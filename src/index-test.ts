@@ -1,3 +1,3 @@
-import 'index'
+import './index'
 
 console.log('grio');
