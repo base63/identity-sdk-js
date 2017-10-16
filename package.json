@@ -8,7 +8,8 @@
     "pretest": "tsc",
     "test-dev": "tsc --watch & mocha --watch $(find out -name '*-test.js')",
     "test": "tsc && istanbul cover --config ./.istanbul.yml ./node_modules/mocha/bin/_mocha --  $(find out -name '*-test.js') && remap-istanbul -i ./build/coverage/coverage-final.json -o ./build/coverage/coverage-remapped.json && coverage-filter -i ./build/coverage/coverage-remapped.json -o ./build/coverage/coverage-filtered.json",
-    "push-coverage-to-codecov": "codecov -f ./build/coverage/coverage-filtered.json"
+    "push-coverage-to-codecov": "codecov -f ./build/coverage/coverage-filtered.json",
+    "docs": "typedoc src/"
   },
   "keywords": [
     "common",
@@ -17,7 +18,7 @@
     "sdk",
     "server"
   ],
-  "respository": {
+  "repository": {
     "type": "git",
     "url": "git+https://github.com/base63/identity-sdk-js.git"
   },
@@ -31,9 +32,13 @@
     "package.json": "f:package.json",
     "tsconfig.json": "f:tsconfig.json"
   },
+  "pre-commit": [
+    "docs"
+  ],
   "dependencies": {
     "@base63/common-js": "=0.0.2",
-    "@base63/common-server-js": "=1.0.1"
+    "@base63/common-server-js": "=1.0.1",
+    "raynor": "0.9.7"
   },
   "devDependencies": {
     "@base63/togemfury": "=0.0.1",
@@ -49,8 +54,10 @@
     "coverage-filter": "=1.0.0",
     "istanbul": "=0.4.5",
     "mocha": "=4.0.1",
+    "pre-commit": "=1.2.2",
     "remap-istanbul": "=0.9.5",
     "testdouble": "=3.2.6",
+    "typedoc": "=0.9.0",
     "typescript": "=2.5.3"
   }
 }
