@@ -40,13 +40,14 @@ export class Auth0AuthorizationCodeMarshaller extends StringMarshaller {
 
 
 /**
- * The authentication information needed by a user of the identity service. This is the session state basically.
+ * That which identifies a particular user, in a session. A _real_ user might have several such
+ * identifiers attached, but no two users will have the same one.
  */
 export class AuthInfo {
     static readonly CookieName = 'neoncity-authinfo';
     static readonly HeaderName = 'X-NeonCity-AuthInfo';
 
-    /** An identifier for the session. Globally unique. */
+    /** An identifier for the session. Globally unique.. */
     @MarshalWith(UuidMarshaller)
     sessionId: string;
 
