@@ -38,6 +38,7 @@
   "dependencies": {
     "@base63/common-js": "=0.0.2",
     "@base63/common-server-js": "=1.0.1",
+    "http-status-codes": "=1.1.6",
     "raynor": "0.9.7"
   },
   "devDependencies": {
