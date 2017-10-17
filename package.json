@@ -32,9 +32,6 @@
     "package.json": "f:package.json",
     "tsconfig.json": "f:tsconfig.json"
   },
-  "pre-commit": [
-    "docs"
-  ],
   "dependencies": {
     "@base63/common-js": "=0.0.2",
     "@base63/common-server-js": "=1.0.1",
@@ -55,7 +52,6 @@
     "coverage-filter": "=1.0.0",
     "istanbul": "=0.4.5",
     "mocha": "=4.0.1",
-    "pre-commit": "=1.2.2",
     "remap-istanbul": "=0.9.5",
     "testdouble": "=3.2.6",
     "typedoc": "=0.9.0",
