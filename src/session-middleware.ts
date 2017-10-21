@@ -2,21 +2,56 @@ import { wrap } from 'async-middleware'
 import * as cookieParser from 'cookie-parser'
 import * as express from 'express'
 import * as HttpStatus from 'http-status-codes'
+import * as moment from 'moment'
 import { MarshalFrom } from 'raynor'
+
+import { Env, isLocal } from '@base63/common-js'
 
 import { AuthInfo } from './auth-info'
 import { IdentityClient } from './client'
 import { RequestWithIdentity } from './requests'
 
 
+/**
+ * The requirements for the session a request belongs to.
+ */
 export enum SessionLevel {
+    /** It isn't necessary for a session to exist. If it exists, we use it, but if it doesn't we create a new one. */
     None,
+    /** A session must exist and it's going to be attached to the request. */
     Session,
+    /** A session for a user account must exist and it's going to be attached to the request. */
     SessionAndUser
 }
 
+/**
+ * Where to find the session information.
+ */
+export enum SessionInfoSource {
+    /** Can be found as a cookie. Usually used for frontend services. */
+    Cookie,
+    /** Can be found as a special header. Usually used for API services. */
+    Header
+}
 
-export function newSessionMiddleware(sessionLevel: SessionLevel, identityClient: IdentityClient): express.RequestHandler {
+
+/**
+ * Create a connect middleware which populates the incoming request's {@link RequestWithIdentity.session} property
+ * with a {@link Session} object. It does this by looking at either cookies or headers in the HTTP request, extracting
+ * authentication information and using this to retrieve data about the session and potentially user from the identity
+ * service. It also re-attaches the auth info to the response, as either a cookie or a header.
+ * @param sessionLevel - how much of a session to expect to exist.
+ * @param sessionInfoSource - where to extract the session from the request, and where to place the session info on
+ *     the response.
+ * @param env - the environment the code is running in.
+ * @param identityClient - an {@link IdentityClient} for communicating with the identity service.
+ * @returns A connect middleware of type {@link express.RequestHandler}.
+ */
+export function newSessionMiddleware(
+    sessionLevel: SessionLevel,
+    sessionInfoSource: SessionInfoSource,
+    env: Env,
+    identityClient: IdentityClient): express.RequestHandler {
     const authInfoMarshaller = new (MarshalFrom(AuthInfo))();
     const cookieParserMiddleware = cookieParser();
 
@@ -38,9 +73,9 @@ export function newSessionMiddleware(sessionLevel: SessionLevel, identityClient:
             // Try to retrieve any side-channel auth information in the request. This can appear
             // either as a cookie with the name AuthInfo.CookieName, or as a header with the name
             // AuthInfo.HeaderName.
-            if (req.cookies[AuthInfo.CookieName] != undefined) {
+            if (sessionInfoSource == SessionInfoSource.Cookie && req.cookies[AuthInfo.CookieName] != undefined) {
                 authInfoSerialized = req.cookies[AuthInfo.CookieName];
-            } else if (req.header(AuthInfo.HeaderName) != undefined) {
+            } else if (sessionInfoSource == SessionInfoSource.Header && req.header(AuthInfo.HeaderName) != undefined) {
                 try {
                     authInfoSerialized = JSON.parse(req.header(AuthInfo.HeaderName) as string);
                 } catch (e) {
@@ -58,9 +93,18 @@ export function newSessionMiddleware(sessionLevel: SessionLevel, identityClient:
                     return;
                 }
 
-                // Fire away.
-                req.session = null;
-                next();
+                identityClient
+                    .getOrCreateSession()
+                    .then(([authInfo, session]) => {
+                        req.session = session;
+                        setAuthInfoOnResponse(res, authInfo, sessionInfoSource, env);
+                        next();
+                    })
+                    .catch(e => {
+                        req.log.error(e);
+                        res.status(HttpStatus.INTERNAL_SERVER_ERROR);
+                        res.end();
+                    });
                 return;
             }
 
@@ -91,6 +135,7 @@ export function newSessionMiddleware(sessionLevel: SessionLevel, identityClient:
                     .getSession()
                     .then(session => {
                         req.session = session;
+                        setAuthInfoOnResponse(res, authInfo as AuthInfo, sessionInfoSource, env);
                         next();
                     })
                     .catch(e => {
@@ -117,6 +162,7 @@ export function newSessionMiddleware(sessionLevel: SessionLevel, identityClient:
                     .getUserOnSession()
                     .then((session) => {
                         req.session = session;
+                        setAuthInfoOnResponse(res, authInfo as AuthInfo, sessionInfoSource, env);
                         next();
                     })
                     .catch(e => {
@@ -140,4 +186,20 @@ export function newSessionMiddleware(sessionLevel: SessionLevel, identityClient:
             }
         });
     });
+
+    function setAuthInfoOnResponse(res: express.Response, authInfo: AuthInfo, sessionInfoSource: SessionInfoSource, env: Env) {
+        switch (sessionInfoSource) {
+        case SessionInfoSource.Cookie:
+            res.cookie(AuthInfo.CookieName, authInfoMarshaller.pack(authInfo), {
+                httpOnly: true,
+                secure: !isLocal(env),
+                expires: moment.utc().add('days', 10000).toDate(),
+                sameSite: 'lax'
+            });
+            break;
+        case SessionInfoSource.Header:
+            res.setHeader(AuthInfo.HeaderName, JSON.stringify(authInfoMarshaller.pack(authInfo)));
+            break;
+        }
+    }
 }

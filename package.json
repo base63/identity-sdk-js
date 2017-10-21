@@ -37,6 +37,7 @@
     "@base63/common-server-js": "=1.0.1",
     "cookie-parser": "=1.4.3",
     "http-status-codes": "=1.1.6",
+    "moment": "=2.18.1",
     "raynor": "0.9.7"
   },
   "devDependencies": {
