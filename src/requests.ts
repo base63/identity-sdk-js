@@ -4,6 +4,6 @@ import { Session } from './entities'
 
 
 export interface RequestWithIdentity extends Request {
-    session: Session;
+    session: Session | null;
     xsrfToken: string | null;
 }
