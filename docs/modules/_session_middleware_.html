@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AuthInfoAndSessionResponse | identity-sdk-js</title>
+	<title>&quot;session-middleware&quot; | identity-sdk-js</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,62 +56,91 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_responses_.html">&quot;responses&quot;</a>
-				</li>
-				<li>
-					<a href="_responses_.authinfoandsessionresponse.html">AuthInfoAndSessionResponse</a>
+					<a href="_session_middleware_.html">&quot;session-middleware&quot;</a>
 				</li>
 			</ul>
-			<h1>Class AuthInfoAndSessionResponse</h1>
+			<h1>External module &quot;session-middleware&quot;</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-hierarchy">
-				<h3>Hierarchy</h3>
-				<ul class="tsd-hierarchy">
-					<li>
-						<span class="target">AuthInfoAndSessionResponse</span>
-					</li>
-				</ul>
-			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Enumerations</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_responses_.authinfoandsessionresponse.html#authinfo" class="tsd-kind-icon">auth<wbr>Info</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_responses_.authinfoandsessionresponse.html#session" class="tsd-kind-icon">session</a></li>
+								<li class="tsd-kind-enum tsd-parent-kind-external-module"><a href="../enums/_session_middleware_.sessioninfosource.html" class="tsd-kind-icon">Session<wbr>Info<wbr>Source</a></li>
+								<li class="tsd-kind-enum tsd-parent-kind-external-module"><a href="../enums/_session_middleware_.sessionlevel.html" class="tsd-kind-icon">Session<wbr>Level</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_session_middleware_.html#newsessionmiddleware" class="tsd-kind-icon">new<wbr>Session<wbr>Middleware</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="authinfo" class="tsd-anchor"></a>
-					<h3>auth<wbr>Info</h3>
-					<div class="tsd-signature tsd-kind-icon">auth<wbr>Info<span class="tsd-signature-symbol">:</span> <a href="_auth_info_.authinfo.html" class="tsd-signature-type">AuthInfo</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/responses.ts#L9">responses.ts:9</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="session" class="tsd-anchor"></a>
-					<h3>session</h3>
-					<div class="tsd-signature tsd-kind-icon">session<span class="tsd-signature-symbol">:</span> <a href="_entities_.session.html" class="tsd-signature-type">Session</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/responses.ts#L12">responses.ts:12</a></li>
-						</ul>
-					</aside>
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="newsessionmiddleware" class="tsd-anchor"></a>
+					<h3>new<wbr>Session<wbr>Middleware</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">new<wbr>Session<wbr>Middleware<span class="tsd-signature-symbol">(</span>sessionLevel<span class="tsd-signature-symbol">: </span><a href="../enums/_session_middleware_.sessionlevel.html" class="tsd-signature-type">SessionLevel</a>, sessionInfoSource<span class="tsd-signature-symbol">: </span><a href="../enums/_session_middleware_.sessioninfosource.html" class="tsd-signature-type">SessionInfoSource</a>, env<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Env</span>, identityClient<span class="tsd-signature-symbol">: </span><a href="../interfaces/_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">express.RequestHandler</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/session-middleware.ts#L50">session-middleware.ts:50</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create a connect middleware which populates the incoming request&#39;s <a href="../interfaces/_requests_.requestwithidentity.html#session">RequestWithIdentity.session</a> property
+										with a <a href="../classes/_entities_.session.html">Session</a> object. It does this by looking at either cookies or headers in the HTTP request, extracting
+										authentication information and using this to retrieve data about the session and potentially user from the identity
+									service. It also re-attaches the auth info to the response, as either a cookie or a header.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>sessionLevel: <a href="../enums/_session_middleware_.sessionlevel.html" class="tsd-signature-type">SessionLevel</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>how much of a session to expect to exist.</p>
+									</div>
+								</li>
+								<li>
+									<h5>sessionInfoSource: <a href="../enums/_session_middleware_.sessioninfosource.html" class="tsd-signature-type">SessionInfoSource</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>where to extract the session from the request, and where to place the session info on
+										the response.</p>
+									</div>
+								</li>
+								<li>
+									<h5>env: <span class="tsd-signature-type">Env</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the environment the code is running in.</p>
+									</div>
+								</li>
+								<li>
+									<h5>identityClient: <a href="../interfaces/_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>an <a href="../interfaces/_client_.identityclient.html">IdentityClient</a> for communicating with the identity service.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">express.RequestHandler</span></h4>
+							<p>A connect middleware of type {@link express.RequestHandler}.</p>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -122,59 +151,47 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_auth_info_.html">"auth-<wbr>info"</a>
+						<a href="_auth_info_.html">"auth-<wbr>info"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_check_xsrf_token_middleware_.html">"check-<wbr>xsrf-<wbr>token-<wbr>middleware"</a>
+						<a href="_check_xsrf_token_middleware_.html">"check-<wbr>xsrf-<wbr>token-<wbr>middleware"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_client_.html">"client"</a>
+						<a href="_client_.html">"client"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_client_impl_.html">"client-<wbr>impl"</a>
+						<a href="_client_impl_.html">"client-<wbr>impl"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_entities_.html">"entities"</a>
+						<a href="_entities_.html">"entities"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_events_.html">"events"</a>
+						<a href="_events_.html">"events"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_index_.html">"index"</a>
+						<a href="_index_.html">"index"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_requests_.html">"requests"</a>
+						<a href="_requests_.html">"requests"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_responses_.html">"responses"</a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../modules/_responses_.html">"responses"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_session_middleware_.html">"session-<wbr>middleware"</a>
+						<a href="_session_middleware_.html">"session-<wbr>middleware"</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_responses_.authinfoandsessionresponse.html" class="tsd-kind-icon">Auth<wbr>Info<wbr>And<wbr>Session<wbr>Response</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_responses_.authinfoandsessionresponse.html#authinfo" class="tsd-kind-icon">auth<wbr>Info</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_responses_.authinfoandsessionresponse.html#session" class="tsd-kind-icon">session</a>
-							</li>
-						</ul>
+					<li class=" tsd-kind-enum tsd-parent-kind-external-module">
+						<a href="../enums/_session_middleware_.sessioninfosource.html" class="tsd-kind-icon">Session<wbr>Info<wbr>Source</a>
 					</li>
-				</ul>
-				<ul class="after-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_responses_.sessionresponse.html" class="tsd-kind-icon">Session<wbr>Response</a>
+					<li class=" tsd-kind-enum tsd-parent-kind-external-module">
+						<a href="../enums/_session_middleware_.sessionlevel.html" class="tsd-kind-icon">Session<wbr>Level</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_responses_.usersinforesponse.html" class="tsd-kind-icon">Users<wbr>Info<wbr>Response</a>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="_session_middleware_.html#newsessionmiddleware" class="tsd-kind-icon">new<wbr>Session<wbr>Middleware</a>
 					</li>
 				</ul>
 			</nav>

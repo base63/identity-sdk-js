@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>User | identity-sdk-js</title>
+	<title>SessionEvent | identity-sdk-js</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,13 +56,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_entities_.html">&quot;entities&quot;</a>
+					<a href="../modules/_events_.html">&quot;events&quot;</a>
 				</li>
 				<li>
-					<a href="_entities_.user.html">User</a>
+					<a href="_events_.sessionevent.html">SessionEvent</a>
 				</li>
 			</ul>
-			<h1>Class User</h1>
+			<h1>Class SessionEvent</h1>
 		</div>
 	</div>
 </header>
@@ -73,15 +73,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">User</span>
-						<ul class="tsd-hierarchy">
-							<li>
-								<a href="_entities_.publicuser.html" class="tsd-signature-type">PublicUser</a>
-							</li>
-							<li>
-								<a href="_entities_.privateuser.html" class="tsd-signature-type">PrivateUser</a>
-							</li>
-						</ul>
+						<span class="target">SessionEvent</span>
 					</li>
 				</ul>
 			</section>
@@ -92,20 +84,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_entities_.user.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_entities_.user.html#language" class="tsd-kind-icon">language</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_entities_.user.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_entities_.user.html#pictureuri" class="tsd-kind-icon">picture<wbr>Uri</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_entities_.user.html#role" class="tsd-kind-icon">role</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_entities_.user.html#state" class="tsd-kind-icon">state</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_entities_.user.html#timecreated" class="tsd-kind-icon">time<wbr>Created</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_entities_.user.html#timelastupdated" class="tsd-kind-icon">time<wbr>Last<wbr>Updated</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Methods</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_entities_.user.html#isadmin" class="tsd-kind-icon">is<wbr>Admin</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_events_.sessionevent.html#data" class="tsd-kind-icon">data</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_events_.sessionevent.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_events_.sessionevent.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_events_.sessionevent.html#type" class="tsd-kind-icon">type</a></li>
 							</ul>
 						</section>
 					</div>
@@ -114,104 +96,44 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="data" class="tsd-anchor"></a>
+					<h3>data</h3>
+					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/events.ts#L50">events.ts:50</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="id" class="tsd-anchor"></a>
 					<h3>id</h3>
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/entities.ts#L57">entities.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/events.ts#L41">events.ts:41</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="language" class="tsd-anchor"></a>
-					<h3>language</h3>
-					<div class="tsd-signature tsd-kind-icon">language<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="timestamp" class="tsd-anchor"></a>
+					<h3>timestamp</h3>
+					<div class="tsd-signature tsd-kind-icon">timestamp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Date</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/entities.ts#L72">entities.ts:72</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/events.ts#L47">events.ts:47</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="name" class="tsd-anchor"></a>
-					<h3>name</h3>
-					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="type" class="tsd-anchor"></a>
+					<h3>type</h3>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../enums/_events_.sessioneventtype.html" class="tsd-signature-type">SessionEventType</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/entities.ts#L66">entities.ts:66</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/events.ts#L44">events.ts:44</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="pictureuri" class="tsd-anchor"></a>
-					<h3>picture<wbr>Uri</h3>
-					<div class="tsd-signature tsd-kind-icon">picture<wbr>Uri<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/entities.ts#L69">entities.ts:69</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="role" class="tsd-anchor"></a>
-					<h3>role</h3>
-					<div class="tsd-signature tsd-kind-icon">role<span class="tsd-signature-symbol">:</span> <a href="../enums/_entities_.role.html" class="tsd-signature-type">Role</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/entities.ts#L63">entities.ts:63</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="state" class="tsd-anchor"></a>
-					<h3>state</h3>
-					<div class="tsd-signature tsd-kind-icon">state<span class="tsd-signature-symbol">:</span> <a href="../enums/_entities_.userstate.html" class="tsd-signature-type">UserState</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/entities.ts#L60">entities.ts:60</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="timecreated" class="tsd-anchor"></a>
-					<h3>time<wbr>Created</h3>
-					<div class="tsd-signature tsd-kind-icon">time<wbr>Created<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Date</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/entities.ts#L75">entities.ts:75</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="timelastupdated" class="tsd-anchor"></a>
-					<h3>time<wbr>Last<wbr>Updated</h3>
-					<div class="tsd-signature tsd-kind-icon">time<wbr>Last<wbr>Updated<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Date</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/entities.ts#L78">entities.ts:78</a></li>
-						</ul>
-					</aside>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="isadmin" class="tsd-anchor"></a>
-					<h3>is<wbr>Admin</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Admin<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/entities.ts#L80">entities.ts:80</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-					</ul>
 				</section>
 			</section>
 		</div>
@@ -233,10 +155,10 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_client_impl_.html">"client-<wbr>impl"</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_entities_.html">"entities"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class="current tsd-kind-external-module">
 						<a href="../modules/_events_.html">"events"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -256,64 +178,34 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-enum tsd-parent-kind-external-module">
-						<a href="../enums/_entities_.role.html" class="tsd-kind-icon">Role</a>
+						<a href="../enums/_events_.sessioneventtype.html" class="tsd-kind-icon">Session<wbr>Event<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-enum tsd-parent-kind-external-module">
-						<a href="../enums/_entities_.sessionstate.html" class="tsd-kind-icon">Session<wbr>State</a>
-					</li>
-					<li class=" tsd-kind-enum tsd-parent-kind-external-module">
-						<a href="../enums/_entities_.userstate.html" class="tsd-kind-icon">User<wbr>State</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_entities_.auth0useridhashmarshaller.html" class="tsd-kind-icon">Auth0<wbr>User<wbr>IdHash<wbr>Marshaller</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_entities_.privateuser.html" class="tsd-kind-icon">Private<wbr>User</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_entities_.publicuser.html" class="tsd-kind-icon">Public<wbr>User</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_entities_.session.html" class="tsd-kind-icon">Session</a>
+						<a href="../enums/_events_.usereventtype.html" class="tsd-kind-icon">User<wbr>Event<wbr>Type</a>
 					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_entities_.user.html" class="tsd-kind-icon">User</a>
+						<a href="_events_.sessionevent.html" class="tsd-kind-icon">Session<wbr>Event</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_entities_.user.html#id" class="tsd-kind-icon">id</a>
+								<a href="_events_.sessionevent.html#data" class="tsd-kind-icon">data</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_entities_.user.html#language" class="tsd-kind-icon">language</a>
+								<a href="_events_.sessionevent.html#id" class="tsd-kind-icon">id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_entities_.user.html#name" class="tsd-kind-icon">name</a>
+								<a href="_events_.sessionevent.html#timestamp" class="tsd-kind-icon">timestamp</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_entities_.user.html#pictureuri" class="tsd-kind-icon">picture<wbr>Uri</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_entities_.user.html#role" class="tsd-kind-icon">role</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_entities_.user.html#state" class="tsd-kind-icon">state</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_entities_.user.html#timecreated" class="tsd-kind-icon">time<wbr>Created</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_entities_.user.html#timelastupdated" class="tsd-kind-icon">time<wbr>Last<wbr>Updated</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_entities_.user.html#isadmin" class="tsd-kind-icon">is<wbr>Admin</a>
+								<a href="_events_.sessionevent.html#type" class="tsd-kind-icon">type</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_entities_.xsrftokenmarshaller.html" class="tsd-kind-icon">Xsrf<wbr>Token<wbr>Marshaller</a>
+						<a href="_events_.userevent.html" class="tsd-kind-icon">User<wbr>Event</a>
 					</li>
 				</ul>
 			</nav>
