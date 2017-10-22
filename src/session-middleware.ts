@@ -96,6 +96,7 @@ export function newSessionMiddleware(
                 identityClient
                     .getOrCreateSession()
                     .then(([authInfo, session]) => {
+                        req.authInfo = authInfo;
                         req.session = session;
                         setAuthInfoOnResponse(res, authInfo, sessionInfoSource, env);
                         next();
@@ -134,6 +135,7 @@ export function newSessionMiddleware(
                     .withContext(authInfo as AuthInfo)
                     .getSession()
                     .then(session => {
+                        req.authInfo = authInfo as AuthInfo;
                         req.session = session;
                         setAuthInfoOnResponse(res, authInfo as AuthInfo, sessionInfoSource, env);
                         next();
@@ -161,6 +163,7 @@ export function newSessionMiddleware(
                     .withContext(authInfo as AuthInfo)
                     .getUserOnSession()
                     .then((session) => {
+                        req.authInfo = authInfo as AuthInfo;
                         req.session = session;
                         setAuthInfoOnResponse(res, authInfo as AuthInfo, sessionInfoSource, env);
                         next();
@@ -186,20 +189,35 @@ export function newSessionMiddleware(
             }
         });
     });
+}
 
-    function setAuthInfoOnResponse(res: express.Response, authInfo: AuthInfo, sessionInfoSource: SessionInfoSource, env: Env) {
-        switch (sessionInfoSource) {
-        case SessionInfoSource.Cookie:
-            res.cookie(AuthInfo.CookieName, authInfoMarshaller.pack(authInfo), {
-                httpOnly: true,
-                secure: !isLocal(env),
-                expires: moment.utc().add('days', 10000).toDate(),
-                sameSite: 'lax'
-            });
-            break;
-        case SessionInfoSource.Header:
-            res.setHeader(AuthInfo.HeaderName, JSON.stringify(authInfoMarshaller.pack(authInfo)));
-            break;
-        }
+
+export function setAuthInfoOnResponse(res: express.Response, authInfo: AuthInfo, sessionInfoSource: SessionInfoSource, env: Env) {
+    const authInfoMarshaller = new (MarshalFrom(AuthInfo))();
+
+    switch (sessionInfoSource) {
+    case SessionInfoSource.Cookie:
+        res.cookie(AuthInfo.CookieName, authInfoMarshaller.pack(authInfo), {
+            httpOnly: true,
+            secure: !isLocal(env),
+            expires: moment.utc().add('days', 10000).toDate(),
+            sameSite: 'lax'
+        });
+        break;
+    case SessionInfoSource.Header:
+        res.setHeader(AuthInfo.HeaderName, JSON.stringify(authInfoMarshaller.pack(authInfo)));
+        break;
+    }
+}
+
+
+export function clearAuthInfoOnResponse(res: express.Response, sessionInfoSource: SessionInfoSource, env: Env) {
+    switch (sessionInfoSource) {
+    case SessionInfoSource.Cookie:
+        res.clearCookie(AuthInfo.CookieName, {httpOnly: true, secure: !isLocal(env)});
+        break;
+    case SessionInfoSource.Header:
+        res.removeHeader(AuthInfo.HeaderName);
+        break;
     }
 }
