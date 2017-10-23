@@ -10,7 +10,7 @@ import {
     Auth0AuthorizationCodeMarshaller,
     AuthInfo,
 } from './auth-info'
-import { PostLoginRedirectInfo, PostLoginRedirectInfoMarshaller } from './auth-flow'
+import { Auth0Config, PostLoginRedirectInfo, PostLoginRedirectInfoMarshaller } from './auth-flow'
 import { IdentityClient } from './client'
 import { RequestWithIdentity } from './requests'
 import {
@@ -47,13 +47,6 @@ const AUTHORIZE_OPTIONS = {
         'Content-Type': 'application/json'
     }
 };
-
-export class Auth0Config {
-    clientId: string;
-    clientSecret: string;
-    domain: string;
-    callbackUri: string;
-}
 
 export function newAuthFlowRouter(env: Env, auth0Config: Auth0Config, webFetcher: WebFetcher, identityClient: IdentityClient): express.Router {
     const auth0TokenExchangeResultMarshaller = new (MarshalFrom(Auth0TokenExchangeResult))();
