@@ -15,7 +15,7 @@ import {
     AuthInfoAndSessionResponse,
     SessionResponse,
     UsersInfoResponse
-} from './responses'
+} from './dtos'
 
 
 export function newIdentityClient(env: Env, origin: string, identityServiceHost: string, webFetcher: WebFetcher): IdentityClient {
