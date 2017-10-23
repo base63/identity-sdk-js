@@ -9,7 +9,7 @@ import { Env, isLocal } from '@base63/common-js'
 
 import { AuthInfo } from './auth-info'
 import { IdentityClient } from './client'
-import { RequestWithIdentity } from './requests'
+import { RequestWithIdentity } from './request'
 
 
 /**
@@ -196,28 +196,28 @@ export function setAuthInfoOnResponse(res: express.Response, authInfo: AuthInfo,
     const authInfoMarshaller = new (MarshalFrom(AuthInfo))();
 
     switch (sessionInfoSource) {
-    case SessionInfoSource.Cookie:
-        res.cookie(AuthInfo.CookieName, authInfoMarshaller.pack(authInfo), {
-            httpOnly: true,
-            secure: !isLocal(env),
-            expires: moment.utc().add('days', 10000).toDate(),
-            sameSite: 'lax'
-        });
-        break;
-    case SessionInfoSource.Header:
-        res.setHeader(AuthInfo.HeaderName, JSON.stringify(authInfoMarshaller.pack(authInfo)));
-        break;
+        case SessionInfoSource.Cookie:
+            res.cookie(AuthInfo.CookieName, authInfoMarshaller.pack(authInfo), {
+                httpOnly: true,
+                secure: !isLocal(env),
+                expires: moment.utc().add('days', 10000).toDate(),
+                sameSite: 'lax'
+            });
+            break;
+        case SessionInfoSource.Header:
+            res.setHeader(AuthInfo.HeaderName, JSON.stringify(authInfoMarshaller.pack(authInfo)));
+            break;
     }
 }
 
 
 export function clearAuthInfoOnResponse(res: express.Response, sessionInfoSource: SessionInfoSource, env: Env) {
     switch (sessionInfoSource) {
-    case SessionInfoSource.Cookie:
-        res.clearCookie(AuthInfo.CookieName, {httpOnly: true, secure: !isLocal(env)});
-        break;
-    case SessionInfoSource.Header:
-        res.removeHeader(AuthInfo.HeaderName);
-        break;
+        case SessionInfoSource.Cookie:
+            res.clearCookie(AuthInfo.CookieName, { httpOnly: true, secure: !isLocal(env) });
+            break;
+        case SessionInfoSource.Header:
+            res.removeHeader(AuthInfo.HeaderName);
+            break;
     }
 }

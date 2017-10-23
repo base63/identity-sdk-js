@@ -33,8 +33,8 @@
     "tsconfig.json": "f:tsconfig.json"
   },
   "dependencies": {
-    "@base63/common-js": "=0.0.2",
-    "@base63/common-server-js": "=1.0.1",
+    "@base63/common-js": "=0.1.0",
+    "@base63/common-server-js": "=1.1.0",
     "cookie-parser": "=1.4.3",
     "express": "=4.16.2",
     "history": "=4.7.2",

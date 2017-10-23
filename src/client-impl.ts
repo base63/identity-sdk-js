@@ -1,7 +1,8 @@
 import * as HttpStatus from 'http-status-codes'
 import { MarshalFrom, Marshaller } from 'raynor'
 
-import { Env, isLocal, WebFetcher } from '@base63/common-js'
+import { Env, isLocal } from '@base63/common-js'
+import { WebFetcher } from '@base63/common-server-js'
 
 import { AuthInfo } from './auth-info'
 import {

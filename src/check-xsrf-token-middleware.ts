@@ -1,7 +1,7 @@
 import * as express from 'express'
 import * as HttpStatus from 'http-status-codes'
 
-import { RequestWithIdentity } from './requests'
+import { RequestWithIdentity } from './request'
 import { Session, XsrfTokenMarshaller } from './entities'
 
 

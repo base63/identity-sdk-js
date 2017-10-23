@@ -3,7 +3,8 @@ import * as express from 'express'
 import * as HttpStatus from 'http-status-codes'
 import { MarshalFrom, MarshalWith, OptionalOf } from 'raynor'
 
-import { Env, WebFetcher } from '@base63/common-js'
+import { Env } from '@base63/common-js'
+import { WebFetcher } from '@base63/common-server-js'
 
 import {
     Auth0AccessTokenMarshaller,
@@ -12,7 +13,7 @@ import {
 } from './auth-info'
 import { Auth0Config, PostLoginRedirectInfo, PostLoginRedirectInfoMarshaller } from './auth-flow'
 import { IdentityClient } from './client'
-import { RequestWithIdentity } from './requests'
+import { RequestWithIdentity } from './request'
 import {
     newSessionMiddleware,
     SessionLevel,
