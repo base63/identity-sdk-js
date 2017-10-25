@@ -122,7 +122,7 @@ export function newSessionMiddleware(
 
             // Treat the case of incomplete auth info. If we're supposed to also have a user, but there
             // is none, the request handling is stopped with an error.
-            if (mustHaveUser && sessionToken.auth0AccessToken == null) {
+            if (mustHaveUser && sessionToken.userToken == null) {
                 req.log.warn('Expected auth token but none was had');
                 res.status(HttpStatus.BAD_REQUEST);
                 res.end();
@@ -130,7 +130,7 @@ export function newSessionMiddleware(
             }
 
             // Actually retrieve the session info and attach it to the request.
-            if (sessionToken.auth0AccessToken == null) {
+            if (sessionToken.userToken == null) {
                 identityClient
                     .withContext(sessionToken as SessionToken)
                     .getSession()

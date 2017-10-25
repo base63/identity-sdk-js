@@ -4,7 +4,7 @@ import { ExtractError, OptionalOf, MarshalEnum, MarshalFrom, MarshalWith } from 
 import { LanguageMarshaller } from '@base63/common-js'
 
 
-export class Auth0UserIdHashMarshaller extends r.StringMarshaller {
+export class UserIdHashMarshaller extends r.StringMarshaller {
     private static readonly _hexRegExp: RegExp = new RegExp('^[0-9a-f]{64}$');
 
     filter(s: string): string {
@@ -12,7 +12,7 @@ export class Auth0UserIdHashMarshaller extends r.StringMarshaller {
             throw new ExtractError('Expected string to be 64 characters');
         }
 
-        if (!Auth0UserIdHashMarshaller._hexRegExp.test(s)) {
+        if (!UserIdHashMarshaller._hexRegExp.test(s)) {
             throw new ExtractError('Expected all hex characters');
         }
 
@@ -91,8 +91,8 @@ export class PrivateUser extends User {
     @MarshalWith(r.BooleanMarshaller)
     agreedToCookiePolicy: boolean;
 
-    @MarshalWith(Auth0UserIdHashMarshaller)
-    auth0UserIdHash: string;
+    @MarshalWith(UserIdHashMarshaller)
+    userIdHash: string;
 }
 
 

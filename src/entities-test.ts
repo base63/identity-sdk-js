@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import 'mocha'
 
-import { Auth0UserIdHashMarshaller, Role, User, UserState } from './entities'
+import { UserIdHashMarshaller, Role, User, UserState } from './entities'
 
 
 describe('User', () => {
@@ -52,7 +52,7 @@ describe('User', () => {
 });
 
 
-describe('Auth0UserIdHashMarshaller', () => {
+describe('UserIdHashMarshaller', () => {
     const Hashes = [
         '0000000000000000000000000000000000000000000000000000000000000000',
         '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'
@@ -74,7 +74,7 @@ describe('Auth0UserIdHashMarshaller', () => {
     describe('extract', () => {
         for (let hash of Hashes) {
             it(`should parse "${hash}"`, () => {
-                const hashMarshaller = new Auth0UserIdHashMarshaller();
+                const hashMarshaller = new UserIdHashMarshaller();
 
                 expect(hashMarshaller.extract(hash)).to.eql(hash);
             });
@@ -82,7 +82,7 @@ describe('Auth0UserIdHashMarshaller', () => {
 
         for (let hash of BadLengthHashes) {
             it(`should throw for bad-length "${hash}"`, () => {
-                const hashMarshaller = new Auth0UserIdHashMarshaller();
+                const hashMarshaller = new UserIdHashMarshaller();
 
                 expect(() => hashMarshaller.extract(hash)).to.throw('Expected string to be 64 characters');
             });
@@ -90,7 +90,7 @@ describe('Auth0UserIdHashMarshaller', () => {
 
         for (let hash of BadContentHashes) {
             it(`should throw for bad-content "${hash}"`, () => {
-                const hashMarshaller = new Auth0UserIdHashMarshaller();
+                const hashMarshaller = new UserIdHashMarshaller();
 
                 expect(() => hashMarshaller.extract(hash)).to.throw('Expected all hex characters');
             });
@@ -100,7 +100,7 @@ describe('Auth0UserIdHashMarshaller', () => {
     describe('pack', () => {
         for (let hash of Hashes) {
             it(`should produce the same input for "${hash}"`, () => {
-                const hashMarshaller = new Auth0UserIdHashMarshaller();
+                const hashMarshaller = new UserIdHashMarshaller();
 
                 expect(hashMarshaller.pack(hash)).to.eql(hash);
             });
@@ -110,7 +110,7 @@ describe('Auth0UserIdHashMarshaller', () => {
     describe('extract and pack', () => {
         for (let hash of Hashes) {
             it(`should be opposites for "${hash}"`, () => {
-                const hashMarshaller = new Auth0UserIdHashMarshaller();
+                const hashMarshaller = new UserIdHashMarshaller();
 
                 const raw = hash;
                 const extracted = hashMarshaller.extract(raw);
