@@ -1,5 +1,5 @@
-import { AuthInfo } from './auth-info'
 import { PublicUser, Session } from './entities'
+import { SessionToken } from './session-token'
 
 
 export const SESSION_TOKEN_COOKIE_NAME: string = 'base63-sessiontoken';
@@ -24,13 +24,13 @@ export class UnauthorizedIdentityError extends IdentityError {
 
 
 export interface IdentityClient {
-    withContext(authInfo: AuthInfo): IdentityClient;
+    withContext(authInfo: SessionToken): IdentityClient;
 
-    getOrCreateSession(): Promise<[AuthInfo, Session]>;
+    getOrCreateSession(): Promise<[SessionToken, Session]>;
     getSession(): Promise<Session>;
     expireSession(session: Session): Promise<void>;
     agreeToCookiePolicyForSession(session: Session): Promise<Session>;
-    getOrCreateUserOnSession(session: Session): Promise<[AuthInfo, Session]>;
+    getOrCreateUserOnSession(session: Session): Promise<[SessionToken, Session]>;
     getUserOnSession(): Promise<Session>;
 
     getUsersInfo(ids: number[]): Promise<PublicUser[]>;

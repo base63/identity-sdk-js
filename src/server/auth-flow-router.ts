@@ -6,11 +6,6 @@ import { MarshalFrom, MarshalWith, OptionalOf } from 'raynor'
 import { Env } from '@base63/common-js'
 import { WebFetcher } from '@base63/common-server-js'
 
-import {
-    Auth0AccessTokenMarshaller,
-    Auth0AuthorizationCodeMarshaller,
-    AuthInfo,
-} from '../auth-info'
 import { Auth0Config, PostLoginRedirectInfo, PostLoginRedirectInfoMarshaller } from '../auth-flow'
 import { IdentityClient } from '../client'
 import { RequestWithIdentity } from '../request'
@@ -18,9 +13,14 @@ import {
     newSessionMiddleware,
     SessionLevel,
     SessionInfoSource,
-    setAuthInfoOnResponse,
-    clearAuthInfoOnResponse
+    setSessionTokenOnResponse,
+    clearSessionTokenOnResponse
 } from './session-middleware'
+import {
+    Auth0AccessTokenMarshaller,
+    Auth0AuthorizationCodeMarshaller,
+    SessionToken,
+} from '../session-token'
 
 
 export class Auth0AuthorizeRedirectInfo {
@@ -110,10 +110,10 @@ export function newAuthFlowRouter(env: Env, auth0Config: Auth0Config, webFetcher
             return;
         }
 
-        let authInfo = new AuthInfo((req.authInfo).sessionId, auth0TokenExchangeResult.accessToken);
+        let sessionToken = new SessionToken((req.sessionToken).sessionId, auth0TokenExchangeResult.accessToken);
 
         try {
-            authInfo = (await identityClient.withContext(authInfo).getOrCreateUserOnSession(req.session))[0];
+            sessionToken = (await identityClient.withContext(sessionToken).getOrCreateUserOnSession(req.session))[0];
         } catch (e) {
             req.log.error(e);
             req.errorLog.error(e);
@@ -122,13 +122,13 @@ export function newAuthFlowRouter(env: Env, auth0Config: Auth0Config, webFetcher
             return;
         }
 
-        setAuthInfoOnResponse(res, authInfo, SessionInfoSource.Cookie, env);
+        setSessionTokenOnResponse(res, sessionToken, SessionInfoSource.Cookie, env);
         res.redirect(redirectInfo.state.path);
     }));
 
     authFlowRouter.get('/logout', wrap(async (req: RequestWithIdentity, res: express.Response) => {
         try {
-            await identityClient.withContext(req.authInfo as AuthInfo).expireSession(req.session);
+            await identityClient.withContext(req.sessionToken as SessionToken).expireSession(req.session);
         } catch (e) {
             req.log.error(e);
             req.errorLog.error(e);
@@ -137,7 +137,7 @@ export function newAuthFlowRouter(env: Env, auth0Config: Auth0Config, webFetcher
             return;
         }
 
-        clearAuthInfoOnResponse(res, SessionInfoSource.Cookie, env);
+        clearSessionTokenOnResponse(res, SessionInfoSource.Cookie, env);
         res.redirect('/');
     }));
 

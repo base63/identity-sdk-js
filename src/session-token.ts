@@ -43,7 +43,7 @@ export class Auth0AuthorizationCodeMarshaller extends StringMarshaller {
  * That which identifies a particular user, in a session. A _real_ user might have several such
  * identifiers attached, but no two users will have the same one.
  */
-export class AuthInfo {
+export class SessionToken {
     /** An identifier for the session. Globally unique.. */
     @MarshalWith(UuidMarshaller)
     sessionId: string;

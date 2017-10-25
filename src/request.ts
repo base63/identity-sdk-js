@@ -1,11 +1,11 @@
 import { Request } from '@base63/common-server-js'
 
-import { AuthInfo } from './auth-info'
 import { Session } from './entities'
+import { SessionToken } from './session-token'
 
 
 export interface RequestWithIdentity extends Request {
-    authInfo: AuthInfo;
+    sessionToken: SessionToken;
     session: Session;
     xsrfToken: string | null;
 }

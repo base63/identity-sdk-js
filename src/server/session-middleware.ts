@@ -7,7 +7,7 @@ import { MarshalFrom } from 'raynor'
 
 import { Env, isLocal } from '@base63/common-js'
 
-import { AuthInfo } from '../auth-info'
+import { SessionToken } from '../session-token'
 import { IdentityClient, SESSION_TOKEN_COOKIE_NAME, SESSION_TOKEN_HEADER_NAME } from '../client'
 import { RequestWithIdentity } from '../request'
 
@@ -52,7 +52,7 @@ export function newSessionMiddleware(
     sessionInfoSource: SessionInfoSource,
     env: Env,
     identityClient: IdentityClient): express.RequestHandler {
-    const authInfoMarshaller = new (MarshalFrom(AuthInfo))();
+    const sessionTokenMarshaller = new (MarshalFrom(SessionToken))();
     const cookieParserMiddleware = cookieParser();
 
     let mustHaveSession = false;
@@ -68,24 +68,24 @@ export function newSessionMiddleware(
 
     return wrap(async (req: RequestWithIdentity, res: express.Response, next: express.NextFunction) => {
         cookieParserMiddleware(req, res, () => {
-            let authInfoSerialized: string | null = null;
+            let sessionTokenSerialized: string | null = null;
 
             // Try to retrieve any side-channel auth information in the request. This can appear
             // either as a cookie with the name SESSION_TOKEN_COOKIE_NAME, or as a header with the name
             // SESSION_TOKEN_HEADER_NAME.
             if (sessionInfoSource == SessionInfoSource.Cookie && req.cookies[SESSION_TOKEN_COOKIE_NAME] != undefined) {
-                authInfoSerialized = req.cookies[SESSION_TOKEN_COOKIE_NAME];
+                sessionTokenSerialized = req.cookies[SESSION_TOKEN_COOKIE_NAME];
             } else if (sessionInfoSource == SessionInfoSource.Header && req.header(SESSION_TOKEN_HEADER_NAME) != undefined) {
                 try {
-                    authInfoSerialized = JSON.parse(req.header(SESSION_TOKEN_HEADER_NAME) as string);
+                    sessionTokenSerialized = JSON.parse(req.header(SESSION_TOKEN_HEADER_NAME) as string);
                 } catch (e) {
-                    authInfoSerialized = null;
+                    sessionTokenSerialized = null;
                 }
             }
 
             // Treat the case of no auth info. If it's required the request handling is stopped with an
             // error, otherwise future handlers are invoked.
-            if (authInfoSerialized == null) {
+            if (sessionTokenSerialized == null) {
                 if (mustHaveSession) {
                     req.log.warn('Expected some auth info but there was none');
                     res.status(HttpStatus.BAD_REQUEST);
@@ -95,10 +95,10 @@ export function newSessionMiddleware(
 
                 identityClient
                     .getOrCreateSession()
-                    .then(([authInfo, session]) => {
-                        req.authInfo = authInfo;
+                    .then(([sessionToken, session]) => {
+                        req.sessionToken = sessionToken;
                         req.session = session;
-                        setAuthInfoOnResponse(res, authInfo, sessionInfoSource, env);
+                        setSessionTokenOnResponse(res, sessionToken, sessionInfoSource, env);
                         next();
                     })
                     .catch(e => {
@@ -110,9 +110,9 @@ export function newSessionMiddleware(
             }
 
             // If there is some auth info, let's extract it.
-            let authInfo: AuthInfo | null = null;
+            let sessionToken: SessionToken | null = null;
             try {
-                authInfo = authInfoMarshaller.extract(authInfoSerialized);
+                sessionToken = sessionTokenMarshaller.extract(sessionTokenSerialized);
             } catch (e) {
                 req.log.error(e);
                 res.status(HttpStatus.BAD_REQUEST);
@@ -122,7 +122,7 @@ export function newSessionMiddleware(
 
             // Treat the case of incomplete auth info. If we're supposed to also have a user, but there
             // is none, the request handling is stopped with an error.
-            if (mustHaveUser && authInfo.auth0AccessToken == null) {
+            if (mustHaveUser && sessionToken.auth0AccessToken == null) {
                 req.log.warn('Expected auth token but none was had');
                 res.status(HttpStatus.BAD_REQUEST);
                 res.end();
@@ -130,14 +130,14 @@ export function newSessionMiddleware(
             }
 
             // Actually retrieve the session info and attach it to the request.
-            if (authInfo.auth0AccessToken == null) {
+            if (sessionToken.auth0AccessToken == null) {
                 identityClient
-                    .withContext(authInfo as AuthInfo)
+                    .withContext(sessionToken as SessionToken)
                     .getSession()
                     .then(session => {
-                        req.authInfo = authInfo as AuthInfo;
+                        req.sessionToken = sessionToken as SessionToken;
                         req.session = session;
-                        setAuthInfoOnResponse(res, authInfo as AuthInfo, sessionInfoSource, env);
+                        setSessionTokenOnResponse(res, sessionToken as SessionToken, sessionInfoSource, env);
                         next();
                     })
                     .catch(e => {
@@ -160,12 +160,12 @@ export function newSessionMiddleware(
                     });
             } else {
                 identityClient
-                    .withContext(authInfo as AuthInfo)
+                    .withContext(sessionToken as SessionToken)
                     .getUserOnSession()
                     .then((session) => {
-                        req.authInfo = authInfo as AuthInfo;
+                        req.sessionToken = sessionToken as SessionToken;
                         req.session = session;
-                        setAuthInfoOnResponse(res, authInfo as AuthInfo, sessionInfoSource, env);
+                        setSessionTokenOnResponse(res, sessionToken as SessionToken, sessionInfoSource, env);
                         next();
                     })
                     .catch(e => {
@@ -192,12 +192,12 @@ export function newSessionMiddleware(
 }
 
 
-export function setAuthInfoOnResponse(res: express.Response, authInfo: AuthInfo, sessionInfoSource: SessionInfoSource, env: Env) {
-    const authInfoMarshaller = new (MarshalFrom(AuthInfo))();
+export function setSessionTokenOnResponse(res: express.Response, sessionToken: SessionToken, sessionInfoSource: SessionInfoSource, env: Env) {
+    const sessionTokenMarshaller = new (MarshalFrom(SessionToken))();
 
     switch (sessionInfoSource) {
         case SessionInfoSource.Cookie:
-            res.cookie(SESSION_TOKEN_COOKIE_NAME, authInfoMarshaller.pack(authInfo), {
+            res.cookie(SESSION_TOKEN_COOKIE_NAME, sessionTokenMarshaller.pack(sessionToken), {
                 httpOnly: true,
                 secure: !isLocal(env),
                 expires: moment.utc().add('days', 10000).toDate(),
@@ -205,13 +205,13 @@ export function setAuthInfoOnResponse(res: express.Response, authInfo: AuthInfo,
             });
             break;
         case SessionInfoSource.Header:
-            res.setHeader(SESSION_TOKEN_HEADER_NAME, JSON.stringify(authInfoMarshaller.pack(authInfo)));
+            res.setHeader(SESSION_TOKEN_HEADER_NAME, JSON.stringify(sessionTokenMarshaller.pack(sessionToken)));
             break;
     }
 }
 
 
-export function clearAuthInfoOnResponse(res: express.Response, sessionInfoSource: SessionInfoSource, env: Env) {
+export function clearSessionTokenOnResponse(res: express.Response, sessionInfoSource: SessionInfoSource, env: Env) {
     switch (sessionInfoSource) {
         case SessionInfoSource.Cookie:
             res.clearCookie(SESSION_TOKEN_COOKIE_NAME, { httpOnly: true, secure: !isLocal(env) });

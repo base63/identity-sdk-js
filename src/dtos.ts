@@ -1,12 +1,12 @@
 import { ArrayOf, MarshalFrom, MarshalWith } from 'raynor'
 
-import { AuthInfo } from './auth-info'
 import { PublicUser, Session } from './entities'
+import { SessionToken } from './session-token'
 
 
-export class AuthInfoAndSessionResponse {
-    @MarshalWith(MarshalFrom(AuthInfo))
-    authInfo: AuthInfo;
+export class SessionAndTokenResponse {
+    @MarshalWith(MarshalFrom(SessionToken))
+    sessionToken: SessionToken;
 
     @MarshalWith(MarshalFrom(Session))
     session: Session;

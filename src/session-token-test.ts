@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import 'mocha'
 
-import { Auth0AccessTokenMarshaller } from './auth-info'
+import { Auth0AccessTokenMarshaller } from './session-token'
 
 
 describe('Auth0AccessTokenMarshaller', () => {

@@ -4,7 +4,7 @@ import { MarshalFrom, Marshaller } from 'raynor'
 import { Env, isLocal } from '@base63/common-js'
 import { WebFetcher } from '@base63/common-server-js'
 
-import { AuthInfo } from './auth-info'
+import { SessionToken } from './session-token'
 import {
     IdentityClient,
     IdentityError,
@@ -14,15 +14,15 @@ import {
 } from './client'
 import { PublicUser, Session } from './entities'
 import {
-    AuthInfoAndSessionResponse,
+    SessionAndTokenResponse,
     SessionResponse,
     UsersInfoResponse
 } from './dtos'
 
 
 export function newIdentityClient(env: Env, origin: string, identityServiceHost: string, webFetcher: WebFetcher): IdentityClient {
-    const authInfoMarshaller = new (MarshalFrom(AuthInfo))();
-    const authInfoAndSessionResponse = new (MarshalFrom(AuthInfoAndSessionResponse))();
+    const sessionTokenMarshaller = new (MarshalFrom(SessionToken))();
+    const sessionAndTokenResponseMarshaller = new (MarshalFrom(SessionAndTokenResponse))();
     const sessionResponseMarshaller = new (MarshalFrom(SessionResponse))();
     const usersInfoResponseMarshaller = new (MarshalFrom(UsersInfoResponse))();
 
@@ -31,8 +31,8 @@ export function newIdentityClient(env: Env, origin: string, identityServiceHost:
         origin,
         identityServiceHost,
         webFetcher,
-        authInfoMarshaller,
-        authInfoAndSessionResponse,
+        sessionTokenMarshaller,
+        sessionAndTokenResponseMarshaller,
         sessionResponseMarshaller,
         usersInfoResponseMarshaller);
 }
@@ -92,11 +92,11 @@ class IdentityClientImpl implements IdentityClient {
     private readonly _origin: string;
     private readonly _identityServiceHost: string;
     private readonly _webFetcher: WebFetcher;
-    private readonly _authInfoMarshaller: Marshaller<AuthInfo>;
-    private readonly _authInfoAndSessionResponseMarshaller: Marshaller<AuthInfoAndSessionResponse>;
+    private readonly _sessionTokenMarshaller: Marshaller<SessionToken>;
+    private readonly _sessionAndTokenResponseMarshaller: Marshaller<SessionAndTokenResponse>;
     private readonly _sessionResponseMarshaller: Marshaller<SessionResponse>;
     private readonly _usersInfoResponseMarshaller: Marshaller<UsersInfoResponse>;
-    private readonly _authInfo: AuthInfo | null;
+    private readonly _sessionToken: SessionToken | null;
     private readonly _defaultHeaders: HeadersInit;
     private readonly _protocol: string;
 
@@ -105,27 +105,27 @@ class IdentityClientImpl implements IdentityClient {
         origin: string,
         identityServiceHost: string,
         webFetcher: WebFetcher,
-        authInfoMarshaller: Marshaller<AuthInfo>,
-        authInfoAndSessionResponseMarshaller: Marshaller<AuthInfoAndSessionResponse>,
+        sessionTokenMarshaller: Marshaller<SessionToken>,
+        sessionAndTokenResponseMarshaler: Marshaller<SessionAndTokenResponse>,
         sessionResponseMarshaller: Marshaller<SessionResponse>,
         usersInfoResponseMarshaller: Marshaller<UsersInfoResponse>,
-        authInfo: AuthInfo | null = null) {
+        sessionToken: SessionToken | null = null) {
         this._env = env;
         this._origin = origin;
         this._identityServiceHost = identityServiceHost;
         this._webFetcher = webFetcher;
-        this._authInfoMarshaller = authInfoMarshaller;
-        this._authInfoAndSessionResponseMarshaller = authInfoAndSessionResponseMarshaller
+        this._sessionTokenMarshaller = sessionTokenMarshaller;
+        this._sessionAndTokenResponseMarshaller = sessionAndTokenResponseMarshaler
         this._sessionResponseMarshaller = sessionResponseMarshaller;
         this._usersInfoResponseMarshaller = usersInfoResponseMarshaller;
-        this._authInfo = authInfo;
+        this._sessionToken = sessionToken;
 
         this._defaultHeaders = {
             'Origin': origin
         }
 
-        if (authInfo != null) {
-            this._defaultHeaders[SESSION_TOKEN_HEADER_NAME] = JSON.stringify(this._authInfoMarshaller.pack(authInfo));
+        if (sessionToken != null) {
+            this._defaultHeaders[SESSION_TOKEN_HEADER_NAME] = JSON.stringify(this._sessionTokenMarshaller.pack(sessionToken));
         }
 
         if (isLocal(this._env)) {
@@ -135,20 +135,20 @@ class IdentityClientImpl implements IdentityClient {
         }
     }
 
-    withContext(authInfo: AuthInfo): IdentityClient {
+    withContext(sessionToken: SessionToken): IdentityClient {
         return new IdentityClientImpl(
             this._env,
             this._origin,
             this._identityServiceHost,
             this._webFetcher,
-            this._authInfoMarshaller,
-            this._authInfoAndSessionResponseMarshaller,
+            this._sessionTokenMarshaller,
+            this._sessionAndTokenResponseMarshaller,
             this._sessionResponseMarshaller,
             this._usersInfoResponseMarshaller,
-            authInfo);
+            sessionToken);
     }
 
-    async getOrCreateSession(): Promise<[AuthInfo, Session]> {
+    async getOrCreateSession(): Promise<[SessionToken, Session]> {
         const options = this._buildOptions(IdentityClientImpl._getOrCreateSessionOptions);
 
         let rawResponse: Response;
@@ -161,8 +161,8 @@ class IdentityClientImpl implements IdentityClient {
         if (rawResponse.ok) {
             try {
                 const jsonResponse = await rawResponse.json();
-                const sessionResponse = this._authInfoAndSessionResponseMarshaller.extract(jsonResponse);
-                return [sessionResponse.authInfo, sessionResponse.session];
+                const sessionResponse = this._sessionAndTokenResponseMarshaller.extract(jsonResponse);
+                return [sessionResponse.sessionToken, sessionResponse.session];
             } catch (e) {
                 throw new IdentityError(`Could not retrieve session '${e.toString()}'`);
             }
@@ -238,7 +238,7 @@ class IdentityClientImpl implements IdentityClient {
         }
     }
 
-    async getOrCreateUserOnSession(session: Session): Promise<[AuthInfo, Session]> {
+    async getOrCreateUserOnSession(session: Session): Promise<[SessionToken, Session]> {
         const options = this._buildOptions(IdentityClientImpl._getOrCreateUserOnSessionOptions, session);
 
         let rawResponse: Response;
@@ -251,8 +251,8 @@ class IdentityClientImpl implements IdentityClient {
         if (rawResponse.ok) {
             try {
                 const jsonResponse = await rawResponse.json();
-                const sessionResponse = this._authInfoAndSessionResponseMarshaller.extract(jsonResponse);
-                return [sessionResponse.authInfo, sessionResponse.session];
+                const sessionResponse = this._sessionAndTokenResponseMarshaller.extract(jsonResponse);
+                return [sessionResponse.sessionToken, sessionResponse.session];
             } catch (e) {
                 throw new IdentityError(`Could not retrieve session '${e.toString()}'`);
             }
