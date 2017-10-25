@@ -2,6 +2,11 @@ import { AuthInfo } from './auth-info'
 import { PublicUser, Session } from './entities'
 
 
+export const SESSION_TOKEN_COOKIE_NAME: string = 'base63-sessiontoken';
+export const SESSION_TOKEN_HEADER_NAME: string = 'X-Base63-SessionToken';
+export const XSRF_TOKEN_HEADER_NAME: string = 'X-Base63-XsrfToken';
+
+
 export class IdentityError extends Error {
     constructor(message: string) {
         super(message);

@@ -44,9 +44,6 @@ export class Auth0AuthorizationCodeMarshaller extends StringMarshaller {
  * identifiers attached, but no two users will have the same one.
  */
 export class AuthInfo {
-    static readonly CookieName = 'neoncity-authinfo';
-    static readonly HeaderName = 'X-NeonCity-AuthInfo';
-
     /** An identifier for the session. Globally unique.. */
     @MarshalWith(UuidMarshaller)
     sessionId: string;

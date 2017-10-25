@@ -8,7 +8,7 @@ import { MarshalFrom } from 'raynor'
 import { Env, isLocal } from '@base63/common-js'
 
 import { AuthInfo } from '../auth-info'
-import { IdentityClient } from '../client'
+import { IdentityClient, SESSION_TOKEN_COOKIE_NAME, SESSION_TOKEN_HEADER_NAME } from '../client'
 import { RequestWithIdentity } from '../request'
 
 
@@ -71,13 +71,13 @@ export function newSessionMiddleware(
             let authInfoSerialized: string | null = null;
 
             // Try to retrieve any side-channel auth information in the request. This can appear
-            // either as a cookie with the name AuthInfo.CookieName, or as a header with the name
-            // AuthInfo.HeaderName.
-            if (sessionInfoSource == SessionInfoSource.Cookie && req.cookies[AuthInfo.CookieName] != undefined) {
-                authInfoSerialized = req.cookies[AuthInfo.CookieName];
-            } else if (sessionInfoSource == SessionInfoSource.Header && req.header(AuthInfo.HeaderName) != undefined) {
+            // either as a cookie with the name SESSION_TOKEN_COOKIE_NAME, or as a header with the name
+            // SESSION_TOKEN_HEADER_NAME.
+            if (sessionInfoSource == SessionInfoSource.Cookie && req.cookies[SESSION_TOKEN_COOKIE_NAME] != undefined) {
+                authInfoSerialized = req.cookies[SESSION_TOKEN_COOKIE_NAME];
+            } else if (sessionInfoSource == SessionInfoSource.Header && req.header(SESSION_TOKEN_HEADER_NAME) != undefined) {
                 try {
-                    authInfoSerialized = JSON.parse(req.header(AuthInfo.HeaderName) as string);
+                    authInfoSerialized = JSON.parse(req.header(SESSION_TOKEN_HEADER_NAME) as string);
                 } catch (e) {
                     authInfoSerialized = null;
                 }
@@ -197,7 +197,7 @@ export function setAuthInfoOnResponse(res: express.Response, authInfo: AuthInfo,
 
     switch (sessionInfoSource) {
         case SessionInfoSource.Cookie:
-            res.cookie(AuthInfo.CookieName, authInfoMarshaller.pack(authInfo), {
+            res.cookie(SESSION_TOKEN_COOKIE_NAME, authInfoMarshaller.pack(authInfo), {
                 httpOnly: true,
                 secure: !isLocal(env),
                 expires: moment.utc().add('days', 10000).toDate(),
@@ -205,7 +205,7 @@ export function setAuthInfoOnResponse(res: express.Response, authInfo: AuthInfo,
             });
             break;
         case SessionInfoSource.Header:
-            res.setHeader(AuthInfo.HeaderName, JSON.stringify(authInfoMarshaller.pack(authInfo)));
+            res.setHeader(SESSION_TOKEN_HEADER_NAME, JSON.stringify(authInfoMarshaller.pack(authInfo)));
             break;
     }
 }
@@ -214,10 +214,10 @@ export function setAuthInfoOnResponse(res: express.Response, authInfo: AuthInfo,
 export function clearAuthInfoOnResponse(res: express.Response, sessionInfoSource: SessionInfoSource, env: Env) {
     switch (sessionInfoSource) {
         case SessionInfoSource.Cookie:
-            res.clearCookie(AuthInfo.CookieName, { httpOnly: true, secure: !isLocal(env) });
+            res.clearCookie(SESSION_TOKEN_COOKIE_NAME, { httpOnly: true, secure: !isLocal(env) });
             break;
         case SessionInfoSource.Header:
-            res.removeHeader(AuthInfo.HeaderName);
+            res.removeHeader(SESSION_TOKEN_HEADER_NAME);
             break;
     }
 }

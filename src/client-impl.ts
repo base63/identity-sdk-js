@@ -8,7 +8,9 @@ import { AuthInfo } from './auth-info'
 import {
     IdentityClient,
     IdentityError,
-    UnauthorizedIdentityError
+    UnauthorizedIdentityError,
+    SESSION_TOKEN_HEADER_NAME,
+    XSRF_TOKEN_HEADER_NAME
 } from './client'
 import { PublicUser, Session } from './entities'
 import {
@@ -123,7 +125,7 @@ class IdentityClientImpl implements IdentityClient {
         }
 
         if (authInfo != null) {
-            this._defaultHeaders[AuthInfo.HeaderName] = JSON.stringify(this._authInfoMarshaller.pack(authInfo));
+            this._defaultHeaders[SESSION_TOKEN_HEADER_NAME] = JSON.stringify(this._authInfoMarshaller.pack(authInfo));
         }
 
         if (isLocal(this._env)) {
@@ -321,7 +323,7 @@ class IdentityClientImpl implements IdentityClient {
         const options = (Object as any).assign({ headers: this._defaultHeaders }, template);
 
         if (session != null) {
-            options.headers = (Object as any).assign(options.headers, { [Session.XsrfTokenHeaderName]: session.xsrfToken });
+            options.headers = (Object as any).assign(options.headers, { [XSRF_TOKEN_HEADER_NAME]: session.xsrfToken });
         }
 
         return options;
