@@ -10,10 +10,10 @@ import {
     Auth0AccessTokenMarshaller,
     Auth0AuthorizationCodeMarshaller,
     AuthInfo,
-} from './auth-info'
-import { Auth0Config, PostLoginRedirectInfo, PostLoginRedirectInfoMarshaller } from './auth-flow'
-import { IdentityClient } from './client'
-import { RequestWithIdentity } from './request'
+} from '../auth-info'
+import { Auth0Config, PostLoginRedirectInfo, PostLoginRedirectInfoMarshaller } from '../auth-flow'
+import { IdentityClient } from '../client'
+import { RequestWithIdentity } from '../request'
 import {
     newSessionMiddleware,
     SessionLevel,

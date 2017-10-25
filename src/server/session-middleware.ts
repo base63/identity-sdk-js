@@ -7,9 +7,9 @@ import { MarshalFrom } from 'raynor'
 
 import { Env, isLocal } from '@base63/common-js'
 
-import { AuthInfo } from './auth-info'
-import { IdentityClient } from './client'
-import { RequestWithIdentity } from './request'
+import { AuthInfo } from '../auth-info'
+import { IdentityClient } from '../client'
+import { RequestWithIdentity } from '../request'
 
 
 /**
