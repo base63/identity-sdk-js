@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>&quot;client-impl&quot; | identity-sdk-js</title>
+	<title>&quot;server/auth0-auth-flow-router&quot; | identity-sdk-js</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="_client_impl_.html">&quot;client-impl&quot;</a>
+					<a href="_server_auth0_auth_flow_router_.html">&quot;server/auth0-auth-flow-router&quot;</a>
 				</li>
 			</ul>
-			<h1>External module &quot;client-impl&quot;</h1>
+			<h1>External module &quot;server/auth0-auth-flow-router&quot;</h1>
 		</div>
 	</div>
 </header>
@@ -73,13 +73,21 @@
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported"><a href="../classes/_client_impl_.identityclientimpl.html" class="tsd-kind-icon">Identity<wbr>Client<wbr>Impl</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported"><a href="../classes/_server_auth0_auth_flow_router_.auth0authorizationcodemarshaller.html" class="tsd-kind-icon">Auth0<wbr>Authorization<wbr>Code<wbr>Marshaller</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported"><a href="../classes/_server_auth0_auth_flow_router_.auth0authorizeredirectinfo.html" class="tsd-kind-icon">Auth0<wbr>Authorize<wbr>Redirect<wbr>Info</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported"><a href="../classes/_server_auth0_auth_flow_router_.auth0tokenexchangeresult.html" class="tsd-kind-icon">Auth0<wbr>Token<wbr>Exchange<wbr>Result</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_client_impl_.html#newidentityclient" class="tsd-kind-icon">new<wbr>Identity<wbr>Client</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_server_auth0_auth_flow_router_.html#newauth0authflowrouter" class="tsd-kind-icon">new<wbr>Auth0<wbr>Auth<wbr>Flow<wbr>Router</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Object literals</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-object-literal tsd-parent-kind-external-module tsd-is-not-exported"><a href="_server_auth0_auth_flow_router_.html#authorize_options" class="tsd-kind-icon">AUTHORIZE_<wbr>OPTIONS</a></li>
 							</ul>
 						</section>
 					</div>
@@ -88,16 +96,16 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
-					<a name="newidentityclient" class="tsd-anchor"></a>
-					<h3>new<wbr>Identity<wbr>Client</h3>
+					<a name="newauth0authflowrouter" class="tsd-anchor"></a>
+					<h3>new<wbr>Auth0<wbr>Auth<wbr>Flow<wbr>Router</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
-						<li class="tsd-signature tsd-kind-icon">new<wbr>Identity<wbr>Client<span class="tsd-signature-symbol">(</span>env<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Env</span>, origin<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, identityServiceHost<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, webFetcher<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebFetcher</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a></li>
+						<li class="tsd-signature tsd-kind-icon">new<wbr>Auth0<wbr>Auth<wbr>Flow<wbr>Router<span class="tsd-signature-symbol">(</span>env<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Env</span>, auth0Config<span class="tsd-signature-symbol">: </span><a href="../classes/_auth0_.auth0config.html" class="tsd-signature-type">Auth0Config</a>, webFetcher<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebFetcher</span>, identityClient<span class="tsd-signature-symbol">: </span><a href="../interfaces/_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">express.Router</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/client-impl.ts#L23">client-impl.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/server/auth0-auth-flow-router.ts#L66">server/auth0-auth-flow-router.ts:66</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -106,18 +114,101 @@
 									<h5>env: <span class="tsd-signature-type">Env</span></h5>
 								</li>
 								<li>
-									<h5>origin: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>identityServiceHost: <span class="tsd-signature-type">string</span></h5>
+									<h5>auth0Config: <a href="../classes/_auth0_.auth0config.html" class="tsd-signature-type">Auth0Config</a></h5>
 								</li>
 								<li>
 									<h5>webFetcher: <span class="tsd-signature-type">WebFetcher</span></h5>
 								</li>
+								<li>
+									<h5>identityClient: <a href="../interfaces/_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a></h5>
+								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">express.Router</span></h4>
 						</li>
 					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+				<h2>Object literals</h2>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="authorize_options" class="tsd-anchor"></a>
+					<h3>AUTHORIZE_<wbr>OPTIONS</h3>
+					<div class="tsd-signature tsd-kind-icon">AUTHORIZE_<wbr>OPTIONS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/server/auth0-auth-flow-router.ts#L55">server/auth0-auth-flow-router.ts:55</a></li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="authorize_options.cache" class="tsd-anchor"></a>
+						<h3>cache</h3>
+						<div class="tsd-signature tsd-kind-icon">cache<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;no-cache&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/server/auth0-auth-flow-router.ts#L58">server/auth0-auth-flow-router.ts:58</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="authorize_options.method" class="tsd-anchor"></a>
+						<h3>method</h3>
+						<div class="tsd-signature tsd-kind-icon">method<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;POST&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/server/auth0-auth-flow-router.ts#L56">server/auth0-auth-flow-router.ts:56</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="authorize_options.mode" class="tsd-anchor"></a>
+						<h3>mode</h3>
+						<div class="tsd-signature tsd-kind-icon">mode<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;cors&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/server/auth0-auth-flow-router.ts#L57">server/auth0-auth-flow-router.ts:57</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="authorize_options.redirect" class="tsd-anchor"></a>
+						<h3>redirect</h3>
+						<div class="tsd-signature tsd-kind-icon">redirect<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;error&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/server/auth0-auth-flow-router.ts#L59">server/auth0-auth-flow-router.ts:59</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="authorize_options.referrer" class="tsd-anchor"></a>
+						<h3>referrer</h3>
+						<div class="tsd-signature tsd-kind-icon">referrer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;client&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/server/auth0-auth-flow-router.ts#L60">server/auth0-auth-flow-router.ts:60</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="authorize_options.headers" class="tsd-anchor"></a>
+						<h3>headers</h3>
+						<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/server/auth0-auth-flow-router.ts#L61">server/auth0-auth-flow-router.ts:61</a></li>
+							</ul>
+						</aside>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+							<a name="authorize_options.headers.content_type" class="tsd-anchor"></a>
+							<h3>Content-<wbr><wbr>Type</h3>
+							<div class="tsd-signature tsd-kind-icon">Content-<wbr><wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;application/json&quot;</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/server/auth0-auth-flow-router.ts#L62">server/auth0-auth-flow-router.ts:62</a></li>
+								</ul>
+							</aside>
+						</section>
+					</section>
 				</section>
 			</section>
 		</div>
@@ -136,7 +227,7 @@
 					<li class=" tsd-kind-external-module">
 						<a href="_client_.html">"client"</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-external-module">
 						<a href="_client_impl_.html">"client-<wbr>impl"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -157,7 +248,7 @@
 					<li class=" tsd-kind-external-module">
 						<a href="_request_.html">"request"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class="current tsd-kind-external-module">
 						<a href="_server_auth0_auth_flow_router_.html">"server/auth0-<wbr>auth-<wbr>flow-<wbr>router"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -174,10 +265,19 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../classes/_client_impl_.identityclientimpl.html" class="tsd-kind-icon">Identity<wbr>Client<wbr>Impl</a>
+						<a href="../classes/_server_auth0_auth_flow_router_.auth0authorizationcodemarshaller.html" class="tsd-kind-icon">Auth0<wbr>Authorization<wbr>Code<wbr>Marshaller</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../classes/_server_auth0_auth_flow_router_.auth0authorizeredirectinfo.html" class="tsd-kind-icon">Auth0<wbr>Authorize<wbr>Redirect<wbr>Info</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../classes/_server_auth0_auth_flow_router_.auth0tokenexchangeresult.html" class="tsd-kind-icon">Auth0<wbr>Token<wbr>Exchange<wbr>Result</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="_client_impl_.html#newidentityclient" class="tsd-kind-icon">new<wbr>Identity<wbr>Client</a>
+						<a href="_server_auth0_auth_flow_router_.html#newauth0authflowrouter" class="tsd-kind-icon">new<wbr>Auth0<wbr>Auth<wbr>Flow<wbr>Router</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_server_auth0_auth_flow_router_.html#authorize_options" class="tsd-kind-icon">AUTHORIZE_<wbr>OPTIONS</a>
 					</li>
 				</ul>
 			</nav>

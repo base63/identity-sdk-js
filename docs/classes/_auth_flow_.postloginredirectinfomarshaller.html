@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>XsrfTokenMarshaller | identity-sdk-js</title>
+	<title>PostLoginRedirectInfoMarshaller | identity-sdk-js</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,13 +56,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_entities_.html">&quot;entities&quot;</a>
+					<a href="../modules/_auth_flow_.html">&quot;auth-flow&quot;</a>
 				</li>
 				<li>
-					<a href="_entities_.xsrftokenmarshaller.html">XsrfTokenMarshaller</a>
+					<a href="_auth_flow_.postloginredirectinfomarshaller.html">PostLoginRedirectInfoMarshaller</a>
 				</li>
 			</ul>
-			<h1>Class XsrfTokenMarshaller</h1>
+			<h1>Class PostLoginRedirectInfoMarshaller</h1>
 		</div>
 	</div>
 </header>
@@ -73,10 +73,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="tsd-signature-type">StringMarshaller</span>
+						<span class="tsd-signature-type">BaseStringMarshaller</span><span class="tsd-signature-symbol">&lt;</span><a href="_auth_flow_.postloginredirectinfo.html" class="tsd-signature-type">PostLoginRedirectInfo</a><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">XsrfTokenMarshaller</span>
+								<span class="target">PostLoginRedirectInfoMarshaller</span>
 							</li>
 						</ul>
 					</li>
@@ -85,7 +85,7 @@
 			<section class="tsd-panel">
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><span class="tsd-signature-type">Marshaller</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<li><span class="tsd-signature-type">Marshaller</span><span class="tsd-signature-symbol">&lt;</span><a href="_auth_flow_.postloginredirectinfo.html" class="tsd-signature-type">PostLoginRedirectInfo</a><span class="tsd-signature-symbol">&gt;</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -95,13 +95,12 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="_entities_.xsrftokenmarshaller.html#build" class="tsd-kind-icon">build</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_entities_.xsrftokenmarshaller.html#extract" class="tsd-kind-icon">extract</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_entities_.xsrftokenmarshaller.html#filter" class="tsd-kind-icon">filter</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="_entities_.xsrftokenmarshaller.html#lower" class="tsd-kind-icon">lower</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_entities_.xsrftokenmarshaller.html#pack" class="tsd-kind-icon">pack</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="_entities_.xsrftokenmarshaller.html#raise" class="tsd-kind-icon">raise</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="_entities_.xsrftokenmarshaller.html#unbuild" class="tsd-kind-icon">unbuild</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_auth_flow_.postloginredirectinfomarshaller.html#build" class="tsd-kind-icon">build</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_auth_flow_.postloginredirectinfomarshaller.html#extract" class="tsd-kind-icon">extract</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="_auth_flow_.postloginredirectinfomarshaller.html#lower" class="tsd-kind-icon">lower</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_auth_flow_.postloginredirectinfomarshaller.html#pack" class="tsd-kind-icon">pack</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="_auth_flow_.postloginredirectinfomarshaller.html#raise" class="tsd-kind-icon">raise</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_auth_flow_.postloginredirectinfomarshaller.html#unbuild" class="tsd-kind-icon">unbuild</a></li>
 							</ul>
 						</section>
 					</div>
@@ -109,19 +108,18 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="build" class="tsd-anchor"></a>
 					<h3>build</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">build<span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">build<span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_auth_flow_.postloginredirectinfo.html" class="tsd-signature-type">PostLoginRedirectInfo</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from StringMarshaller.build</p>
 								<p>Overrides RaiseBuildFilterMarshaller.build</p>
 								<ul>
-									<li>Defined in /Users/Horia/WorkA/base63/identity-sdk-js/node_modules/raynor/string.d.ts:7</li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/auth-flow.ts#L32">auth-flow.ts:32</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -130,7 +128,7 @@
 									<h5>a: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="_auth_flow_.postloginredirectinfo.html" class="tsd-signature-type">PostLoginRedirectInfo</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -138,7 +136,7 @@
 					<a name="extract" class="tsd-anchor"></a>
 					<h3>extract</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">extract<span class="tsd-signature-symbol">(</span>raw<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						<li class="tsd-signature tsd-kind-icon">extract<span class="tsd-signature-symbol">(</span>raw<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_auth_flow_.postloginredirectinfo.html" class="tsd-signature-type">PostLoginRedirectInfo</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -154,30 +152,7 @@
 									<h5>raw: <span class="tsd-signature-type">any</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="filter" class="tsd-anchor"></a>
-					<h3>filter</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">filter<span class="tsd-signature-symbol">(</span>s<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/entities.ts#L27">entities.ts:27</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>s: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="_auth_flow_.postloginredirectinfo.html" class="tsd-signature-type">PostLoginRedirectInfo</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -210,7 +185,7 @@
 					<a name="pack" class="tsd-anchor"></a>
 					<h3>pack</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">pack<span class="tsd-signature-symbol">(</span>b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">pack<span class="tsd-signature-symbol">(</span>b<span class="tsd-signature-symbol">: </span><a href="_auth_flow_.postloginredirectinfo.html" class="tsd-signature-type">PostLoginRedirectInfo</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -223,7 +198,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>b: <span class="tsd-signature-type">string</span></h5>
+									<h5>b: <a href="_auth_flow_.postloginredirectinfo.html" class="tsd-signature-type">PostLoginRedirectInfo</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -255,25 +230,24 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="unbuild" class="tsd-anchor"></a>
 					<h3>unbuild</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">unbuild<span class="tsd-signature-symbol">(</span>b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">unbuild<span class="tsd-signature-symbol">(</span>redirectInfo<span class="tsd-signature-symbol">: </span><a href="_auth_flow_.postloginredirectinfo.html" class="tsd-signature-type">PostLoginRedirectInfo</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from StringMarshaller.unbuild</p>
 								<p>Overrides RaiseBuildFilterMarshaller.unbuild</p>
 								<ul>
-									<li>Defined in /Users/Horia/WorkA/base63/identity-sdk-js/node_modules/raynor/string.d.ts:8</li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/auth-flow.ts#L43">auth-flow.ts:43</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>b: <span class="tsd-signature-type">string</span></h5>
+									<h5>redirectInfo: <a href="_auth_flow_.postloginredirectinfo.html" class="tsd-signature-type">PostLoginRedirectInfo</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -288,7 +262,7 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class="current tsd-kind-external-module">
 						<a href="../modules/_auth_flow_.html">"auth-<wbr>flow"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -306,7 +280,7 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_dtos_.html">"dtos"</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_entities_.html">"entities"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -334,55 +308,34 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum tsd-parent-kind-external-module">
-						<a href="../enums/_entities_.role.html" class="tsd-kind-icon">Role</a>
-					</li>
-					<li class=" tsd-kind-enum tsd-parent-kind-external-module">
-						<a href="../enums/_entities_.sessionstate.html" class="tsd-kind-icon">Session<wbr>State</a>
-					</li>
-					<li class=" tsd-kind-enum tsd-parent-kind-external-module">
-						<a href="../enums/_entities_.userstate.html" class="tsd-kind-icon">User<wbr>State</a>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_auth_flow_.allowedroutesmarshaller.html" class="tsd-kind-icon">Allowed<wbr>Routes<wbr>Marshaller</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_entities_.privateuser.html" class="tsd-kind-icon">Private<wbr>User</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_entities_.publicuser.html" class="tsd-kind-icon">Public<wbr>User</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_entities_.session.html" class="tsd-kind-icon">Session</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_entities_.user.html" class="tsd-kind-icon">User</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_entities_.useridhashmarshaller.html" class="tsd-kind-icon">User<wbr>IdHash<wbr>Marshaller</a>
+						<a href="_auth_flow_.postloginredirectinfo.html" class="tsd-kind-icon">Post<wbr>Login<wbr>Redirect<wbr>Info</a>
 					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_entities_.xsrftokenmarshaller.html" class="tsd-kind-icon">Xsrf<wbr>Token<wbr>Marshaller</a>
+						<a href="_auth_flow_.postloginredirectinfomarshaller.html" class="tsd-kind-icon">Post<wbr>Login<wbr>Redirect<wbr>Info<wbr>Marshaller</a>
 						<ul>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="_entities_.xsrftokenmarshaller.html#build" class="tsd-kind-icon">build</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="_auth_flow_.postloginredirectinfomarshaller.html#build" class="tsd-kind-icon">build</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="_entities_.xsrftokenmarshaller.html#extract" class="tsd-kind-icon">extract</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_entities_.xsrftokenmarshaller.html#filter" class="tsd-kind-icon">filter</a>
+								<a href="_auth_flow_.postloginredirectinfomarshaller.html#extract" class="tsd-kind-icon">extract</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="_entities_.xsrftokenmarshaller.html#lower" class="tsd-kind-icon">lower</a>
+								<a href="_auth_flow_.postloginredirectinfomarshaller.html#lower" class="tsd-kind-icon">lower</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="_entities_.xsrftokenmarshaller.html#pack" class="tsd-kind-icon">pack</a>
+								<a href="_auth_flow_.postloginredirectinfomarshaller.html#pack" class="tsd-kind-icon">pack</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="_entities_.xsrftokenmarshaller.html#raise" class="tsd-kind-icon">raise</a>
+								<a href="_auth_flow_.postloginredirectinfomarshaller.html#raise" class="tsd-kind-icon">raise</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="_entities_.xsrftokenmarshaller.html#unbuild" class="tsd-kind-icon">unbuild</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="_auth_flow_.postloginredirectinfomarshaller.html#unbuild" class="tsd-kind-icon">unbuild</a>
 							</li>
 						</ul>
 					</li>

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>&quot;client-impl&quot; | identity-sdk-js</title>
+	<title>&quot;server/session-middleware&quot; | identity-sdk-js</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="_client_impl_.html">&quot;client-impl&quot;</a>
+					<a href="_server_session_middleware_.html">&quot;server/session-middleware&quot;</a>
 				</li>
 			</ul>
-			<h1>External module &quot;client-impl&quot;</h1>
+			<h1>External module &quot;server/session-middleware&quot;</h1>
 		</div>
 	</div>
 </header>
@@ -70,16 +70,19 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section tsd-is-not-exported">
-							<h3>Classes</h3>
+						<section class="tsd-index-section ">
+							<h3>Enumerations</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported"><a href="../classes/_client_impl_.identityclientimpl.html" class="tsd-kind-icon">Identity<wbr>Client<wbr>Impl</a></li>
+								<li class="tsd-kind-enum tsd-parent-kind-external-module"><a href="../enums/_server_session_middleware_.sessioninfosource.html" class="tsd-kind-icon">Session<wbr>Info<wbr>Source</a></li>
+								<li class="tsd-kind-enum tsd-parent-kind-external-module"><a href="../enums/_server_session_middleware_.sessionlevel.html" class="tsd-kind-icon">Session<wbr>Level</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_client_impl_.html#newidentityclient" class="tsd-kind-icon">new<wbr>Identity<wbr>Client</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_server_session_middleware_.html#clearsessiontokenonresponse" class="tsd-kind-icon">clear<wbr>Session<wbr>Token<wbr>OnResponse</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_server_session_middleware_.html#newsessionmiddleware" class="tsd-kind-icon">new<wbr>Session<wbr>Middleware</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_server_session_middleware_.html#setsessiontokenonresponse" class="tsd-kind-icon">set<wbr>Session<wbr>Token<wbr>OnResponse</a></li>
 							</ul>
 						</section>
 					</div>
@@ -88,34 +91,117 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
-					<a name="newidentityclient" class="tsd-anchor"></a>
-					<h3>new<wbr>Identity<wbr>Client</h3>
+					<a name="clearsessiontokenonresponse" class="tsd-anchor"></a>
+					<h3>clear<wbr>Session<wbr>Token<wbr>OnResponse</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
-						<li class="tsd-signature tsd-kind-icon">new<wbr>Identity<wbr>Client<span class="tsd-signature-symbol">(</span>env<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Env</span>, origin<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, identityServiceHost<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, webFetcher<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebFetcher</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a></li>
+						<li class="tsd-signature tsd-kind-icon">clear<wbr>Session<wbr>Token<wbr>OnResponse<span class="tsd-signature-symbol">(</span>res<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">express.Response</span>, sessionInfoSource<span class="tsd-signature-symbol">: </span><a href="../enums/_server_session_middleware_.sessioninfosource.html" class="tsd-signature-type">SessionInfoSource</a>, env<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Env</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/client-impl.ts#L23">client-impl.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/server/session-middleware.ts#L214">server/session-middleware.ts:214</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
+									<h5>res: <span class="tsd-signature-type">express.Response</span></h5>
+								</li>
+								<li>
+									<h5>sessionInfoSource: <a href="../enums/_server_session_middleware_.sessioninfosource.html" class="tsd-signature-type">SessionInfoSource</a></h5>
+								</li>
+								<li>
 									<h5>env: <span class="tsd-signature-type">Env</span></h5>
 								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="newsessionmiddleware" class="tsd-anchor"></a>
+					<h3>new<wbr>Session<wbr>Middleware</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">new<wbr>Session<wbr>Middleware<span class="tsd-signature-symbol">(</span>sessionLevel<span class="tsd-signature-symbol">: </span><a href="../enums/_server_session_middleware_.sessionlevel.html" class="tsd-signature-type">SessionLevel</a>, sessionInfoSource<span class="tsd-signature-symbol">: </span><a href="../enums/_server_session_middleware_.sessioninfosource.html" class="tsd-signature-type">SessionInfoSource</a>, env<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Env</span>, identityClient<span class="tsd-signature-symbol">: </span><a href="../interfaces/_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">express.RequestHandler</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/server/session-middleware.ts#L50">server/session-middleware.ts:50</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create a connect middleware which populates the incoming request&#39;s <a href="../interfaces/_request_.requestwithidentity.html#session">RequestWithIdentity.session</a> property
+										with a <a href="../classes/_entities_.session.html">Session</a> object. It does this by looking at either cookies or headers in the HTTP request, extracting
+										authentication information and using this to retrieve data about the session and potentially user from the identity
+									service. It also re-attaches the auth info to the response, as either a cookie or a header.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
 								<li>
-									<h5>origin: <span class="tsd-signature-type">string</span></h5>
+									<h5>sessionLevel: <a href="../enums/_server_session_middleware_.sessionlevel.html" class="tsd-signature-type">SessionLevel</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>how much of a session to expect to exist.</p>
+									</div>
 								</li>
 								<li>
-									<h5>identityServiceHost: <span class="tsd-signature-type">string</span></h5>
+									<h5>sessionInfoSource: <a href="../enums/_server_session_middleware_.sessioninfosource.html" class="tsd-signature-type">SessionInfoSource</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>where to extract the session from the request, and where to place the session info on
+										the response.</p>
+									</div>
 								</li>
 								<li>
-									<h5>webFetcher: <span class="tsd-signature-type">WebFetcher</span></h5>
+									<h5>env: <span class="tsd-signature-type">Env</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the environment the code is running in.</p>
+									</div>
+								</li>
+								<li>
+									<h5>identityClient: <a href="../interfaces/_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>an <a href="../interfaces/_client_.identityclient.html">IdentityClient</a> for communicating with the identity service.</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">express.RequestHandler</span></h4>
+							<p>A connect middleware of type {@link express.RequestHandler}.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="setsessiontokenonresponse" class="tsd-anchor"></a>
+					<h3>set<wbr>Session<wbr>Token<wbr>OnResponse</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Session<wbr>Token<wbr>OnResponse<span class="tsd-signature-symbol">(</span>res<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">express.Response</span>, sessionToken<span class="tsd-signature-symbol">: </span><a href="../classes/_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a>, sessionInfoSource<span class="tsd-signature-symbol">: </span><a href="../enums/_server_session_middleware_.sessioninfosource.html" class="tsd-signature-type">SessionInfoSource</a>, env<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Env</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/server/session-middleware.ts#L195">server/session-middleware.ts:195</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>res: <span class="tsd-signature-type">express.Response</span></h5>
+								</li>
+								<li>
+									<h5>sessionToken: <a href="../classes/_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a></h5>
+								</li>
+								<li>
+									<h5>sessionInfoSource: <a href="../enums/_server_session_middleware_.sessioninfosource.html" class="tsd-signature-type">SessionInfoSource</a></h5>
+								</li>
+								<li>
+									<h5>env: <span class="tsd-signature-type">Env</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -136,7 +222,7 @@
 					<li class=" tsd-kind-external-module">
 						<a href="_client_.html">"client"</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-external-module">
 						<a href="_client_impl_.html">"client-<wbr>impl"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -163,7 +249,7 @@
 					<li class=" tsd-kind-external-module">
 						<a href="_server_check_xsrf_token_middleware_.html">"server/check-<wbr>xsrf-<wbr>token-<wbr>middleware"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class="current tsd-kind-external-module">
 						<a href="_server_session_middleware_.html">"server/session-<wbr>middleware"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -173,11 +259,20 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../classes/_client_impl_.identityclientimpl.html" class="tsd-kind-icon">Identity<wbr>Client<wbr>Impl</a>
+					<li class=" tsd-kind-enum tsd-parent-kind-external-module">
+						<a href="../enums/_server_session_middleware_.sessioninfosource.html" class="tsd-kind-icon">Session<wbr>Info<wbr>Source</a>
+					</li>
+					<li class=" tsd-kind-enum tsd-parent-kind-external-module">
+						<a href="../enums/_server_session_middleware_.sessionlevel.html" class="tsd-kind-icon">Session<wbr>Level</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="_client_impl_.html#newidentityclient" class="tsd-kind-icon">new<wbr>Identity<wbr>Client</a>
+						<a href="_server_session_middleware_.html#clearsessiontokenonresponse" class="tsd-kind-icon">clear<wbr>Session<wbr>Token<wbr>OnResponse</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="_server_session_middleware_.html#newsessionmiddleware" class="tsd-kind-icon">new<wbr>Session<wbr>Middleware</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="_server_session_middleware_.html#setsessiontokenonresponse" class="tsd-kind-icon">set<wbr>Session<wbr>Token<wbr>OnResponse</a>
 					</li>
 				</ul>
 			</nav>

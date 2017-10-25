@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>SessionResponse | identity-sdk-js</title>
+	<title>PostLoginRedirectInfo | identity-sdk-js</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,13 +56,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_responses_.html">&quot;responses&quot;</a>
+					<a href="../modules/_auth_flow_.html">&quot;auth-flow&quot;</a>
 				</li>
 				<li>
-					<a href="_responses_.sessionresponse.html">SessionResponse</a>
+					<a href="_auth_flow_.postloginredirectinfo.html">PostLoginRedirectInfo</a>
 				</li>
 			</ul>
-			<h1>Class SessionResponse</h1>
+			<h1>Class PostLoginRedirectInfo</h1>
 		</div>
 	</div>
 </header>
@@ -73,7 +73,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">SessionResponse</span>
+						<span class="target">PostLoginRedirectInfo</span>
 					</li>
 				</ul>
 			</section>
@@ -82,23 +82,55 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_auth_flow_.postloginredirectinfo.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_responses_.sessionresponse.html#session" class="tsd-kind-icon">session</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_auth_flow_.postloginredirectinfo.html#path" class="tsd-kind-icon">path</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Post<wbr>Login<wbr>Redirect<wbr>Info<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_auth_flow_.postloginredirectinfo.html" class="tsd-signature-type">PostLoginRedirectInfo</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/auth-flow.ts#L21">auth-flow.ts:21</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>path: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_auth_flow_.postloginredirectinfo.html" class="tsd-signature-type">PostLoginRedirectInfo</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="session" class="tsd-anchor"></a>
-					<h3>session</h3>
-					<div class="tsd-signature tsd-kind-icon">session<span class="tsd-signature-symbol">:</span> <a href="_entities_.session.html" class="tsd-signature-type">Session</a></div>
+					<a name="path" class="tsd-anchor"></a>
+					<h3>path</h3>
+					<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/responses.ts#L18">responses.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/auth-flow.ts#L21">auth-flow.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -110,17 +142,23 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_auth_info_.html">"auth-<wbr>info"</a>
+					<li class="current tsd-kind-external-module">
+						<a href="../modules/_auth_flow_.html">"auth-<wbr>flow"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_check_xsrf_token_middleware_.html">"check-<wbr>xsrf-<wbr>token-<wbr>middleware"</a>
+						<a href="../modules/_auth0_.html">"auth0"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_client_.html">"client"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_client_impl_.html">"client-<wbr>impl"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_client_auth0_lock_.html">"client/auth0-<wbr>lock"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_dtos_.html">"dtos"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_entities_.html">"entities"</a>
@@ -132,35 +170,44 @@
 						<a href="../modules/_index_.html">"index"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_requests_.html">"requests"</a>
-					</li>
-					<li class="current tsd-kind-external-module">
-						<a href="../modules/_responses_.html">"responses"</a>
+						<a href="../modules/_request_.html">"request"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_session_middleware_.html">"session-<wbr>middleware"</a>
+						<a href="../modules/_server_auth0_auth_flow_router_.html">"server/auth0-<wbr>auth-<wbr>flow-<wbr>router"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_server_check_xsrf_token_middleware_.html">"server/check-<wbr>xsrf-<wbr>token-<wbr>middleware"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_server_session_middleware_.html">"server/session-<wbr>middleware"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_session_token_.html">"session-<wbr>token"</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_responses_.authinfoandsessionresponse.html" class="tsd-kind-icon">Auth<wbr>Info<wbr>And<wbr>Session<wbr>Response</a>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_auth_flow_.allowedroutesmarshaller.html" class="tsd-kind-icon">Allowed<wbr>Routes<wbr>Marshaller</a>
 					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_responses_.sessionresponse.html" class="tsd-kind-icon">Session<wbr>Response</a>
+						<a href="_auth_flow_.postloginredirectinfo.html" class="tsd-kind-icon">Post<wbr>Login<wbr>Redirect<wbr>Info</a>
 						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="_auth_flow_.postloginredirectinfo.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_responses_.sessionresponse.html#session" class="tsd-kind-icon">session</a>
+								<a href="_auth_flow_.postloginredirectinfo.html#path" class="tsd-kind-icon">path</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_responses_.usersinforesponse.html" class="tsd-kind-icon">Users<wbr>Info<wbr>Response</a>
+						<a href="_auth_flow_.postloginredirectinfomarshaller.html" class="tsd-kind-icon">Post<wbr>Login<wbr>Redirect<wbr>Info<wbr>Marshaller</a>
 					</li>
 				</ul>
 			</nav>

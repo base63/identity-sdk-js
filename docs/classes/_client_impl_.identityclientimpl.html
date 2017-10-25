@@ -115,13 +115,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Identity<wbr>Client<wbr>Impl<span class="tsd-signature-symbol">(</span>env<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Env</span>, origin<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, identityServiceHost<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, webFetcher<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebFetcher</span>, authInfoMarshaller<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Marshaller</span><span class="tsd-signature-symbol">&lt;</span><a href="_auth_info_.authinfo.html" class="tsd-signature-type">AuthInfo</a><span class="tsd-signature-symbol">&gt;</span>, authInfoAndSessionResponseMarshaller<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Marshaller</span><span class="tsd-signature-symbol">&lt;</span><a href="_responses_.authinfoandsessionresponse.html" class="tsd-signature-type">AuthInfoAndSessionResponse</a><span class="tsd-signature-symbol">&gt;</span>, sessionResponseMarshaller<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Marshaller</span><span class="tsd-signature-symbol">&lt;</span><a href="_responses_.sessionresponse.html" class="tsd-signature-type">SessionResponse</a><span class="tsd-signature-symbol">&gt;</span>, usersInfoResponseMarshaller<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Marshaller</span><span class="tsd-signature-symbol">&lt;</span><a href="_responses_.usersinforesponse.html" class="tsd-signature-type">UsersInfoResponse</a><span class="tsd-signature-symbol">&gt;</span>, authInfo<span class="tsd-signature-symbol">?: </span><a href="_auth_info_.authinfo.html" class="tsd-signature-type">AuthInfo</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_client_impl_.identityclientimpl.html" class="tsd-signature-type">IdentityClientImpl</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Identity<wbr>Client<wbr>Impl<span class="tsd-signature-symbol">(</span>env<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Env</span>, origin<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, identityServiceHost<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, webFetcher<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebFetcher</span>, sessionTokenMarshaller<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Marshaller</span><span class="tsd-signature-symbol">&lt;</span><a href="_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a><span class="tsd-signature-symbol">&gt;</span>, sessionAndTokenResponseMarshaler<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Marshaller</span><span class="tsd-signature-symbol">&lt;</span><a href="_dtos_.sessionandtokenresponse.html" class="tsd-signature-type">SessionAndTokenResponse</a><span class="tsd-signature-symbol">&gt;</span>, sessionResponseMarshaller<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Marshaller</span><span class="tsd-signature-symbol">&lt;</span><a href="_dtos_.sessionresponse.html" class="tsd-signature-type">SessionResponse</a><span class="tsd-signature-symbol">&gt;</span>, usersInfoResponseMarshaller<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Marshaller</span><span class="tsd-signature-symbol">&lt;</span><a href="_dtos_.usersinforesponse.html" class="tsd-signature-type">UsersInfoResponse</a><span class="tsd-signature-symbol">&gt;</span>, sessionToken<span class="tsd-signature-symbol">?: </span><a href="_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_client_impl_.identityclientimpl.html" class="tsd-signature-type">IdentityClientImpl</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/client-impl.ts#L98">client-impl.ts:98</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/client-impl.ts#L101">client-impl.ts:101</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -139,19 +139,19 @@
 									<h5>webFetcher: <span class="tsd-signature-type">WebFetcher</span></h5>
 								</li>
 								<li>
-									<h5>authInfoMarshaller: <span class="tsd-signature-type">Marshaller</span><span class="tsd-signature-symbol">&lt;</span><a href="_auth_info_.authinfo.html" class="tsd-signature-type">AuthInfo</a><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>sessionTokenMarshaller: <span class="tsd-signature-type">Marshaller</span><span class="tsd-signature-symbol">&lt;</span><a href="_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
-									<h5>authInfoAndSessionResponseMarshaller: <span class="tsd-signature-type">Marshaller</span><span class="tsd-signature-symbol">&lt;</span><a href="_responses_.authinfoandsessionresponse.html" class="tsd-signature-type">AuthInfoAndSessionResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>sessionAndTokenResponseMarshaler: <span class="tsd-signature-type">Marshaller</span><span class="tsd-signature-symbol">&lt;</span><a href="_dtos_.sessionandtokenresponse.html" class="tsd-signature-type">SessionAndTokenResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
-									<h5>sessionResponseMarshaller: <span class="tsd-signature-type">Marshaller</span><span class="tsd-signature-symbol">&lt;</span><a href="_responses_.sessionresponse.html" class="tsd-signature-type">SessionResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>sessionResponseMarshaller: <span class="tsd-signature-type">Marshaller</span><span class="tsd-signature-symbol">&lt;</span><a href="_dtos_.sessionresponse.html" class="tsd-signature-type">SessionResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
-									<h5>usersInfoResponseMarshaller: <span class="tsd-signature-type">Marshaller</span><span class="tsd-signature-symbol">&lt;</span><a href="_responses_.usersinforesponse.html" class="tsd-signature-type">UsersInfoResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>usersInfoResponseMarshaller: <span class="tsd-signature-type">Marshaller</span><span class="tsd-signature-symbol">&lt;</span><a href="_dtos_.usersinforesponse.html" class="tsd-signature-type">UsersInfoResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> authInfo: <a href="_auth_info_.authinfo.html" class="tsd-signature-type">AuthInfo</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> =&nbsp;null</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> sessionToken: <a href="_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> =&nbsp;null</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_client_impl_.identityclientimpl.html" class="tsd-signature-type">IdentityClientImpl</a></h4>
@@ -172,7 +172,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_client_.identityclient.html">IdentityClient</a>.<a href="../interfaces/_client_.identityclient.html#agreetocookiepolicyforsession">agreeToCookiePolicyForSession</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/client-impl.ts#L213">client-impl.ts:213</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/client-impl.ts#L216">client-impl.ts:216</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -196,7 +196,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_client_.identityclient.html">IdentityClient</a>.<a href="../interfaces/_client_.identityclient.html#expiresession">expireSession</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/client-impl.ts#L196">client-impl.ts:196</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/client-impl.ts#L199">client-impl.ts:199</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -213,17 +213,17 @@
 					<a name="getorcreatesession" class="tsd-anchor"></a>
 					<h3>get<wbr>OrCreate<wbr>Session</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>OrCreate<wbr>Session<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="_auth_info_.authinfo.html" class="tsd-signature-type">AuthInfo</a><span class="tsd-signature-symbol">, </span><a href="_entities_.session.html" class="tsd-signature-type">Session</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>OrCreate<wbr>Session<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a><span class="tsd-signature-symbol">, </span><a href="_entities_.session.html" class="tsd-signature-type">Session</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_client_.identityclient.html">IdentityClient</a>.<a href="../interfaces/_client_.identityclient.html#getorcreatesession">getOrCreateSession</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/client-impl.ts#L148">client-impl.ts:148</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/client-impl.ts#L151">client-impl.ts:151</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="_auth_info_.authinfo.html" class="tsd-signature-type">AuthInfo</a><span class="tsd-signature-symbol">, </span><a href="_entities_.session.html" class="tsd-signature-type">Session</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a><span class="tsd-signature-symbol">, </span><a href="_entities_.session.html" class="tsd-signature-type">Session</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -231,14 +231,14 @@
 					<a name="getorcreateuseronsession" class="tsd-anchor"></a>
 					<h3>get<wbr>OrCreate<wbr>User<wbr>OnSession</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>OrCreate<wbr>User<wbr>OnSession<span class="tsd-signature-symbol">(</span>session<span class="tsd-signature-symbol">: </span><a href="_entities_.session.html" class="tsd-signature-type">Session</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="_auth_info_.authinfo.html" class="tsd-signature-type">AuthInfo</a><span class="tsd-signature-symbol">, </span><a href="_entities_.session.html" class="tsd-signature-type">Session</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>OrCreate<wbr>User<wbr>OnSession<span class="tsd-signature-symbol">(</span>session<span class="tsd-signature-symbol">: </span><a href="_entities_.session.html" class="tsd-signature-type">Session</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a><span class="tsd-signature-symbol">, </span><a href="_entities_.session.html" class="tsd-signature-type">Session</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_client_.identityclient.html">IdentityClient</a>.<a href="../interfaces/_client_.identityclient.html#getorcreateuseronsession">getOrCreateUserOnSession</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/client-impl.ts#L238">client-impl.ts:238</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/client-impl.ts#L241">client-impl.ts:241</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -247,7 +247,7 @@
 									<h5>session: <a href="_entities_.session.html" class="tsd-signature-type">Session</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="_auth_info_.authinfo.html" class="tsd-signature-type">AuthInfo</a><span class="tsd-signature-symbol">, </span><a href="_entities_.session.html" class="tsd-signature-type">Session</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a><span class="tsd-signature-symbol">, </span><a href="_entities_.session.html" class="tsd-signature-type">Session</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -262,7 +262,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_client_.identityclient.html">IdentityClient</a>.<a href="../interfaces/_client_.identityclient.html#getsession">getSession</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/client-impl.ts#L171">client-impl.ts:171</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/client-impl.ts#L174">client-impl.ts:174</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_entities_.session.html" class="tsd-signature-type">Session</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -280,7 +280,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_client_.identityclient.html">IdentityClient</a>.<a href="../interfaces/_client_.identityclient.html#getuseronsession">getUserOnSession</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/client-impl.ts#L263">client-impl.ts:263</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/client-impl.ts#L266">client-impl.ts:266</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_entities_.session.html" class="tsd-signature-type">Session</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -298,7 +298,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_client_.identityclient.html">IdentityClient</a>.<a href="../interfaces/_client_.identityclient.html#getusersinfo">getUsersInfo</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/client-impl.ts#L288">client-impl.ts:288</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/client-impl.ts#L291">client-impl.ts:291</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -315,20 +315,20 @@
 					<a name="withcontext" class="tsd-anchor"></a>
 					<h3>with<wbr>Context</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">with<wbr>Context<span class="tsd-signature-symbol">(</span>authInfo<span class="tsd-signature-symbol">: </span><a href="_auth_info_.authinfo.html" class="tsd-signature-type">AuthInfo</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Context<span class="tsd-signature-symbol">(</span>sessionToken<span class="tsd-signature-symbol">: </span><a href="_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_client_.identityclient.html">IdentityClient</a>.<a href="../interfaces/_client_.identityclient.html#withcontext">withContext</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/b49f19e/src/client-impl.ts#L135">client-impl.ts:135</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/client-impl.ts#L138">client-impl.ts:138</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>authInfo: <a href="_auth_info_.authinfo.html" class="tsd-signature-type">AuthInfo</a></h5>
+									<h5>sessionToken: <a href="_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a></h4>
@@ -344,16 +344,22 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_auth_info_.html">"auth-<wbr>info"</a>
+						<a href="../modules/_auth_flow_.html">"auth-<wbr>flow"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_check_xsrf_token_middleware_.html">"check-<wbr>xsrf-<wbr>token-<wbr>middleware"</a>
+						<a href="../modules/_auth0_.html">"auth0"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_client_.html">"client"</a>
 					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="../modules/_client_impl_.html">"client-<wbr>impl"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_client_auth0_lock_.html">"client/auth0-<wbr>lock"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_dtos_.html">"dtos"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_entities_.html">"entities"</a>
@@ -365,13 +371,19 @@
 						<a href="../modules/_index_.html">"index"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_requests_.html">"requests"</a>
+						<a href="../modules/_request_.html">"request"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_responses_.html">"responses"</a>
+						<a href="../modules/_server_auth0_auth_flow_router_.html">"server/auth0-<wbr>auth-<wbr>flow-<wbr>router"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_session_middleware_.html">"session-<wbr>middleware"</a>
+						<a href="../modules/_server_check_xsrf_token_middleware_.html">"server/check-<wbr>xsrf-<wbr>token-<wbr>middleware"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_server_session_middleware_.html">"server/session-<wbr>middleware"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_session_token_.html">"session-<wbr>token"</a>
 					</li>
 				</ul>
 			</nav>

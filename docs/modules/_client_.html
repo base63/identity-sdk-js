@@ -83,7 +83,48 @@
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/_client_.identityclient.html" class="tsd-kind-icon">Identity<wbr>Client</a></li>
 							</ul>
 						</section>
+						<section class="tsd-index-section ">
+							<h3>Variables</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable tsd-parent-kind-external-module"><a href="_client_.html#session_token_cookie_name" class="tsd-kind-icon">SESSION_<wbr>TOKEN_<wbr>COOKIE_<wbr>NAME</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module"><a href="_client_.html#session_token_header_name" class="tsd-kind-icon">SESSION_<wbr>TOKEN_<wbr>HEADER_<wbr>NAME</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module"><a href="_client_.html#xsrf_token_header_name" class="tsd-kind-icon">XSRF_<wbr>TOKEN_<wbr>HEADER_<wbr>NAME</a></li>
+							</ul>
+						</section>
 					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module">
+					<a name="session_token_cookie_name" class="tsd-anchor"></a>
+					<h3>SESSION_<wbr>TOKEN_<wbr>COOKIE_<wbr>NAME</h3>
+					<div class="tsd-signature tsd-kind-icon">SESSION_<wbr>TOKEN_<wbr>COOKIE_<wbr>NAME<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;base63-sessiontoken&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/client.ts#L5">client.ts:5</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module">
+					<a name="session_token_header_name" class="tsd-anchor"></a>
+					<h3>SESSION_<wbr>TOKEN_<wbr>HEADER_<wbr>NAME</h3>
+					<div class="tsd-signature tsd-kind-icon">SESSION_<wbr>TOKEN_<wbr>HEADER_<wbr>NAME<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;X-Base63-SessionToken&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/client.ts#L6">client.ts:6</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module">
+					<a name="xsrf_token_header_name" class="tsd-anchor"></a>
+					<h3>XSRF_<wbr>TOKEN_<wbr>HEADER_<wbr>NAME</h3>
+					<div class="tsd-signature tsd-kind-icon">XSRF_<wbr>TOKEN_<wbr>HEADER_<wbr>NAME<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;X-Base63-XsrfToken&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/dd9002e/src/client.ts#L7">client.ts:7</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 		</div>
@@ -94,16 +135,22 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_auth_info_.html">"auth-<wbr>info"</a>
+						<a href="_auth_flow_.html">"auth-<wbr>flow"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_check_xsrf_token_middleware_.html">"check-<wbr>xsrf-<wbr>token-<wbr>middleware"</a>
+						<a href="_auth0_.html">"auth0"</a>
 					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="_client_.html">"client"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="_client_impl_.html">"client-<wbr>impl"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_client_auth0_lock_.html">"client/auth0-<wbr>lock"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_dtos_.html">"dtos"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="_entities_.html">"entities"</a>
@@ -115,13 +162,19 @@
 						<a href="_index_.html">"index"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_requests_.html">"requests"</a>
+						<a href="_request_.html">"request"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_responses_.html">"responses"</a>
+						<a href="_server_auth0_auth_flow_router_.html">"server/auth0-<wbr>auth-<wbr>flow-<wbr>router"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_session_middleware_.html">"session-<wbr>middleware"</a>
+						<a href="_server_check_xsrf_token_middleware_.html">"server/check-<wbr>xsrf-<wbr>token-<wbr>middleware"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_server_session_middleware_.html">"server/session-<wbr>middleware"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_session_token_.html">"session-<wbr>token"</a>
 					</li>
 				</ul>
 			</nav>
@@ -135,6 +188,15 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/_client_.identityclient.html" class="tsd-kind-icon">Identity<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module">
+						<a href="_client_.html#session_token_cookie_name" class="tsd-kind-icon">SESSION_<wbr>TOKEN_<wbr>COOKIE_<wbr>NAME</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module">
+						<a href="_client_.html#session_token_header_name" class="tsd-kind-icon">SESSION_<wbr>TOKEN_<wbr>HEADER_<wbr>NAME</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module">
+						<a href="_client_.html#xsrf_token_header_name" class="tsd-kind-icon">XSRF_<wbr>TOKEN_<wbr>HEADER_<wbr>NAME</a>
 					</li>
 				</ul>
 			</nav>
