@@ -23,7 +23,7 @@ import {
 } from '../session-token'
 
 
-export class Auth0AuthorizeRedirectInfo {
+class Auth0AuthorizeRedirectInfo {
     @MarshalWith(OptionalOf(Auth0AuthorizationCodeMarshaller), 'code')
     authorizationCode: string | null;
 
@@ -32,7 +32,7 @@ export class Auth0AuthorizeRedirectInfo {
 }
 
 
-export class Auth0TokenExchangeResult {
+class Auth0TokenExchangeResult {
     @MarshalWith(Auth0AccessTokenMarshaller, 'access_token')
     accessToken: string;
 }
