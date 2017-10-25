@@ -1,42 +1,10 @@
-/** Defines the {@link AuthInfo} class as well as marshallers for various Auth0 types. */
+/** Defines the {@link SessionToken} class as well as marshallers for various Auth0 types. */
 
 /** Imports. Also so typedoc works correctly. */
 
-import { ExtractError, MarshalWith, OptionalOf, StringMarshaller, UuidMarshaller } from 'raynor'
+import { MarshalWith, OptionalOf, UuidMarshaller } from 'raynor'
 
-
-export class Auth0AccessTokenMarshaller extends StringMarshaller {
-    private static readonly _alnumRegExp: RegExp = new RegExp('^[0-9a-zA-Z_-]+$');
-
-    filter(s: string): string {
-        if (s.length == 0) {
-            throw new ExtractError('Expected a string to be non-empty');
-        }
-
-        if (!Auth0AccessTokenMarshaller._alnumRegExp.test(s)) {
-            throw new ExtractError('Should only contain alphanumerics');
-        }
-
-        return s;
-    }
-}
-
-
-export class Auth0AuthorizationCodeMarshaller extends StringMarshaller {
-    private static readonly _alnumRegExp: RegExp = new RegExp('^[0-9a-zA-Z_-]+$');
-
-    filter(s: string): string {
-        if (s.length == 0) {
-            throw new ExtractError('Expected a string to be non-empty');
-        }
-
-        if (!Auth0AuthorizationCodeMarshaller._alnumRegExp.test(s)) {
-            throw new ExtractError('Should only contain alphanumerics');
-        }
-
-        return s;
-    }
-}
+import { Auth0AccessTokenMarshaller } from './auth0'
 
 
 /**

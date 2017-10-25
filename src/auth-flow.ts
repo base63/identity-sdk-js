@@ -2,13 +2,6 @@ import * as r from 'raynor'
 import { ExtractError, MarshalFrom, MarshalWith } from 'raynor'
 import * as serializeJavascript from 'serialize-javascript'
 
-export class Auth0Config {
-    clientId: string;
-    clientSecret: string;
-    domain: string;
-    callbackUri: string;
-}
-
 
 class AllowedRoutesMarshaller extends r.AbsolutePathMarshaller {
     filter(path: string): string {
