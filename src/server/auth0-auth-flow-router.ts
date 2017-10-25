@@ -63,15 +63,15 @@ const AUTHORIZE_OPTIONS = {
     }
 };
 
-export function newAuthFlowRouter(env: Env, auth0Config: Auth0Config, webFetcher: WebFetcher, identityClient: IdentityClient): express.Router {
+export function newAuth0AuthFlowRouter(env: Env, auth0Config: Auth0Config, webFetcher: WebFetcher, identityClient: IdentityClient): express.Router {
     const auth0TokenExchangeResultMarshaller = new (MarshalFrom(Auth0TokenExchangeResult))();
     const auth0AuthorizeRedirectInfoMarshaller = new (MarshalFrom(Auth0AuthorizeRedirectInfo))();
 
-    const authFlowRouter = express.Router();
+    const router = express.Router();
 
-    authFlowRouter.use(newSessionMiddleware(SessionLevel.Session, SessionInfoSource.Cookie, env, identityClient))
+    router.use(newSessionMiddleware(SessionLevel.Session, SessionInfoSource.Cookie, env, identityClient))
 
-    authFlowRouter.get('/login', wrap(async (req: RequestWithIdentity, res: express.Response) => {
+    router.get('/login', wrap(async (req: RequestWithIdentity, res: express.Response) => {
         let redirectInfo: Auth0AuthorizeRedirectInfo | null = null;
         try {
             redirectInfo = auth0AuthorizeRedirectInfoMarshaller.extract(req.query);
@@ -140,7 +140,7 @@ export function newAuthFlowRouter(env: Env, auth0Config: Auth0Config, webFetcher
         res.redirect(redirectInfo.state.path);
     }));
 
-    authFlowRouter.get('/logout', wrap(async (req: RequestWithIdentity, res: express.Response) => {
+    router.get('/logout', wrap(async (req: RequestWithIdentity, res: express.Response) => {
         try {
             await identityClient.withContext(req.sessionToken as SessionToken).expireSession(req.session);
         } catch (e) {
@@ -155,5 +155,5 @@ export function newAuthFlowRouter(env: Env, auth0Config: Auth0Config, webFetcher
         res.redirect('/');
     }));
 
-    return authFlowRouter;
+    return router;
 }
