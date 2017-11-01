@@ -65,7 +65,15 @@
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
 				<h1 id="common-build-status-https-travis-ci-org-base63-identity-sdk-js-svg-branch-master-https-travis-ci-org-base63-identity-sdk-js-coverage-https-codecov-io-gh-base63-identity-sdk-js-branch-master-graph-badge-svg-https-codecov-io-gh-base63-identity-sdk-js-">Common <a href="https://travis-ci.org/base63/identity-sdk-js"><img src="https://travis-ci.org/base63/identity-sdk-js.svg?branch=master" alt="Build Status"></a> <a href="https://codecov.io/gh/base63/identity-sdk-js"><img src="https://codecov.io/gh/base63/identity-sdk-js/branch/master/graph/badge.svg" alt="Coverage"></a></h1>
-				<p>The SDK for the identity service.</p>
+				<p>The SDK for the identity service. This is meant to be used by both client side and server side code. Some bits are isomorphic and they are found in <code>/src</code> directly and are exported via <code>/src/index.ts</code> to users. Other bits are server or client specific, and can be found in <code>/src/server</code> and <code>/src/client</code>, respectively. Both have their own <code>index.ts</code> files which export what&#39;s needed. The idea is, of course for client code to only reference isomorphic and client code, and server code only isomorphic and server code.</p>
+				<p>The identity service provides five main functionalities:</p>
+				<ul>
+					<li>Representations for users and sessions for use by applications.</li>
+					<li>A client for interacting with the identity service, if the need arises.</li>
+					<li>The definition and implementation of the &quot;auth flow&quot; for users.</li>
+					<li>Integration with <a href="https://auth0.com/">auth0</a>. This is a meta-identity provider, abstracting Google/Facebook/Twitter/etc.</li>
+					<li>Utilities for other services to make use of the identity service, such as express middleware to ensure a session with a user exists.</li>
+				</ul>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -90,6 +98,9 @@
 						<a href="modules/_client_auth0_lock_.html">"client/auth0-<wbr>lock"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="modules/_client_index_.html">"client/index"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="modules/_dtos_.html">"dtos"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -109,6 +120,9 @@
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_server_check_xsrf_token_middleware_.html">"server/check-<wbr>xsrf-<wbr>token-<wbr>middleware"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_server_index_.html">"server/index"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_server_session_middleware_.html">"server/session-<wbr>middleware"</a>
