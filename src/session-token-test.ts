@@ -22,9 +22,15 @@ describe('SessionToken', () => {
 
     describe('serialization', () => {
         const Examples = [
-            [{sessionId: '01234567-0123-0123-0123-0123456789ab'}, new SessionToken('01234567-0123-0123-0123-0123456789ab')],
-            [{sessionId: '01234567-0123-0123-0123-0123456789ab', userToken: 'hello'}, new SessionToken('01234567-0123-0123-0123-0123456789ab', 'hello')]
+            [{ sessionId: '01234567-0123-0123-0123-0123456789ab' }, new SessionToken('01234567-0123-0123-0123-0123456789ab')],
+            [{ sessionId: '01234567-0123-0123-0123-0123456789ab', userToken: 'hello' }, new SessionToken('01234567-0123-0123-0123-0123456789ab', 'hello')]
         ];
+
+        const BadCases = [
+            [{ sessionId: '' }, 'Expected a uuid'],
+            [{ sessionId: '01234567-0123-0123-0123-0123456789ab', userToken: '' }, 'Expected a string to be non-empty'],
+            [{ sessionId: '01234567-0123-0123-0123-0123456789ab', userToken: '$$#1' }, 'Should only contain alphanumerics']
+        ]
 
         for (let [raw, token] of Examples) {
             it(`should extract ${JSON.stringify(raw)}`, () => {
@@ -41,6 +47,14 @@ describe('SessionToken', () => {
 
                 const packed = marshaller.pack(token as SessionToken);
                 expect(packed).to.eql(raw);
+            });
+        }
+
+        for (let [badCase, message] of BadCases) {
+            it(`should fail to extract ${JSON.stringify(badCase)}`, () => {
+                const marshaller = new (MarshalFrom(SessionToken))();
+
+                expect(() => marshaller.extract(badCase)).to.throw(message as string);
             });
         }
     });
