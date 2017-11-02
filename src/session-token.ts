@@ -5,6 +5,9 @@
 import { ExtractError, MarshalWith, OptionalOf, UuidMarshaller, StringMarshaller } from 'raynor'
 
 
+/**
+ * A marshaller for user ids. Currently only checks that the string is alphanumeric and dash.
+ */
 class UserIdMarshaller extends StringMarshaller {
     private static readonly _alnumRegExp: RegExp = new RegExp('^[0-9a-zA-Z_-]+$');
 
@@ -24,10 +27,11 @@ class UserIdMarshaller extends StringMarshaller {
 
 /**
  * That which identifies a particular user, in a session. A _real_ user might have several such
- * identifiers attached, but no two users will have the same one.
+ * identifiers attached, say, from different devices or different accounts in their browser.
+ * But no two users will share a session token.
  */
 export class SessionToken {
-    /** An identifier for the session. Globally unique. */
+    /** An identifier for the session. Globally unique and opaque. */
     @MarshalWith(UuidMarshaller)
     sessionId: string;
 

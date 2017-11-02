@@ -40,7 +40,7 @@
     "history": "=4.7.2",
     "http-status-codes": "=1.3.0",
     "moment": "=2.19.1",
-    "raynor": "0.9.7",
+    "raynor": "0.10.0",
     "require-ensure": "=1.0.2",
     "serialize-javascript": "=1.4.0"
   },
