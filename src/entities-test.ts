@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import 'mocha'
 
-import { UserIdHashMarshaller, Role, User, UserState } from './entities'
+import { UserIdHashMarshaller, PrivateUser, Role, User, UserState, Session, SessionState } from './entities'
 
 
 describe('User', () => {
@@ -48,6 +48,37 @@ describe('User', () => {
                 expect(tc.user.isAdmin()).to.eql(tc.isAdmin);
             });
         }
+    });
+});
+
+
+describe('Session', () => {
+    describe('hasUser', () => {
+        it('should return false when there is no user', () => {
+            const session = new Session();
+            session.state = SessionState.Active;
+            expect(session.hasUser()).to.be.false;
+        });
+
+        it('should return false when the state is correct but there is no user', () => {
+            const session = new Session();
+            session.state = SessionState.ActiveAndLinkedWithUser;
+            expect(session.hasUser()).to.be.false;
+        });
+
+        it('should return false when there is a user but the state is wrong', () => {
+            const session = new Session();
+            session.state = SessionState.Active;
+            session.user = new PrivateUser();
+            expect(session.hasUser()).to.be.false;
+        });
+
+        it('should return true when there is a user', () => {
+            const session = new Session();
+            session.state = SessionState.ActiveAndLinkedWithUser;
+            session.user = new PrivateUser();
+            expect(session.hasUser()).to.be.true;
+        });
     });
 });
 
