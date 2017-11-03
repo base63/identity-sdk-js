@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import 'mocha'
 
-import { UserIdHashMarshaller, PrivateUser, Role, User, UserState, Session, SessionState } from './entities'
+import { PrivateUser, Role, User, UserState, Session, SessionState } from './entities'
 
 
 describe('User', () => {
@@ -79,76 +79,5 @@ describe('Session', () => {
             session.user = new PrivateUser();
             expect(session.hasUser()).to.be.true;
         });
-    });
-});
-
-
-describe('UserIdHashMarshaller', () => {
-    const Hashes = [
-        '0000000000000000000000000000000000000000000000000000000000000000',
-        '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'
-    ];
-
-    const BadLengthHashes = [
-        '',
-        '0',
-        '000000000000000000000000000000000000000000000000000000000000000',
-        '00000000000000000000000000000000000000000000000000000000000000000'
-    ];
-
-    const BadContentHashes = [
-        ' 000000000000000000000000000000000000000000000000000000000000000',
-        '0123456789Abcdef0123456789Abcdef0123456789Abcdef0123456789Abcdef',
-        '                                                                '
-    ];
-
-    describe('extract', () => {
-        for (let hash of Hashes) {
-            it(`should parse "${hash}"`, () => {
-                const hashMarshaller = new UserIdHashMarshaller();
-
-                expect(hashMarshaller.extract(hash)).to.eql(hash);
-            });
-        }
-
-        for (let hash of BadLengthHashes) {
-            it(`should throw for bad-length "${hash}"`, () => {
-                const hashMarshaller = new UserIdHashMarshaller();
-
-                expect(() => hashMarshaller.extract(hash)).to.throw('Expected string to be 64 characters');
-            });
-        }
-
-        for (let hash of BadContentHashes) {
-            it(`should throw for bad-content "${hash}"`, () => {
-                const hashMarshaller = new UserIdHashMarshaller();
-
-                expect(() => hashMarshaller.extract(hash)).to.throw('Expected all hex characters');
-            });
-        }
-    });
-
-    describe('pack', () => {
-        for (let hash of Hashes) {
-            it(`should produce the same input for "${hash}"`, () => {
-                const hashMarshaller = new UserIdHashMarshaller();
-
-                expect(hashMarshaller.pack(hash)).to.eql(hash);
-            });
-        }
-    });
-
-    describe('extract and pack', () => {
-        for (let hash of Hashes) {
-            it(`should be opposites for "${hash}"`, () => {
-                const hashMarshaller = new UserIdHashMarshaller();
-
-                const raw = hash;
-                const extracted = hashMarshaller.extract(raw);
-                const packed = hashMarshaller.pack(extracted);
-
-                expect(packed).to.eql(raw);
-            });
-        }
     });
 });

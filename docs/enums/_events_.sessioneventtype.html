@@ -69,6 +69,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>The type of <a href="../classes/_events_.sessionevent.html">SessionEvent</a>.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -78,9 +85,9 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_events_.sessioneventtype.html#agreedtocookiepolicy" class="tsd-kind-icon">Agreed<wbr>ToCookie<wbr>Policy</a></li>
 								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_events_.sessioneventtype.html#created" class="tsd-kind-icon">Created</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_events_.sessioneventtype.html#expired" class="tsd-kind-icon">Expired</a></li>
 								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_events_.sessioneventtype.html#linkedwithuser" class="tsd-kind-icon">Linked<wbr>With<wbr>User</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_events_.sessioneventtype.html#unknonw" class="tsd-kind-icon">Unknonw</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_events_.sessioneventtype.html#removed" class="tsd-kind-icon">Removed</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_events_.sessioneventtype.html#unknown" class="tsd-kind-icon">Unknown</a></li>
 							</ul>
 						</section>
 					</div>
@@ -94,9 +101,14 @@
 					<div class="tsd-signature tsd-kind-icon">Agreed<wbr>ToCookie<wbr>Policy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;4</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/events.ts#L35">events.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/events.ts#L76">events.ts:76</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The user has agreed to our cookie policy.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
 					<a name="created" class="tsd-anchor"></a>
@@ -104,19 +116,14 @@
 					<div class="tsd-signature tsd-kind-icon">Created<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;1</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/events.ts#L32">events.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/events.ts#L67">events.ts:67</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="expired" class="tsd-anchor"></a>
-					<h3>Expired</h3>
-					<div class="tsd-signature tsd-kind-icon">Expired<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;3</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/events.ts#L34">events.ts:34</a></li>
-						</ul>
-					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A session was created.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
 					<a name="linkedwithuser" class="tsd-anchor"></a>
@@ -124,19 +131,45 @@
 					<div class="tsd-signature tsd-kind-icon">Linked<wbr>With<wbr>User<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;2</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/events.ts#L33">events.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/events.ts#L69">events.ts:69</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The session was linked with the user, because the user signed-in/up.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="unknonw" class="tsd-anchor"></a>
-					<h3>Unknonw</h3>
-					<div class="tsd-signature tsd-kind-icon">Unknonw<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;0</span></div>
+					<a name="removed" class="tsd-anchor"></a>
+					<h3>Removed</h3>
+					<div class="tsd-signature tsd-kind-icon">Removed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;3</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/events.ts#L31">events.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/events.ts#L74">events.ts:74</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The session has expired. Happens only when the user explicitly logs out or some admin action happens.
+							There&#39;s no expiration or anything like that for identity service sessions.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="unknown" class="tsd-anchor"></a>
+					<h3>Unknown</h3>
+					<div class="tsd-signature tsd-kind-icon">Unknown<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;0</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/events.ts#L65">events.ts:65</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>This should not be used. A default to get us alerted if it happens.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -154,9 +187,6 @@
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_client_.html">"client"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_client_impl_.html">"client-<wbr>impl"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_client_auth0_lock_.html">"client/auth0-<wbr>lock"</a>
@@ -210,13 +240,13 @@
 								<a href="_events_.sessioneventtype.html#created" class="tsd-kind-icon">Created</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="_events_.sessioneventtype.html#expired" class="tsd-kind-icon">Expired</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
 								<a href="_events_.sessioneventtype.html#linkedwithuser" class="tsd-kind-icon">Linked<wbr>With<wbr>User</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="_events_.sessioneventtype.html#unknonw" class="tsd-kind-icon">Unknonw</a>
+								<a href="_events_.sessioneventtype.html#removed" class="tsd-kind-icon">Removed</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="_events_.sessioneventtype.html#unknown" class="tsd-kind-icon">Unknown</a>
 							</li>
 						</ul>
 					</li>

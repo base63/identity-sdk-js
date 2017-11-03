@@ -1,6 +1,5 @@
 export * from './auth-flow'
 export * from './client'
-export * from './client-impl'
 export * from './dtos'
 export * from './entities'
 export * from './events'

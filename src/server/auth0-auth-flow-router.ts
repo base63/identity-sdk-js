@@ -142,7 +142,7 @@ export function newAuth0AuthFlowRouter(env: Env, auth0Config: Auth0Config, webFe
 
     router.get('/logout', wrap(async (req: RequestWithIdentity, res: express.Response) => {
         try {
-            await identityClient.withContext(req.sessionToken as SessionToken).expireSession(req.session);
+            await identityClient.withContext(req.sessionToken as SessionToken).removeSession(req.session);
         } catch (e) {
             req.log.error(e);
             req.errorLog.error(e);

@@ -6,9 +6,9 @@ import { ExtractError, MarshalWith, OptionalOf, UuidMarshaller, StringMarshaller
 
 
 /**
- * A marshaller for user ids. Currently only checks that the string is alphanumeric and dash.
+ * A marshaller for user tokens. Currently only checks that the string is alphanumeric and dash.
  */
-class UserIdMarshaller extends StringMarshaller {
+class UserTokenMarshaller extends StringMarshaller {
     private static readonly _alnumRegExp: RegExp = new RegExp('^[0-9a-zA-Z_-]+$');
 
     filter(s: string): string {
@@ -16,7 +16,7 @@ class UserIdMarshaller extends StringMarshaller {
             throw new ExtractError('Expected a string to be non-empty');
         }
 
-        if (!UserIdMarshaller._alnumRegExp.test(s)) {
+        if (!UserTokenMarshaller._alnumRegExp.test(s)) {
             throw new ExtractError('Should only contain alphanumerics');
         }
 
@@ -26,7 +26,7 @@ class UserIdMarshaller extends StringMarshaller {
 
 
 /**
- * That which identifies a particular user, in a session. A _real_ user might have several such
+ * That which identifies a particular {@link Session}. A _real_ user might have several such
  * identifiers attached, say, from different devices or different accounts in their browser.
  * But no two users will share a session token.
  */
@@ -39,7 +39,7 @@ export class SessionToken {
      * An externally provided access token. Used when making calls to those services to uniquely identify a user
      * Optional if user isn't authenticated.
      */
-    @MarshalWith(OptionalOf(UserIdMarshaller))
+    @MarshalWith(OptionalOf(UserTokenMarshaller))
     userToken: string | null;
 
     /**

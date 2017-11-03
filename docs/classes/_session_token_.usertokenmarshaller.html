@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>UserIdMarshaller | identity-sdk-js</title>
+	<title>UserTokenMarshaller | identity-sdk-js</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -59,10 +59,10 @@
 					<a href="../modules/_session_token_.html">&quot;session-token&quot;</a>
 				</li>
 				<li>
-					<a href="_session_token_.useridmarshaller.html">UserIdMarshaller</a>
+					<a href="_session_token_.usertokenmarshaller.html">UserTokenMarshaller</a>
 				</li>
 			</ul>
-			<h1>Class UserIdMarshaller</h1>
+			<h1>Class UserTokenMarshaller</h1>
 		</div>
 	</div>
 </header>
@@ -72,7 +72,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>A marshaller for user ids. Currently only checks that the string is alphanumeric and dash.</p>
+						<p>A marshaller for user tokens. Currently only checks that the string is alphanumeric and dash.</p>
 					</div>
 				</div>
 			</section>
@@ -83,7 +83,7 @@
 						<span class="tsd-signature-type">StringMarshaller</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">UserIdMarshaller</span>
+								<span class="target">UserTokenMarshaller</span>
 							</li>
 						</ul>
 					</li>
@@ -102,13 +102,13 @@
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported"><a href="_session_token_.useridmarshaller.html#build" class="tsd-kind-icon">build</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported"><a href="_session_token_.useridmarshaller.html#extract" class="tsd-kind-icon">extract</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-not-exported"><a href="_session_token_.useridmarshaller.html#filter" class="tsd-kind-icon">filter</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported"><a href="_session_token_.useridmarshaller.html#lower" class="tsd-kind-icon">lower</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported"><a href="_session_token_.useridmarshaller.html#pack" class="tsd-kind-icon">pack</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported"><a href="_session_token_.useridmarshaller.html#raise" class="tsd-kind-icon">raise</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported"><a href="_session_token_.useridmarshaller.html#unbuild" class="tsd-kind-icon">unbuild</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported"><a href="_session_token_.usertokenmarshaller.html#build" class="tsd-kind-icon">build</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported"><a href="_session_token_.usertokenmarshaller.html#extract" class="tsd-kind-icon">extract</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-not-exported"><a href="_session_token_.usertokenmarshaller.html#filter" class="tsd-kind-icon">filter</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported"><a href="_session_token_.usertokenmarshaller.html#lower" class="tsd-kind-icon">lower</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported"><a href="_session_token_.usertokenmarshaller.html#pack" class="tsd-kind-icon">pack</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported"><a href="_session_token_.usertokenmarshaller.html#raise" class="tsd-kind-icon">raise</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported"><a href="_session_token_.usertokenmarshaller.html#unbuild" class="tsd-kind-icon">unbuild</a></li>
 							</ul>
 						</section>
 					</div>
@@ -175,7 +175,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/session-token.ts#L14">session-token.ts:14</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/session-token.ts#L14">session-token.ts:14</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -305,9 +305,6 @@
 						<a href="../modules/_client_.html">"client"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_client_impl_.html">"client-<wbr>impl"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
 						<a href="../modules/_client_auth0_lock_.html">"client/auth0-<wbr>lock"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -353,28 +350,28 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="_session_token_.useridmarshaller.html" class="tsd-kind-icon">User<wbr>IdMarshaller</a>
+						<a href="_session_token_.usertokenmarshaller.html" class="tsd-kind-icon">User<wbr>Token<wbr>Marshaller</a>
 						<ul>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported">
-								<a href="_session_token_.useridmarshaller.html#build" class="tsd-kind-icon">build</a>
+								<a href="_session_token_.usertokenmarshaller.html#build" class="tsd-kind-icon">build</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported">
-								<a href="_session_token_.useridmarshaller.html#extract" class="tsd-kind-icon">extract</a>
+								<a href="_session_token_.usertokenmarshaller.html#extract" class="tsd-kind-icon">extract</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-								<a href="_session_token_.useridmarshaller.html#filter" class="tsd-kind-icon">filter</a>
+								<a href="_session_token_.usertokenmarshaller.html#filter" class="tsd-kind-icon">filter</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported">
-								<a href="_session_token_.useridmarshaller.html#lower" class="tsd-kind-icon">lower</a>
+								<a href="_session_token_.usertokenmarshaller.html#lower" class="tsd-kind-icon">lower</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported">
-								<a href="_session_token_.useridmarshaller.html#pack" class="tsd-kind-icon">pack</a>
+								<a href="_session_token_.usertokenmarshaller.html#pack" class="tsd-kind-icon">pack</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported">
-								<a href="_session_token_.useridmarshaller.html#raise" class="tsd-kind-icon">raise</a>
+								<a href="_session_token_.usertokenmarshaller.html#raise" class="tsd-kind-icon">raise</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported">
-								<a href="_session_token_.useridmarshaller.html#unbuild" class="tsd-kind-icon">unbuild</a>
+								<a href="_session_token_.usertokenmarshaller.html#unbuild" class="tsd-kind-icon">unbuild</a>
 							</li>
 						</ul>
 					</li>

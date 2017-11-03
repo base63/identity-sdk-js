@@ -66,6 +66,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Defines a client for the identity service.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -73,6 +80,7 @@
 						<section class="tsd-index-section ">
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported"><a href="../classes/_client_.identityclientimpl.html" class="tsd-kind-icon">Identity<wbr>Client<wbr>Impl</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/_client_.identityerror.html" class="tsd-kind-icon">Identity<wbr>Error</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/_client_.unauthorizedidentityerror.html" class="tsd-kind-icon">Unauthorized<wbr>Identity<wbr>Error</a></li>
 							</ul>
@@ -91,6 +99,12 @@
 								<li class="tsd-kind-variable tsd-parent-kind-external-module"><a href="_client_.html#xsrf_token_header_name" class="tsd-kind-icon">XSRF_<wbr>TOKEN_<wbr>HEADER_<wbr>NAME</a></li>
 							</ul>
 						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_client_.html#newidentityclient" class="tsd-kind-icon">new<wbr>Identity<wbr>Client</a></li>
+							</ul>
+						</section>
 					</div>
 				</section>
 			</section>
@@ -102,9 +116,14 @@
 					<div class="tsd-signature tsd-kind-icon">SESSION_<wbr>TOKEN_<wbr>COOKIE_<wbr>NAME<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;base63-sessiontoken&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/client.ts#L5">client.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/client.ts#L20">client.ts:20</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The name of the cookie which contains the session token for browser-&gt;server communication.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module">
 					<a name="session_token_header_name" class="tsd-anchor"></a>
@@ -112,9 +131,14 @@
 					<div class="tsd-signature tsd-kind-icon">SESSION_<wbr>TOKEN_<wbr>HEADER_<wbr>NAME<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;X-Base63-SessionToken&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/client.ts#L6">client.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/client.ts#L22">client.ts:22</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The name of the header which contains the session token for server-&gt;server communication.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module">
 					<a name="xsrf_token_header_name" class="tsd-anchor"></a>
@@ -122,9 +146,68 @@
 					<div class="tsd-signature tsd-kind-icon">XSRF_<wbr>TOKEN_<wbr>HEADER_<wbr>NAME<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;X-Base63-XsrfToken&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/client.ts#L7">client.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/client.ts#L24">client.ts:24</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The name of the header which contains the XSRF token.</p>
+						</div>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="newidentityclient" class="tsd-anchor"></a>
+					<h3>new<wbr>Identity<wbr>Client</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">new<wbr>Identity<wbr>Client<span class="tsd-signature-symbol">(</span>env<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Env</span>, origin<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, identityServiceHost<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, webFetcher<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebFetcher</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/client.ts#L130">client.ts:130</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create an <a href="../interfaces/_client_.identityclient.html">IdentityClient</a>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>env: <span class="tsd-signature-type">Env</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the {@link Env} the client is running in.</p>
+									</div>
+								</li>
+								<li>
+									<h5>origin: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin" class="external">origin</a>
+										to use for the requests originating from the client. Doesn&#39;t &quot;change&quot; things for browser work.</p>
+									</div>
+								</li>
+								<li>
+									<h5>identityServiceHost: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the hostname for the identity service servers.</p>
+									</div>
+								</li>
+								<li>
+									<h5>webFetcher: <span class="tsd-signature-type">WebFetcher</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>a {@link WebFetcher} to use to make requests.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a></h4>
+							<p>a new <a href="../interfaces/_client_.identityclient.html">IdentityClient</a>. On server there&#39;s no context, whereas on the browser it&#39;s implied.</p>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -142,9 +225,6 @@
 					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="_client_.html">"client"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_client_impl_.html">"client-<wbr>impl"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="_client_auth0_lock_.html">"client/auth0-<wbr>lock"</a>
@@ -186,6 +266,9 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../classes/_client_.identityclientimpl.html" class="tsd-kind-icon">Identity<wbr>Client<wbr>Impl</a>
+					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="../classes/_client_.identityerror.html" class="tsd-kind-icon">Identity<wbr>Error</a>
 					</li>
@@ -203,6 +286,9 @@
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module">
 						<a href="_client_.html#xsrf_token_header_name" class="tsd-kind-icon">XSRF_<wbr>TOKEN_<wbr>HEADER_<wbr>NAME</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="_client_.html#newidentityclient" class="tsd-kind-icon">new<wbr>Identity<wbr>Client</a>
 					</li>
 				</ul>
 			</nav>

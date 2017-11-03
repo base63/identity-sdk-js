@@ -69,6 +69,15 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Contains data about a session - a series of interactions of a user has with the application.
+							This is meant to be used both in client and server applications, as everything identifying is
+						stored in the <a href="_session_token_.sessiontoken.html">SessionToken</a>.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -109,9 +118,14 @@
 					<div class="tsd-signature tsd-kind-icon">agreed<wbr>ToCookie<wbr>Policy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/entities.ts#L120">entities.ts:120</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/entities.ts#L177">entities.ts:177</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether the user has agreed to the cookie policy.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="state" class="tsd-anchor"></a>
@@ -119,9 +133,14 @@
 					<div class="tsd-signature tsd-kind-icon">state<span class="tsd-signature-symbol">:</span> <a href="../enums/_entities_.sessionstate.html" class="tsd-signature-type">SessionState</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/entities.ts#L114">entities.ts:114</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/entities.ts#L166">entities.ts:166</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The current <a href="../enums/_entities_.sessionstate.html">SessionState</a> of the session.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="timecreated" class="tsd-anchor"></a>
@@ -129,9 +148,14 @@
 					<div class="tsd-signature tsd-kind-icon">time<wbr>Created<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Date</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/entities.ts#L126">entities.ts:126</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/entities.ts#L188">entities.ts:188</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The time in UTC when the session was created.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="timelastupdated" class="tsd-anchor"></a>
@@ -139,9 +163,14 @@
 					<div class="tsd-signature tsd-kind-icon">time<wbr>Last<wbr>Updated<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Date</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/entities.ts#L129">entities.ts:129</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/entities.ts#L192">entities.ts:192</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The time in UTC when the session was last updated.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="user" class="tsd-anchor"></a>
@@ -149,9 +178,15 @@
 					<div class="tsd-signature tsd-kind-icon">user<span class="tsd-signature-symbol">:</span> <a href="_entities_.privateuser.html" class="tsd-signature-type">PrivateUser</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/entities.ts#L123">entities.ts:123</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/entities.ts#L184">entities.ts:184</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An optional <a href="_entities_.privateuser.html">PrivateUser</a>. This will be non-null if the user has done the log-in or
+							sign-in flows.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="xsrftoken" class="tsd-anchor"></a>
@@ -159,9 +194,15 @@
 					<div class="tsd-signature tsd-kind-icon">xsrf<wbr>Token<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/entities.ts#L117">entities.ts:117</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/entities.ts#L173">entities.ts:173</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A token for use against XSRF attacks. The see <a href="../interfaces/_request_.requestwithidentity.html">RequestWithIdentity</a> for details about
+							how this is used.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -176,10 +217,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/entities.ts#L131">entities.ts:131</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/entities.ts#L198">entities.ts:198</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks whether the session has a user with an account or not.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>Whether the session has a user.</p>
 						</li>
 					</ul>
 				</section>
@@ -199,9 +246,6 @@
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_client_.html">"client"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_client_impl_.html">"client-<wbr>impl"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_client_auth0_lock_.html">"client/auth0-<wbr>lock"</a>
@@ -291,7 +335,7 @@
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="_entities_.user.html" class="tsd-kind-icon">User</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_entities_.useridhashmarshaller.html" class="tsd-kind-icon">User<wbr>IdHash<wbr>Marshaller</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">

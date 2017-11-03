@@ -69,6 +69,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>The state of the <a href="../classes/_entities_.session.html">Session</a>.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -78,7 +85,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_entities_.sessionstate.html#active" class="tsd-kind-icon">Active</a></li>
 								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_entities_.sessionstate.html#activeandlinkedwithuser" class="tsd-kind-icon">Active<wbr>And<wbr>Linked<wbr>With<wbr>User</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_entities_.sessionstate.html#expired" class="tsd-kind-icon">Expired</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_entities_.sessionstate.html#removed" class="tsd-kind-icon">Removed</a></li>
 								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_entities_.sessionstate.html#unknown" class="tsd-kind-icon">Unknown</a></li>
 							</ul>
 						</section>
@@ -93,9 +100,14 @@
 					<div class="tsd-signature tsd-kind-icon">Active<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;1</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/entities.ts#L103">entities.ts:103</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/entities.ts#L147">entities.ts:147</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The session is active and recent activity has been seen for it, but otherwise the user is unknown.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
 					<a name="activeandlinkedwithuser" class="tsd-anchor"></a>
@@ -103,19 +115,25 @@
 					<div class="tsd-signature tsd-kind-icon">Active<wbr>And<wbr>Linked<wbr>With<wbr>User<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;2</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/entities.ts#L105">entities.ts:105</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/entities.ts#L149">entities.ts:149</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="expired" class="tsd-anchor"></a>
-					<h3>Expired</h3>
-					<div class="tsd-signature tsd-kind-icon">Expired<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;3</span></div>
+					<a name="removed" class="tsd-anchor"></a>
+					<h3>Removed</h3>
+					<div class="tsd-signature tsd-kind-icon">Removed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;3</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/entities.ts#L108">entities.ts:108</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/entities.ts#L154">entities.ts:154</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The session has expired. This can happen because the user logs out, or because of some admin action
+							like resetting all the user&#39;s sessions when some strange activity has occurred.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
 					<a name="unknown" class="tsd-anchor"></a>
@@ -123,9 +141,14 @@
 					<div class="tsd-signature tsd-kind-icon">Unknown<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/entities.ts#L101">entities.ts:101</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/entities.ts#L145">entities.ts:145</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A default value which shouldn&#39;t be used.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -143,9 +166,6 @@
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_client_.html">"client"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_client_impl_.html">"client-<wbr>impl"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_client_auth0_lock_.html">"client/auth0-<wbr>lock"</a>
@@ -202,7 +222,7 @@
 								<a href="_entities_.sessionstate.html#activeandlinkedwithuser" class="tsd-kind-icon">Active<wbr>And<wbr>Linked<wbr>With<wbr>User</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="_entities_.sessionstate.html#expired" class="tsd-kind-icon">Expired</a>
+								<a href="_entities_.sessionstate.html#removed" class="tsd-kind-icon">Removed</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
 								<a href="_entities_.sessionstate.html#unknown" class="tsd-kind-icon">Unknown</a>
@@ -226,7 +246,7 @@
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="../classes/_entities_.user.html" class="tsd-kind-icon">User</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../classes/_entities_.useridhashmarshaller.html" class="tsd-kind-icon">User<wbr>IdHash<wbr>Marshaller</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">

@@ -69,6 +69,18 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>An interface for communicating with the identity service directly. Mostly, you&#39;re expected
+							to use the various middleware, but sometimes you need to speak with it directly (like when
+						agreeing to a cookie) and this is the way to do it.</p>
+					</div>
+					<p>Notice that in some context (such as the browser), the existence of a <a href="../classes/_session_token_.sessiontoken.html">SessionToken</a>
+						is implied and every operation is done relative to that session. In others, you need to
+					explicitly associate a token via <a href="_client_.identityclient.html#withcontext">IdentityClient.withContext</a>.</p>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -80,7 +92,7 @@
 			<section class="tsd-panel">
 				<h3>Implemented by</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../classes/_client_impl_.identityclientimpl.html" class="tsd-signature-type">IdentityClientImpl</a></li>
+					<li><a href="../classes/_client_.identityclientimpl.html" class="tsd-signature-type">IdentityClientImpl</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -91,12 +103,12 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_client_.identityclient.html#agreetocookiepolicyforsession" class="tsd-kind-icon">agree<wbr>ToCookie<wbr>Policy<wbr>For<wbr>Session</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_client_.identityclient.html#expiresession" class="tsd-kind-icon">expire<wbr>Session</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_client_.identityclient.html#getorcreatesession" class="tsd-kind-icon">get<wbr>OrCreate<wbr>Session</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_client_.identityclient.html#getorcreateuseronsession" class="tsd-kind-icon">get<wbr>OrCreate<wbr>User<wbr>OnSession</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_client_.identityclient.html#getsession" class="tsd-kind-icon">get<wbr>Session</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_client_.identityclient.html#getuseronsession" class="tsd-kind-icon">get<wbr>User<wbr>OnSession</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_client_.identityclient.html#getusersinfo" class="tsd-kind-icon">get<wbr>Users<wbr>Info</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_client_.identityclient.html#removesession" class="tsd-kind-icon">remove<wbr>Session</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_client_.identityclient.html#withcontext" class="tsd-kind-icon">with<wbr>Context</a></li>
 							</ul>
 						</section>
@@ -115,39 +127,31 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/client.ts#L32">client.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/client.ts#L92">client.ts:92</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Agree to the cookie policy for this session/user.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>throws</dt>
+									<dd><p>If there&#39;s a communication error throws an <a href="../classes/_client_.identityerror.html">IdentityError</a>. If the operation
+										isn&#39;t authorized (such as the token not having a session), throw a <a href="../classes/_client_.unauthorizedidentityerror.html">UnauthorizedIdentityError</a>.</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>session: <a href="../classes/_entities_.session.html" class="tsd-signature-type">Session</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>needed for the XSRF token.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/_entities_.session.html" class="tsd-signature-type">Session</a><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="expiresession" class="tsd-anchor"></a>
-					<h3>expire<wbr>Session</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">expire<wbr>Session<span class="tsd-signature-symbol">(</span>session<span class="tsd-signature-symbol">: </span><a href="../classes/_entities_.session.html" class="tsd-signature-type">Session</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/client.ts#L31">client.ts:31</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>session: <a href="../classes/_entities_.session.html" class="tsd-signature-type">Session</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>the new form of the <a href="../classes/_entities_.session.html">Session</a>.</p>
 						</li>
 					</ul>
 				</section>
@@ -161,10 +165,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/client.ts#L29">client.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/client.ts#L68">client.ts:68</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Retrieve a the session associated with the current token, or create a new one if there&#39;s no token.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>throws</dt>
+									<dd><p>If there&#39;s a communication error throws an <a href="../classes/_client_.identityerror.html">IdentityError</a>.</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../classes/_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a><span class="tsd-signature-symbol">, </span><a href="../classes/_entities_.session.html" class="tsd-signature-type">Session</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>A pair of associated <a href="../classes/_session_token_.sessiontoken.html">SessionToken</a> and <a href="../classes/_entities_.session.html">Session</a>.</p>
 						</li>
 					</ul>
 				</section>
@@ -178,16 +193,32 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/client.ts#L33">client.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/client.ts#L102">client.ts:102</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Retrieve the session with a user associated with the current token, or create one if there&#39;s no
+									user. The session must exist, and the token must contain the <a href="../classes/_session_token_.sessiontoken.html#usertoken">SessionToken.userToken</a>.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>throws</dt>
+									<dd><p>If there&#39;s a communication error throws an <a href="../classes/_client_.identityerror.html">IdentityError</a>. If the operation
+										isn&#39;t authorized (such as the token not having a session), throw a <a href="../classes/_client_.unauthorizedidentityerror.html">UnauthorizedIdentityError</a>.</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>session: <a href="../classes/_entities_.session.html" class="tsd-signature-type">Session</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>needed for the XSRF token.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../classes/_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a><span class="tsd-signature-symbol">, </span><a href="../classes/_entities_.session.html" class="tsd-signature-type">Session</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>A pair of associated <a href="../classes/_session_token_.sessiontoken.html">SessionToken</a> and <a href="../classes/_entities_.session.html">Session</a>.</p>
 						</li>
 					</ul>
 				</section>
@@ -201,10 +232,22 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/client.ts#L30">client.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/client.ts#L76">client.ts:76</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Retrieve a session associated with the current token.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>throws</dt>
+									<dd><p>If there&#39;s a communication error throws an <a href="../classes/_client_.identityerror.html">IdentityError</a>. If the operation
+										isn&#39;t authorized (such as the token not having a session), throw a <a href="../classes/_client_.unauthorizedidentityerror.html">UnauthorizedIdentityError</a>.</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/_entities_.session.html" class="tsd-signature-type">Session</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>The session associated with the current token.</p>
 						</li>
 					</ul>
 				</section>
@@ -218,10 +261,22 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/client.ts#L34">client.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/client.ts#L110">client.ts:110</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Retrieve a session associated with the current token, including the user.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>throws</dt>
+									<dd><p>If there&#39;s a communication error throws an <a href="../classes/_client_.identityerror.html">IdentityError</a>. If the operation
+										isn&#39;t authorized (such as the token not having a session), throw a <a href="../classes/_client_.unauthorizedidentityerror.html">UnauthorizedIdentityError</a>.</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/_entities_.session.html" class="tsd-signature-type">Session</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>The session associated with the current token, with the user.</p>
 						</li>
 					</ul>
 				</section>
@@ -235,9 +290,19 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/client.ts#L36">client.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/client.ts#L117">client.ts:117</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return information about all users.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>throws</dt>
+									<dd><p>If there&#39;s a communication error throws an <a href="../classes/_client_.identityerror.html">IdentityError</a>.</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -245,6 +310,43 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/_entities_.publicuser.html" class="tsd-signature-type">PublicUser</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>A list of <a href="../classes/_entities_.publicuser.html">PublicUser</a> information.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="removesession" class="tsd-anchor"></a>
+					<h3>remove<wbr>Session</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Session<span class="tsd-signature-symbol">(</span>session<span class="tsd-signature-symbol">: </span><a href="../classes/_entities_.session.html" class="tsd-signature-type">Session</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/client.ts#L83">client.ts:83</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Remove the session associated with the current token.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>throws</dt>
+									<dd><p>If there&#39;s a communication error throws an <a href="../classes/_client_.identityerror.html">IdentityError</a>.</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>session: <a href="../classes/_entities_.session.html" class="tsd-signature-type">Session</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>needed for the XSRF token.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -252,22 +354,32 @@
 					<a name="withcontext" class="tsd-anchor"></a>
 					<h3>with<wbr>Context</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">with<wbr>Context<span class="tsd-signature-symbol">(</span>authInfo<span class="tsd-signature-symbol">: </span><a href="../classes/_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Context<span class="tsd-signature-symbol">(</span>sessionToken<span class="tsd-signature-symbol">: </span><a href="../classes/_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/7685895/src/client.ts#L27">client.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/e8a31e6/src/client.ts#L61">client.ts:61</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Attach a given <a href="../classes/_session_token_.sessiontoken.html">SessionToken</a> to the client and return a new one which is restricted
+									to just the session identified by the token.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>authInfo: <a href="../classes/_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a></h5>
+									<h5>sessionToken: <a href="../classes/_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the session token to build a client for.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a></h4>
+							<p>a new client, restricted to just the session identified by the token.</p>
 						</li>
 					</ul>
 				</section>
@@ -287,9 +399,6 @@
 					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="../modules/_client_.html">"client"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_client_impl_.html">"client-<wbr>impl"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_client_auth0_lock_.html">"client/auth0-<wbr>lock"</a>
@@ -331,6 +440,9 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../classes/_client_.identityclientimpl.html" class="tsd-kind-icon">Identity<wbr>Client<wbr>Impl</a>
+					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="../classes/_client_.identityerror.html" class="tsd-kind-icon">Identity<wbr>Error</a>
 					</li>
@@ -344,9 +456,6 @@
 						<ul>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="_client_.identityclient.html#agreetocookiepolicyforsession" class="tsd-kind-icon">agree<wbr>ToCookie<wbr>Policy<wbr>For<wbr>Session</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="_client_.identityclient.html#expiresession" class="tsd-kind-icon">expire<wbr>Session</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="_client_.identityclient.html#getorcreatesession" class="tsd-kind-icon">get<wbr>OrCreate<wbr>Session</a>
@@ -364,6 +473,9 @@
 								<a href="_client_.identityclient.html#getusersinfo" class="tsd-kind-icon">get<wbr>Users<wbr>Info</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="_client_.identityclient.html#removesession" class="tsd-kind-icon">remove<wbr>Session</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="_client_.identityclient.html#withcontext" class="tsd-kind-icon">with<wbr>Context</a>
 							</li>
 						</ul>
@@ -378,6 +490,9 @@
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module">
 						<a href="../modules/_client_.html#xsrf_token_header_name" class="tsd-kind-icon">XSRF_<wbr>TOKEN_<wbr>HEADER_<wbr>NAME</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/_client_.html#newidentityclient" class="tsd-kind-icon">new<wbr>Identity<wbr>Client</a>
 					</li>
 				</ul>
 			</nav>

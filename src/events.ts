@@ -1,4 +1,7 @@
-/** Defines the various events for the entities of the identity type. */
+/**
+ * Defines the various events for the entities of the identity type. These types are meant to be
+ * serialized, so that influenced some choices (unkown values for enums).
+ */
 
 /** Imports. Also so typedoc works correctly. */
 import * as r from 'raynor'
