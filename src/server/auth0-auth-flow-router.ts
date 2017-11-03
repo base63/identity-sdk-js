@@ -106,7 +106,7 @@ export function newAuth0AuthFlowRouter(env: Env, auth0Config: Auth0Config, webFe
                 client_id: auth0Config.clientId,
                 client_secret: auth0Config.clientSecret,
                 code: redirectInfo.authorizationCode,
-                redirect_uri: auth0Config.callbackUri
+                redirect_uri: auth0Config.loginCallbackUri
             })
         });
 

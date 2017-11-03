@@ -33,7 +33,7 @@ export class Auth0Lock {
                     closable: canDismiss,
                     auth: {
                         redirect: true,
-                        redirectUrl: _this._auth0Config.callbackUri,
+                        redirectUrl: _this._auth0Config.loginCallbackUri,
                         responseType: 'code',
                         params: {
                             state: postLoginInfoSer
