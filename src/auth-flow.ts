@@ -1,3 +1,6 @@
+/** Common types relevant to the auth flow. */
+
+/** Imports. Also so typedoc works correctly. */
 import * as r from 'raynor'
 import { ExtractError, MarshalFrom, MarshalWith } from 'raynor'
 import * as serializeJavascript from 'serialize-javascript'
@@ -16,16 +19,33 @@ class AllowedRoutesMarshaller extends r.AbsolutePathMarshaller {
 }
 
 
+/**
+ * Information passed to the identity provider as part of the login flow, which it returns to us,
+ * as a means of maintaining state across the various requests and redirects.
+ */
 export class PostLoginRedirectInfo {
+    /**
+     * The path of the view the user was on when the auth flow began. Used so the application knows
+     * where to return to.
+     */
     @MarshalWith(AllowedRoutesMarshaller)
     path: string;
 
+    /**
+     * Construct a {@link PostLoginRedirectInfo}.
+     * @param path - The path of the view the user was on when the auth flow began.
+     */
     constructor(path: string) {
         this.path = path;
     }
 }
 
 
+/**
+ * A marshaller for {@link PostLoginRedirectInfo}. This is a bit more involved than a regular
+ * marshaller obtained via {@link MarshalFrom}, since the basic representation is that of a string.
+ * For deep lore reasons the basic representation is doubly URI encoded.
+ */
 export class PostLoginRedirectInfoMarshaller extends r.BaseStringMarshaller<PostLoginRedirectInfo> {
     private static readonly _objectMarshaller = new (MarshalFrom(PostLoginRedirectInfo))();
 
