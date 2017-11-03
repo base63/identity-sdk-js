@@ -34,7 +34,7 @@ export class UserEvent {
     id: number;
 
     /** The {@link UserEventType} of the event. */
-    @MarshalWith(MarshalEnum(UserEventType))
+    @MarshalWith(MarshalEnum(UserEventType, UserEventType.Unknown))
     type: UserEventType;
 
     /**
@@ -59,7 +59,7 @@ export class UserEvent {
  */
 export enum SessionEventType {
     /** This should not be used. A default to get us alerted if it happens. */
-    Unknonw = 0,
+    Unknown = 0,
     /** A session was created. */
     Created = 1,
     /** The session was linked with the user, because the user signed-in/up. */
@@ -82,7 +82,7 @@ export class SessionEvent {
     id: number;
 
     /** The {@link SessionEventType} of the event.*/
-    @MarshalWith(MarshalEnum(SessionEventType))
+    @MarshalWith(MarshalEnum(SessionEventType, SessionEventType.Unknown))
     type: SessionEventType;
 
     /**
