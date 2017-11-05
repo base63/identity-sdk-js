@@ -1,3 +1,6 @@
+/** Utilities for the UI parts of Auth0. */
+
+/** Imports. Also so typedoc works correctly. */
 import { History } from 'history'
 import 'require-ensure'
 
@@ -5,17 +8,34 @@ import { PostLoginRedirectInfo, PostLoginRedirectInfoMarshaller } from '../auth-
 import { Auth0Config } from '../auth0'
 
 
+/**
+ * A UI component which shows the login/signup screen via Auth0. The heavy lifting is done
+ * by Auth0, and this just does things our way.
+ */
 export class Auth0Lock {
     private readonly _postLoginRedirectInfoMarshaller: PostLoginRedirectInfoMarshaller;
     private readonly _history: History;
     private readonly _auth0Config: Auth0Config;
 
+    /**
+     * Construct a {@link Auth0Lock}.
+     * @param history - a {@link History} object for accessing the current location.
+     * @param auth0Config - the configuration for Auth0.
+     */
     constructor(history: History, auth0Config: Auth0Config) {
         this._postLoginRedirectInfoMarshaller = new PostLoginRedirectInfoMarshaller();
         this._history = history;
         this._auth0Config = auth0Config;
     }
 
+    /**
+     * Show the UI component which shows the login/signup screen via Auth0.
+     * @details This will load another chunk containing mostly the
+     * [Auth0 Lock]{@link https://auth0.com/lock} library and dependencies. The reason this is so
+     * is that the library itself is _very_ big, but it is only useful rarely (when somebody logs in
+     * or tries to signup).
+     * @param canDismiss - whether the UI component can be dismissed or not.
+     */
     showLock(canDismiss: boolean = true): void {
         var _this = this;
 

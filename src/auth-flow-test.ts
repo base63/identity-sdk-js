@@ -5,7 +5,7 @@ import { PostLoginRedirectInfo } from './auth-flow'
 
 
 describe('PostLoginRedirectInfo', () => {
-    it('is constructed properl', () => {
+    it('is constructed properly', () => {
         const info = new PostLoginRedirectInfo('/a/path');
         expect(info.path).to.eql('/a/path');
     });
