@@ -29,7 +29,8 @@ export class Auth0Lock {
     }
 
     /**
-     * Show the UI component which shows the login/signup screen via Auth0.
+     * Show the UI component which shows the login/signup screen via Auth0. This allows a user to
+     * login or signup, and triggers the authentication flow to start.
      * @details This will load another chunk containing mostly the
      * [Auth0 Lock]{@link https://auth0.com/lock} library and dependencies. The reason this is so
      * is that the library itself is _very_ big, but it is only useful rarely (when somebody logs in
