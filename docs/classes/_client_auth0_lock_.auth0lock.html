@@ -69,6 +69,14 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>A UI component which shows the login/signup screen via Auth0. The heavy lifting is done
+						by Auth0, and this just does things our way.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -108,16 +116,31 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/903ba4e/src/client/auth0-lock.ts#L11">client/auth0-lock.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/0e5a358/src/client/auth0-lock.ts#L18">client/auth0-lock.ts:18</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Construct a <a href="_client_auth0_lock_.auth0lock.html">Auth0Lock</a>.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>history: <span class="tsd-signature-type">History</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>a {@link History} object for accessing the current location.</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5>auth0Config: <a href="_auth0_.auth0config.html" class="tsd-signature-type">Auth0Config</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>the configuration for Auth0.</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_client_auth0_lock_.auth0lock.html" class="tsd-signature-type">Auth0Lock</a></h4>
@@ -137,13 +160,29 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/903ba4e/src/client/auth0-lock.ts#L19">client/auth0-lock.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/0e5a358/src/client/auth0-lock.ts#L39">client/auth0-lock.ts:39</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Show the UI component which shows the login/signup screen via Auth0.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>details</dt>
+									<dd><p>This will load another chunk containing mostly the
+											<a href="https://auth0.com/lock" class="external">Auth0 Lock</a> library and dependencies. The reason this is so
+											is that the library itself is <em>very</em> big, but it is only useful rarely (when somebody logs in
+										or tries to signup).</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> canDismiss: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;true</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>whether the UI component can be dismissed or not.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
