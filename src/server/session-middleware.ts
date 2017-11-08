@@ -1,3 +1,6 @@
+/** Defines the session middleware and some utilities for it. */
+
+/** Imports. Also so typedoc works correctly. */
 import { wrap } from 'async-middleware'
 import * as cookieParser from 'cookie-parser'
 import * as express from 'express'
@@ -192,7 +195,21 @@ export function newSessionMiddleware(
 }
 
 
-export function setSessionTokenOnResponse(res: express.Response, sessionToken: SessionToken, sessionInfoSource: SessionInfoSource, env: Env) {
+/**
+ * Attach the given {@link SessionToken} to the request. Depending on {@link sessionInfoSource},
+ * this means either setting a cookie to the serialized content of the token, or setting a header
+ * to the same value. The cookie is http only, secure in production, does not expire and has the
+ * sameSite attribute to protect against XSS attacks.
+ * @param res - the response to attach the info to.
+ * @param sessionToken - the token to attach to the request.
+ * @param sessionInfoSource - where to place the session info on.
+ * @param env - the environment this code is running in.
+ */
+export function setSessionTokenOnResponse(
+    res: express.Response,
+    sessionToken: SessionToken,
+    sessionInfoSource: SessionInfoSource,
+    env: Env): void {
     const sessionTokenMarshaller = new (MarshalFrom(SessionToken))();
 
     switch (sessionInfoSource) {
@@ -211,6 +228,13 @@ export function setSessionTokenOnResponse(res: express.Response, sessionToken: S
 }
 
 
+/**
+ * Remove the any {@link SessionToken} from the request. Depending on {@link sessionInfoSource},
+ * this means either clearing the cookie or the header from the response object.
+ * @param res - the response to clear the info from.
+ * @param sessionInfoSource - where to clear the session info from.
+ * @param env - the environment this code is running in.
+ */
 export function clearSessionTokenOnResponse(res: express.Response, sessionInfoSource: SessionInfoSource, env: Env) {
     switch (sessionInfoSource) {
         case SessionInfoSource.Cookie:
