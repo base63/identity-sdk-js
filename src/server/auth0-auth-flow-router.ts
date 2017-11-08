@@ -1,3 +1,6 @@
+/** Defines a router which implements the auth flow via [Auth0]{@link https://auth0.com}. */
+
+/** Imports. Also so typedoc works correctly. */
 import { wrap } from 'async-middleware'
 import * as express from 'express'
 import * as HttpStatus from 'http-status-codes'
@@ -80,6 +83,23 @@ const AUTHORIZE_OPTIONS = {
     }
 };
 
+
+/**
+ * Create a new router which takes care of the auth flow with [Auth0]{@link https://auth0.com} as
+ * an identity provider manager. This router is meant to be installed on a backend for frontend
+ * type service, as it is technically part of the "frontend". It won't display any page or anything,
+ * but just make changes to the identity service and redirect according to the configuration setup
+ * here. This is just the way authentication flows work on the web.
+ *
+ * @note The router has two paths exposed: /login and /logout. These are invoked by Auth0, via
+ *     redirection with specific parameters containing information about the signed in user.
+ * @param env - the environment in which the code is running.
+ * @param auth0Config - the configuration for Auth0.
+ * @param webFetcher - a fetcher object.
+ * @param identityClient - a client for the identity service.
+ * @return An express router instance which implement the auth flow for the identity service via
+ *     Auth0.
+ */
 export function newAuth0AuthFlowRouter(env: Env, auth0Config: Auth0Config, webFetcher: WebFetcher, identityClient: IdentityClient): express.Router {
     const auth0TokenExchangeResultMarshaller = new (MarshalFrom(Auth0TokenExchangeResult))();
     const auth0AuthorizeRedirectInfoMarshaller = new (MarshalFrom(Auth0AuthorizeRedirectInfo))();
