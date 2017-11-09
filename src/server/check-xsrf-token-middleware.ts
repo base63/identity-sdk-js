@@ -25,7 +25,7 @@ export function newCheckXsrfTokenMiddleware() {
             const xsrfToken = xsrfTokenMarshaller.extract(xsrfTokenRaw);
 
             if (xsrfToken != req.session.xsrfToken) {
-                req.log.warn('Mismatching XSRF token');
+                req.log.warn('Mismatched XSRF token');
                 res.status(HttpStatus.BAD_REQUEST);
                 res.end();
                 return;
