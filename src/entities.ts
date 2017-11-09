@@ -9,7 +9,7 @@ import { LanguageMarshaller } from '@base63/common-js'
 
 /** A marshaller for the XSRF tokens we use. They're basically 64 random characters. */
 export class XsrfTokenMarshaller extends r.StringMarshaller {
-    private static readonly _base64RegExp: RegExp = new RegExp('(?:[A-Za-z0-9+\/]{4})+');
+    private static readonly _base64RegExp: RegExp = new RegExp('^(?:[A-Za-z0-9+\/]{4})+$');
 
     filter(s: string): string {
         if (s.length != 64) {

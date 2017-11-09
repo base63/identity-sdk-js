@@ -1,7 +1,89 @@
 import { expect } from 'chai'
 import 'mocha'
 
-import { PrivateUser, Role, User, UserState, Session, SessionState } from './entities'
+import {
+    PrivateUser,
+    Role,
+    User,
+    UserState,
+    Session,
+    SessionState,
+    XsrfTokenMarshaller
+} from './entities'
+
+
+describe('XsrfTokenMarshaller', () => {
+    const XsrfTokens = [
+        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+        '0000000000000000000000000000000000000000000000000000000000000000',
+        '0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF',
+        '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'
+    ];
+
+    const BadLengthXsrfTokens = [
+        '',
+        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+    ];
+
+    const BadContentXsrfTokens = [
+        ',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,',
+        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA(',
+        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:',
+        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:AAAAAAAAAAAA'
+    ];
+
+    describe('extract', () => {
+        for (let xsrfToken of XsrfTokens) {
+            it(`should extract "${xsrfToken}"`, () => {
+                const xsrfTokenMarshaller = new XsrfTokenMarshaller();
+
+                expect(xsrfTokenMarshaller.extract(xsrfToken)).to.eql(xsrfToken);
+            });
+        }
+
+        for (let xsrfToken of BadLengthXsrfTokens) {
+            it(`should throw for "${xsrfToken}"`, () => {
+                const xsrfTokenMarshaller = new XsrfTokenMarshaller();
+
+                expect(() => xsrfTokenMarshaller.extract(xsrfToken)).to.throw('Expected string to be 64 characters');
+            });
+        }
+
+        for (let xsrfToken of BadContentXsrfTokens) {
+            it(`should throw for "${xsrfToken}"`, () => {
+                const xsrfTokenMarshaller = new XsrfTokenMarshaller();
+
+                expect(() => xsrfTokenMarshaller.extract(xsrfToken)).to.throw('Expected a base64 string');
+            });
+        }
+    });
+
+    describe('pack', () => {
+        for (let xsrfToken of XsrfTokens) {
+            it(`should produce the same input for "${xsrfToken}"`, () => {
+                const xsrfTokenMarshaller = new XsrfTokenMarshaller();
+
+                expect(xsrfTokenMarshaller.pack(xsrfToken)).to.eql(xsrfToken);
+            });
+        }
+
+    });
+
+    describe('extract and pack', () => {
+        for (let xsrfToken of XsrfTokens) {
+            it(`should be opposites for "${xsrfToken}"`, () => {
+                const xsrfTokenMarshaller = new XsrfTokenMarshaller();
+
+                const raw = xsrfToken;
+                const extracted = xsrfTokenMarshaller.extract(raw);
+                const packed = xsrfTokenMarshaller.pack(extracted);
+
+                expect(packed).to.eql(raw);
+            });
+        }
+    });
+});
 
 
 describe('User', () => {
