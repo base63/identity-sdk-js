@@ -22,16 +22,16 @@ export function newCheckXsrfTokenMiddleware() {
     return function(req: RequestWithIdentity, res: express.Response, next: express.NextFunction): any {
         try {
             const xsrfTokenRaw = req.header(XSRF_TOKEN_HEADER_NAME);
-            req.xsrfToken = xsrfTokenMarshaller.extract(xsrfTokenRaw);
+            const xsrfToken = xsrfTokenMarshaller.extract(xsrfTokenRaw);
+
+            if (xsrfToken != req.session.xsrfToken) {
+                req.log.warn('Mismatching XSRF token');
+                res.status(HttpStatus.BAD_REQUEST);
+                res.end();
+                return;
+            }
         } catch (e) {
             req.log.warn('Bad XSRF token');
-            res.status(HttpStatus.BAD_REQUEST);
-            res.end();
-            return;
-        }
-
-        if (req.xsrfToken != req.session.xsrfToken) {
-            req.log.warn('Mismatching XSRF token');
             res.status(HttpStatus.BAD_REQUEST);
             res.end();
             return;

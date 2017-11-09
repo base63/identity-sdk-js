@@ -22,10 +22,4 @@ export interface RequestWithIdentity extends Request {
      * The {@link Session} this request is part of. The session middleware is in charge of ensuring this exists.
      */
     session: Session;
-    /**
-     * A [xsrf]{@link https://en.wikipedia.org/wiki/Cross-site_request_forgery} token for the request. This is only
-     * present on requests which cause changes, whereas in read-only ones it is null. The xsrf middleware is in charge
-     * of enforcing this and making sure the received value is identical to the one in attached {@link Session}.
-     */
-    xsrfToken: string | null;
 }
