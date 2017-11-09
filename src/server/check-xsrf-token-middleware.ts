@@ -5,7 +5,7 @@ import * as express from 'express'
 import * as HttpStatus from 'http-status-codes'
 
 import { RequestWithIdentity } from '../request'
-import { Session, XsrfTokenMarshaller } from '../entities'
+import { XsrfTokenMarshaller } from '../entities'
 import { XSRF_TOKEN_HEADER_NAME } from '../client'
 
 
@@ -30,7 +30,7 @@ export function newCheckXsrfTokenMiddleware() {
             return;
         }
 
-        if (req.xsrfToken != (req.session as Session).xsrfToken) {
+        if (req.xsrfToken != req.session.xsrfToken) {
             req.log.warn('Mismatching XSRF token');
             res.status(HttpStatus.BAD_REQUEST);
             res.end();
