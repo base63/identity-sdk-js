@@ -8,7 +8,7 @@ import { ExtractError, MarshalWith, OptionalOf, UuidMarshaller, StringMarshaller
 /**
  * A marshaller for user tokens. Currently only checks that the string is alphanumeric and dash.
  */
-class UserTokenMarshaller extends StringMarshaller {
+export class UserTokenMarshaller extends StringMarshaller {
     private static readonly _alnumRegExp: RegExp = new RegExp('^[0-9a-zA-Z_-]+$');
 
     filter(s: string): string {
