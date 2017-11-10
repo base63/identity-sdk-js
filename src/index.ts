@@ -1,6 +1,20 @@
-export * from './client'
-export * from './dtos'
-export * from './entities'
-export * from './events'
-export * from './request'
-export * from './session-token'
+export {
+    IdentityError,
+    IdentityClient,
+    newIdentityClient,
+    UnauthorizedIdentityError
+} from './client'
+
+export {
+    PublicUser,
+    PrivateUser,
+    Role,
+    User,
+    UserState,
+    Session,
+    SessionState
+} from './entities'
+
+export {
+    RequestWithIdentity
+} from './request'

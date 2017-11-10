@@ -1,1 +1,3 @@
-export * from './auth0-lock'
+export {
+    Auth0Lock
+} from './auth0-lock'

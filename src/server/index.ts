@@ -1,3 +1,9 @@
-export * from './auth0-auth-flow-router'
-export * from './check-xsrf-token-middleware'
-export * from './session-middleware'
+export {
+    newAuth0AuthFlowRouter
+} from './auth0-auth-flow-router'
+export {
+    newCheckXsrfTokenMiddleware
+} from './check-xsrf-token-middleware'
+export {
+    newSessionMiddleware
+} from './session-middleware'
