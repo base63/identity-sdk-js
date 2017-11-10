@@ -5,10 +5,11 @@ import {
     PrivateUser,
     Role,
     User,
+    UserIdHashMarshaller,
     UserState,
     Session,
     SessionState,
-    XsrfTokenMarshaller
+    XsrfTokenMarshaller,
 } from './entities'
 
 
@@ -69,17 +70,62 @@ describe('XsrfTokenMarshaller', () => {
         }
 
     });
+});
 
-    describe('extract and pack', () => {
-        for (let xsrfToken of XsrfTokens) {
-            it(`should be opposites for "${xsrfToken}"`, () => {
-                const xsrfTokenMarshaller = new XsrfTokenMarshaller();
 
-                const raw = xsrfToken;
-                const extracted = xsrfTokenMarshaller.extract(raw);
-                const packed = xsrfTokenMarshaller.pack(extracted);
+describe('UserIdHashMarshaller', () => {
+    const UserIdHashes = [
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        '0000000000000000000000000000000000000000000000000000000000000000',
+        '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef',
+    ];
 
-                expect(packed).to.eql(raw);
+    const BadLengthUserIdHashes = [
+        '',
+        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+    ];
+
+    const BadContentUserIdHashes = [
+        ',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,',
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaA',
+        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA(',
+        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:',
+        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:AAAAAAAAAAAA'
+    ];
+
+    describe('extract', () => {
+        for (let userIdHash of UserIdHashes) {
+            it(`should extract "${userIdHash}"`, () => {
+                const userIdHashMarhaller = new UserIdHashMarshaller();
+
+                expect(userIdHashMarhaller.extract(userIdHash)).to.eql(userIdHash);
+            });
+        }
+
+        for (let userIdHash of BadLengthUserIdHashes) {
+            it(`should throw for "${userIdHash}"`, () => {
+                const userIdHashMarhaller = new UserIdHashMarshaller();
+
+                expect(() => userIdHashMarhaller.extract(userIdHash)).to.throw('Expected string to be 64 characters');
+            });
+        }
+
+        for (let userIdHash of BadContentUserIdHashes) {
+            it(`should throw for "${userIdHash}"`, () => {
+                const userIdHashMarhaller = new UserIdHashMarshaller();
+
+                expect(() => userIdHashMarhaller.extract(userIdHash)).to.throw('Expected all hex characters');
+            });
+        }
+    });
+
+    describe('pack', () => {
+        for (let userIdHash of UserIdHashes) {
+            it(`should produce the same input for "${userIdHash}"`, () => {
+                const userIdHashMarhaller = new UserIdHashMarshaller();
+
+                expect(userIdHashMarhaller.pack(userIdHash)).to.eql(userIdHash);
             });
         }
     });

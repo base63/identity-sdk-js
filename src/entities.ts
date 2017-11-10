@@ -25,6 +25,26 @@ export class XsrfTokenMarshaller extends r.StringMarshaller {
 }
 
 
+/**
+ * A marshaller for user id hashes. Checks that it is a base64 encoded 64 character string.
+ */
+export class UserIdHashMarshaller extends r.StringMarshaller {
+    private static readonly _hexRegExp: RegExp = new RegExp('^[0-9a-f]{64}$');
+
+    filter(s: string): string {
+        if (s.length != 64) {
+            throw new ExtractError('Expected string to be 64 characters');
+        }
+
+        if (!UserIdHashMarshaller._hexRegExp.test(s)) {
+            throw new ExtractError('Expected all hex characters');
+        }
+
+        return s;
+    }
+}
+
+
 /** The state a user can be in. */
 export enum UserState {
     /** This should not be used. A default to get us alerted if it happens. */
@@ -96,25 +116,6 @@ export class User {
  * views of the application which are accessible to anyone without special privileges.
  */
 export class PublicUser extends User {
-}
-
-/**
- * A marshaller for user id hashes. Checks that it is a base64 encoded 64 character string.
- */
-class UserIdHashMarshaller extends r.StringMarshaller {
-    private static readonly _hexRegExp: RegExp = new RegExp('^[0-9a-f]{64}$');
-
-    filter(s: string): string {
-        if (s.length != 64) {
-            throw new ExtractError('Expected string to be 64 characters');
-        }
-
-        if (!UserIdHashMarshaller._hexRegExp.test(s)) {
-            throw new ExtractError('Expected all hex characters');
-        }
-
-        return s;
-    }
 }
 
 /**

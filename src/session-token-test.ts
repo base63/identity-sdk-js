@@ -31,19 +31,19 @@ describe('UserTokenMarshaller', () => {
             });
         }
 
-        for (let emptyUserToken of EmptyUserTokens) {
-            it(`should throw for empty "${emptyUserToken}"`, () => {
+        for (let userToken of EmptyUserTokens) {
+            it(`should throw for empty "${userToken}"`, () => {
                 const userTokenMarhaller = new UserTokenMarshaller();
 
-                expect(() => userTokenMarhaller.extract(emptyUserToken)).to.throw('Expected a string to be non-empty');
+                expect(() => userTokenMarhaller.extract(userToken)).to.throw('Expected a string to be non-empty');
             });
         }
 
-        for (let badUserToken of BadUserTokens) {
-            it(`should throw for empty "${badUserToken}"`, () => {
+        for (let userToken of BadUserTokens) {
+            it(`should throw for empty "${userToken}"`, () => {
                 const userTokenMarhaller = new UserTokenMarshaller();
 
-                expect(() => userTokenMarhaller.extract(badUserToken)).to.throw('Should only contain alphanumerics');
+                expect(() => userTokenMarhaller.extract(userToken)).to.throw('Should only contain alphanumerics');
             });
         }
     });
