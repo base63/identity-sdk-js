@@ -5,7 +5,7 @@
 
 /** Imports. Also so typedoc works correctly. */
 import * as r from 'raynor'
-import { MarshalEnum, MarshalWith } from 'raynor'
+import { MarshalEnum, MarshalWith, TryInOrder } from 'raynor'
 
 
 /**
@@ -45,7 +45,7 @@ export class UserEvent {
      * If the event happens as the result of a "request", then the {@link Request.requestTime} should
      * be used.
      */
-    @MarshalWith(r.TimeMarshaller)
+    @MarshalWith(TryInOrder(r.DateFromTsMarshaller, r.DateMarshaller))
     timestamp: Date;
 
     /**
@@ -93,7 +93,7 @@ export class SessionEvent {
      * If the event happens as the result of a "request", then the {@link Request.requestTime} should
      * be used.
      */
-    @MarshalWith(r.TimeMarshaller)
+    @MarshalWith(TryInOrder(r.DateFromTsMarshaller, r.DateMarshaller))
     timestamp: Date;
 
     /**

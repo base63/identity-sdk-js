@@ -2,7 +2,7 @@
 
 /** Imports. Also so typedoc works correctly. */
 import * as r from 'raynor'
-import { ExtractError, OptionalOf, MarshalEnum, MarshalFrom, MarshalWith } from 'raynor'
+import { ExtractError, OptionalOf, MarshalEnum, MarshalFrom, MarshalWith, TryInOrder } from 'raynor'
 
 import { LanguageMarshaller } from '@base63/common-js'
 
@@ -94,11 +94,11 @@ export class User {
     language: string;
 
     /** The time the user joined us. */
-    @MarshalWith(r.TimeMarshaller)
+    @MarshalWith(TryInOrder(r.DateFromTsMarshaller, r.DateMarshaller))
     timeCreated: Date;
 
     /** The time the last update to the user was done. */
-    @MarshalWith(r.TimeMarshaller)
+    @MarshalWith(TryInOrder(r.DateFromTsMarshaller, r.DateMarshaller))
     timeLastUpdated: Date;
 
     /**
@@ -185,11 +185,11 @@ export class Session {
     user: PrivateUser | null;
 
     /** The time in UTC when the session was created. */
-    @MarshalWith(r.TimeMarshaller)
+    @MarshalWith(TryInOrder(r.DateFromTsMarshaller, r.DateMarshaller))
     timeCreated: Date;
 
     /** The time in UTC when the session was last updated. */
-    @MarshalWith(r.TimeMarshaller)
+    @MarshalWith(TryInOrder(r.DateFromTsMarshaller, r.DateMarshaller))
     timeLastUpdated: Date;
 
     /**
