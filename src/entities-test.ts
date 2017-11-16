@@ -208,4 +208,54 @@ describe('Session', () => {
             expect(session.hasUser()).to.be.true;
         });
     });
+
+    describe('getAgreedToCookiePolicy', () => {
+        it('should return false when the session has false and there is no user', () => {
+            const session = new Session();
+            session.agreedToCookiePolicy = false;
+            expect(session.getAgreedToCookiePolicy()).to.be.false;
+        });
+
+        it('should return true when the session has true and there is no user', () => {
+            const session = new Session();
+            session.agreedToCookiePolicy = true;
+            expect(session.getAgreedToCookiePolicy()).to.be.true;
+        });
+
+        it('should return false when the session is false and the user is false', () => {
+            const session = new Session();
+            session.agreedToCookiePolicy = false;
+            session.state = SessionState.ActiveAndLinkedWithUser;
+            session.user = new PrivateUser();
+            session.user.agreedToCookiePolicy = false;
+            expect(session.getAgreedToCookiePolicy()).to.be.false;
+        });
+
+        it('should return true when the session is false and the user is true', () => {
+            const session = new Session();
+            session.agreedToCookiePolicy = false;
+            session.state = SessionState.ActiveAndLinkedWithUser;
+            session.user = new PrivateUser();
+            session.user.agreedToCookiePolicy = true;
+            expect(session.getAgreedToCookiePolicy()).to.be.true;
+        });
+
+        it('should return false when the session is true and the user is false', () => {
+            const session = new Session();
+            session.agreedToCookiePolicy = true;
+            session.state = SessionState.ActiveAndLinkedWithUser;
+            session.user = new PrivateUser();
+            session.user.agreedToCookiePolicy = false;
+            expect(session.getAgreedToCookiePolicy()).to.be.false;
+        });
+
+        it('should return true when the session is true and the user is true', () => {
+            const session = new Session();
+            session.agreedToCookiePolicy = true;
+            session.state = SessionState.ActiveAndLinkedWithUser;
+            session.user = new PrivateUser();
+            session.user.agreedToCookiePolicy = true;
+            expect(session.getAgreedToCookiePolicy()).to.be.true;
+        });
+    });
 });

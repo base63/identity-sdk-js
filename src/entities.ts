@@ -199,4 +199,18 @@ export class Session {
     hasUser(): boolean {
         return this.state == SessionState.ActiveAndLinkedWithUser && this.user != null /* superflous */;
     }
+
+    /**
+     * Return a more correct value for whether the user has agreed to the cookie policy or not.
+     * This checks the {@link user} if it exists, otherwise it looks at the session value. The user
+     * value takes precedence.
+     * @return Whether the user has agreed to the cookie policy.
+     */
+    getAgreedToCookiePolicy(): boolean {
+        if (this.hasUser()) {
+            return (this.user as PrivateUser).agreedToCookiePolicy;
+        } else {
+            return this.agreedToCookiePolicy;
+        }
+    }
 }
