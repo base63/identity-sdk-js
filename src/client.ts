@@ -262,7 +262,7 @@ class IdentityClientImpl implements IdentityClient {
         try {
             rawResponse = await this._webFetcher.fetch(`${this._protocol}://${this._identityServiceHost}/session`, options);
         } catch (e) {
-            throw new IdentityError(`Could not create session - request failed because '${e.toString()}'`);
+            throw new IdentityError(`Request failed because '${e.toString()}'`);
         }
 
         if (rawResponse.ok) {
@@ -271,10 +271,10 @@ class IdentityClientImpl implements IdentityClient {
                 const sessionResponse = this._sessionAndTokenResponseMarshaller.extract(jsonResponse);
                 return [sessionResponse.sessionToken, sessionResponse.session];
             } catch (e) {
-                throw new IdentityError(`Could not retrieve session '${e.toString()}'`);
+                throw new IdentityError(`JSON decoding error because '${e.toString()}'`);
             }
         } else {
-            throw new IdentityError(`Could not retrieve session - service response ${rawResponse.status}`);
+            throw new IdentityError(`Service response ${rawResponse.status}`);
         }
     }
 
@@ -285,7 +285,7 @@ class IdentityClientImpl implements IdentityClient {
         try {
             rawResponse = await this._webFetcher.fetch(`${this._protocol}://${this._identityServiceHost}/session`, options);
         } catch (e) {
-            throw new IdentityError(`Could not create session - request failed because '${e.toString()}'`);
+            throw new IdentityError(`Request failed because '${e.toString()}'`);
         }
 
         if (rawResponse.ok) {
@@ -294,12 +294,12 @@ class IdentityClientImpl implements IdentityClient {
                 const sessionResponse = this._sessionResponseMarshaller.extract(jsonResponse);
                 return sessionResponse.session;
             } catch (e) {
-                throw new IdentityError(`Could not retrieve session '${e.toString()}'`);
+                throw new IdentityError(`JSON decoding error because '${e.toString()}'`);
             }
         } else if (rawResponse.status == HttpStatus.UNAUTHORIZED) {
             throw new UnauthorizedIdentityError('User is not authorized');
         } else {
-            throw new IdentityError(`Could not retrieve session - service response ${rawResponse.status}`);
+            throw new IdentityError(`Service response ${rawResponse.status}`);
         }
     }
 
@@ -310,13 +310,13 @@ class IdentityClientImpl implements IdentityClient {
         try {
             rawResponse = await this._webFetcher.fetch(`${this._protocol}://${this._identityServiceHost}/session`, options);
         } catch (e) {
-            throw new IdentityError(`Could not expire session - request failed because '${e.toString()}'`);
+            throw new IdentityError(`Request failed because '${e.toString()}'`);
         }
 
         if (rawResponse.ok) {
             // Do nothing
         } else {
-            throw new IdentityError(`Could not expire session - service response ${rawResponse.status}`);
+            throw new IdentityError(`Service response ${rawResponse.status}`);
         }
     }
 
@@ -327,7 +327,7 @@ class IdentityClientImpl implements IdentityClient {
         try {
             rawResponse = await this._webFetcher.fetch(`${this._protocol}://${this._identityServiceHost}/session/agree-to-cookie-policy`, options);
         } catch (e) {
-            throw new IdentityError(`Could not agree to cookie policy - request failed because '${e.toString()}'`);
+            throw new IdentityError(`Request failed because '${e.toString()}'`);
         }
 
         if (rawResponse.ok) {
@@ -336,12 +336,12 @@ class IdentityClientImpl implements IdentityClient {
                 const sessionResponse = this._sessionResponseMarshaller.extract(jsonResponse);
                 return sessionResponse.session;
             } catch (e) {
-                throw new IdentityError(`Could not agree to cookie policy '${e.toString()}'`);
+                throw new IdentityError(`JSON decoding error because '${e.toString()}'`);
             }
         } else if (rawResponse.status == HttpStatus.UNAUTHORIZED) {
             throw new UnauthorizedIdentityError('User is not authorized');
         } else {
-            throw new IdentityError(`Could not agree to cookie policy - service response ${rawResponse.status}`);
+            throw new IdentityError(`Service response ${rawResponse.status}`);
         }
     }
 
@@ -352,7 +352,7 @@ class IdentityClientImpl implements IdentityClient {
         try {
             rawResponse = await this._webFetcher.fetch(`${this._protocol}://${this._identityServiceHost}/user`, options);
         } catch (e) {
-            throw new IdentityError(`Could not create session - request failed because '${e.toString()}'`);
+            throw new IdentityError(`Request failed because '${e.toString()}'`);
         }
 
         if (rawResponse.ok) {
@@ -361,12 +361,12 @@ class IdentityClientImpl implements IdentityClient {
                 const sessionResponse = this._sessionAndTokenResponseMarshaller.extract(jsonResponse);
                 return [sessionResponse.sessionToken, sessionResponse.session];
             } catch (e) {
-                throw new IdentityError(`Could not retrieve session '${e.toString()}'`);
+                throw new IdentityError(`JSON decoding error because '${e.toString()}'`);
             }
         } else if (rawResponse.status == HttpStatus.UNAUTHORIZED) {
             throw new UnauthorizedIdentityError('User is not authorized');
         } else {
-            throw new IdentityError(`Could not retrieve session - service response ${rawResponse.status}`);
+            throw new IdentityError(`Service response ${rawResponse.status}`);
         }
     }
 
@@ -377,7 +377,7 @@ class IdentityClientImpl implements IdentityClient {
         try {
             rawResponse = await this._webFetcher.fetch(`${this._protocol}://${this._identityServiceHost}/user`, options);
         } catch (e) {
-            throw new IdentityError(`Could not retrieve user - request failed because '${e.toString()}'`);
+            throw new IdentityError(`Request failed because '${e.toString()}'`);
         }
 
         if (rawResponse.ok) {
@@ -386,12 +386,12 @@ class IdentityClientImpl implements IdentityClient {
                 const sessionResponse = this._sessionResponseMarshaller.extract(jsonResponse);
                 return sessionResponse.session;
             } catch (e) {
-                throw new IdentityError(`Could not retrieve session '${e.toString()}'`);
+                throw new IdentityError(`JSON decoding error '${e.toString()}'`);
             }
         } else if (rawResponse.status == HttpStatus.UNAUTHORIZED) {
             throw new UnauthorizedIdentityError('User is not authorized');
         } else {
-            throw new IdentityError(`Could not retrieve session - service response ${rawResponse.status}`);
+            throw new IdentityError(`Service response ${rawResponse.status}`);
         }
     }
 
@@ -410,7 +410,7 @@ class IdentityClientImpl implements IdentityClient {
             const encodedIds = encodeURIComponent(JSON.stringify(dedupedIds));
             rawResponse = await this._webFetcher.fetch(`${this._protocol}://${this._identityServiceHost}/users-info?ids=${encodedIds}`, options);
         } catch (e) {
-            throw new IdentityError(`Could not retrieve users - request failed because '${e.toString()}'`);
+            throw new IdentityError(`Request failed because '${e.toString()}'`);
         }
 
         if (rawResponse.ok) {
@@ -419,10 +419,10 @@ class IdentityClientImpl implements IdentityClient {
                 const usersInfoResponse = this._usersInfoResponseMarshaller.extract(jsonResponse);
                 return usersInfoResponse.usersInfo;
             } catch (e) {
-                throw new IdentityError(`Could not retrieve user info '${e.toString()}'`);
+                throw new IdentityError(`JSON decoding error '${e.toString()}'`);
             }
         } else {
-            throw new IdentityError(`Could not retrieve user info - service response ${rawResponse.status}`);
+            throw new IdentityError(`Service response ${rawResponse.status}`);
         }
     }
 

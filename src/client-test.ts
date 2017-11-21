@@ -160,7 +160,7 @@ describe('IdentityClient', () => {
                 await methodExtractor(client);
                 expect(true).to.be.false;
             } catch (e) {
-                expect(e.message).to.eql('Could not create session - request failed because \'Error: An error\'');
+                expect(e.message).to.eql('Request failed because \'Error: An error\'');
             }
         });
 
@@ -181,7 +181,7 @@ describe('IdentityClient', () => {
                 await methodExtractor(client);
                 expect(true).to.be.false;
             } catch (e) {
-                expect(e.message).to.eql('Could not retrieve session - service response 400');
+                expect(e.message).to.eql('Service response 400');
             }
         });
 
@@ -202,7 +202,7 @@ describe('IdentityClient', () => {
                 await methodExtractor(client);
                 expect(true).to.be.false;
             } catch (e) {
-                expect(e.message).to.eql('Could not retrieve session \'Error: Bad JSON\'');
+                expect(e.message).to.eql('JSON decoding error because \'Error: Bad JSON\'');
             }
         });
 
@@ -223,7 +223,7 @@ describe('IdentityClient', () => {
                 await methodExtractor(client);
                 expect(true).to.be.false;
             } catch (e) {
-                expect(e.message).to.eql('Could not retrieve session \'ExtractError: Expected an object\'');
+                expect(e.message).to.eql('JSON decoding error because \'ExtractError: Expected an object\'');
             }
         });
     }
