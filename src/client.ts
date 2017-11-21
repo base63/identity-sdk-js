@@ -421,7 +421,7 @@ class IdentityClientImpl implements IdentityClient {
                 const usersInfoResponse = this._usersInfoResponseMarshaller.extract(jsonResponse);
                 return usersInfoResponse.usersInfo;
             } catch (e) {
-                throw new IdentityError(`JSON decoding error '${e.toString()}'`);
+                throw new IdentityError(`JSON decoding error because '${e.toString()}'`);
             }
         } else {
             throw new IdentityError(`Service response ${rawResponse.status}`);

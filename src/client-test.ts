@@ -16,8 +16,15 @@ import {
     UnauthorizedIdentityError,
     XSRF_TOKEN_HEADER_NAME
 } from './client'
-import { SessionAndTokenResponse, SessionResponse } from './dtos'
-import { PrivateUser, Role, Session, SessionState, UserState } from './entities'
+import { SessionAndTokenResponse, SessionResponse, UsersInfoResponse } from './dtos'
+import {
+    PrivateUser,
+    PublicUser,
+    Role,
+    Session,
+    SessionState,
+    UserState
+} from './entities'
 import { SessionToken } from './session-token'
 
 
@@ -45,6 +52,7 @@ describe('IdentityClient', () => {
     const sessionTokenMarshaller = new (MarshalFrom(SessionToken))();
     const sessionAndTokenResponseMarshaller = new (MarshalFrom(SessionAndTokenResponse))();
     const sessionResponseMarshaller = new (MarshalFrom(SessionResponse))();
+    const usersInfoResponseMarshaller = new (MarshalFrom(UsersInfoResponse))();
 
     const rightNow: Date = new Date(Date.now());
 
@@ -83,6 +91,26 @@ describe('IdentityClient', () => {
     theSessionWithUser.user.timeLastUpdated = rightNow;
     theSessionWithUser.user.agreedToCookiePolicy = false;
     theSessionWithUser.user.userIdHash = ('f' as any).repeat(64);
+
+    const userInfoJohnDoe = new PublicUser();
+    userInfoJohnDoe.id = 1;
+    userInfoJohnDoe.state = UserState.Active;
+    userInfoJohnDoe.role = Role.Regular;
+    userInfoJohnDoe.name = 'John Doe';
+    userInfoJohnDoe.pictureUri = 'https://example.com/picture1.jpg';
+    userInfoJohnDoe.language = 'en';
+    userInfoJohnDoe.timeCreated = rightNow;
+    userInfoJohnDoe.timeLastUpdated = rightNow;
+
+    const userInfoJaneDoe = new PublicUser();
+    userInfoJaneDoe.id = 2;
+    userInfoJaneDoe.state = UserState.Active;
+    userInfoJaneDoe.role = Role.Regular;
+    userInfoJaneDoe.name = 'Jane Doe';
+    userInfoJaneDoe.pictureUri = 'https://example.com/picture2.jpg';
+    userInfoJaneDoe.language = 'en';
+    userInfoJaneDoe.timeCreated = rightNow;
+    userInfoJaneDoe.timeLastUpdated = rightNow;
 
     it('can be constructed', () => {
         const fetcher = td.object({});
@@ -351,6 +379,71 @@ describe('IdentityClient', () => {
         testErrorPaths(c => c.getUserOnSession());
         testUnauthorized(c => c.getUserOnSession());
         testJSONDecoding(c => c.getUserOnSession());
+    });
+
+    describe('getUsersInfo', () => {
+        it('should return a set of users', async () => {
+            const fetcher = td.object({
+                fetch: (_u: string, _o: any) => { }
+            });
+            const response = td.object({
+                ok: true,
+                json: () => { }
+            })
+            const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher).withContext(theSessionToken);
+
+            const usersInfoResponse = new UsersInfoResponse();
+            usersInfoResponse.usersInfo = [userInfoJohnDoe, userInfoJaneDoe];
+
+            td.when(fetcher.fetch('http://identity/users-info?ids=%5B1%2C2%5D', {
+                method: 'GET',
+                cache: 'no-cache',
+                redirect: 'error',
+                referrer: 'client',
+                headers: {
+                    'Origin': 'core',
+                    [SESSION_TOKEN_HEADER_NAME]: JSON.stringify(sessionTokenMarshaller.pack(theSessionToken))
+                }
+            })).thenReturn(response);
+            td.when(response.json()).thenReturn(usersInfoResponseMarshaller.pack(usersInfoResponse));
+
+            const usersInfo = await client.getUsersInfo([1, 2]);
+
+            expect(usersInfo).to.eql([userInfoJohnDoe, userInfoJaneDoe]);
+        });
+
+        it('should return a deduped set of users', async () => {
+            const fetcher = td.object({
+                fetch: (_u: string, _o: any) => { }
+            });
+            const response = td.object({
+                ok: true,
+                json: () => { }
+            })
+            const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher).withContext(theSessionToken);
+
+            const usersInfoResponse = new UsersInfoResponse();
+            usersInfoResponse.usersInfo = [userInfoJohnDoe, userInfoJaneDoe];
+
+            td.when(fetcher.fetch('http://identity/users-info?ids=%5B1%2C2%5D', {
+                method: 'GET',
+                cache: 'no-cache',
+                redirect: 'error',
+                referrer: 'client',
+                headers: {
+                    'Origin': 'core',
+                    [SESSION_TOKEN_HEADER_NAME]: JSON.stringify(sessionTokenMarshaller.pack(theSessionToken))
+                }
+            })).thenReturn(response);
+            td.when(response.json()).thenReturn(usersInfoResponseMarshaller.pack(usersInfoResponse));
+
+            const usersInfo = await client.getUsersInfo([1, 1, 2]);
+
+            expect(usersInfo).to.eql([userInfoJohnDoe, userInfoJaneDoe]);
+        });
+
+        testErrorPaths(c => c.getUsersInfo([1, 2]));
+        testJSONDecoding(c => c.getUsersInfo([1, 2]));
     });
 
     function testErrorPaths<T>(methodExtractor: (client: IdentityClient) => Promise<T>) {
