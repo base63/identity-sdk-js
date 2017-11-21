@@ -13,7 +13,8 @@ import {
     IdentityError,
     newIdentityClient,
     SESSION_TOKEN_HEADER_NAME,
-    UnauthorizedIdentityError
+    UnauthorizedIdentityError,
+    XSRF_TOKEN_HEADER_NAME
 } from './client'
 import { SessionAndTokenResponse, SessionResponse } from './dtos'
 import { Session, SessionState } from './entities'
@@ -55,6 +56,13 @@ describe('IdentityClient', () => {
     theSession.agreedToCookiePolicy = false;
     theSession.timeCreated = rightNow;
     theSession.timeLastUpdated = rightNow;
+
+    const theSessionWithAgreement = new Session();
+    theSessionWithAgreement.state = SessionState.Active;
+    theSessionWithAgreement.xsrfToken = ('0' as any).repeat(64);
+    theSessionWithAgreement.agreedToCookiePolicy = true;
+    theSessionWithAgreement.timeCreated = rightNow;
+    theSessionWithAgreement.timeLastUpdated = rightNow;
 
     it('can be constructed', () => {
         const fetcher = td.object({});
@@ -146,6 +154,7 @@ describe('IdentityClient', () => {
         });
 
         testErrorPaths(c => c.getOrCreateSession());
+        testJSONDecoding(c => c.getOrCreateSession());
     });
 
     describe('getSession', () => {
@@ -180,6 +189,72 @@ describe('IdentityClient', () => {
         });
 
         testErrorPaths(c => c.getSession());
+        testUnauthorized(c => c.getSession())
+    });
+
+    describe('removeSession', () => {
+        it('should remove session', async () => {
+            const fetcher = td.object({
+                fetch: (_u: string, _o: any) => { }
+            });
+            const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher).withContext(theSessionToken);
+
+            td.when(fetcher.fetch('http://identity/session', {
+                method: 'DELETE',
+                cache: 'no-cache',
+                redirect: 'error',
+                referrer: 'client',
+                headers: {
+                    'Origin': 'core',
+                    [SESSION_TOKEN_HEADER_NAME]: JSON.stringify(sessionTokenMarshaller.pack(theSessionToken)),
+                    [XSRF_TOKEN_HEADER_NAME]: theSession.xsrfToken
+                }
+            })).thenReturn({ ok: true });
+
+            await client.removeSession(theSession);
+
+            expect(true).to.be.true;
+        });
+
+        testErrorPaths(c => c.removeSession(theSession));
+        testUnauthorized(c => c.getSession())
+    });
+
+    describe('agreeToCookiePolicyForSession', () => {
+        it('should return new session with agreement', async () => {
+            const fetcher = td.object({
+                fetch: (_u: string, _o: any) => { }
+            });
+            const response = td.object({
+                ok: true,
+                json: () => { }
+            })
+            const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher).withContext(theSessionToken);
+
+            const sessionResponse = new SessionResponse();
+            sessionResponse.session = theSessionWithAgreement;
+
+            td.when(fetcher.fetch('http://identity/session/agree-to-cookie-policy', {
+                method: 'POST',
+                cache: 'no-cache',
+                redirect: 'error',
+                referrer: 'client',
+                headers: {
+                    'Origin': 'core',
+                    [SESSION_TOKEN_HEADER_NAME]: JSON.stringify(sessionTokenMarshaller.pack(theSessionToken)),
+                    [XSRF_TOKEN_HEADER_NAME]: theSession.xsrfToken
+                }
+            })).thenReturn(response);
+            td.when(response.json()).thenReturn(sessionResponseMarshaller.pack(sessionResponse));
+
+            const session = await client.agreeToCookiePolicyForSession(theSession);
+
+            expect(session).to.eql(theSessionWithAgreement);
+        });
+
+        testErrorPaths(c => c.agreeToCookiePolicyForSession(theSession));
+        testUnauthorized(c => c.getSession());
+        testJSONDecoding(c => c.getOrCreateSession());
     });
 
     function testErrorPaths<T>(methodExtractor: (client: IdentityClient) => Promise<T>) {
@@ -219,7 +294,32 @@ describe('IdentityClient', () => {
                 expect(e.message).to.eql('Service response 400');
             }
         });
+    }
 
+    function testUnauthorized<T>(methodExtractor: (client: IdentityClient) => Promise<T>) {
+        it('should throw when the HTTP response was an UNAUTHORIZED error', async () => {
+            const fetcher = td.object({
+                fetch: (_u: string, _o: any) => { }
+            });
+            const response = td.object({
+                ok: false,
+                status: HttpStatus.UNAUTHORIZED,
+                json: () => { }
+            })
+            const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher);
+
+            td.when(fetcher.fetch(td.matchers.isA(String), td.matchers.anything())).thenReturn(response);
+
+            try {
+                await methodExtractor(client);
+                expect(true).to.be.false;
+            } catch (e) {
+                expect(e.message).to.eql('User is not authorized');
+            }
+        });
+    }
+
+    function testJSONDecoding<T>(methodExtractor: (client: IdentityClient) => Promise<T>) {
         it('should throw when the json cannot be obtained', async () => {
             const fetcher = td.object({
                 fetch: (_u: string, _o: any) => { }
