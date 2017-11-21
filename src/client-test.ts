@@ -217,7 +217,7 @@ describe('IdentityClient', () => {
         });
 
         testErrorPaths(c => c.removeSession(theSession));
-        testUnauthorized(c => c.getSession())
+        testUnauthorized(c => c.removeSession(theSession))
     });
 
     describe('agreeToCookiePolicyForSession', () => {
@@ -253,8 +253,8 @@ describe('IdentityClient', () => {
         });
 
         testErrorPaths(c => c.agreeToCookiePolicyForSession(theSession));
-        testUnauthorized(c => c.getSession());
-        testJSONDecoding(c => c.getOrCreateSession());
+        testUnauthorized(c => c.agreeToCookiePolicyForSession(theSession));
+        testJSONDecoding(c => c.agreeToCookiePolicyForSession(theSession));
     });
 
     function testErrorPaths<T>(methodExtractor: (client: IdentityClient) => Promise<T>) {
