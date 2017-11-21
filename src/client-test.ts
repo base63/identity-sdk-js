@@ -15,7 +15,7 @@ import {
     SESSION_TOKEN_HEADER_NAME,
     UnauthorizedIdentityError
 } from './client'
-import { SessionAndTokenResponse } from './dtos'
+import { SessionAndTokenResponse, SessionResponse } from './dtos'
 import { Session, SessionState } from './entities'
 import { SessionToken } from './session-token'
 
@@ -43,6 +43,7 @@ describe('UnauthorizedIdentityError', () => {
 describe('IdentityClient', () => {
     const sessionTokenMarshaller = new (MarshalFrom(SessionToken))();
     const sessionAndTokenResponseMarshaller = new (MarshalFrom(SessionAndTokenResponse))();
+    const sessionResponseMarshaller = new (MarshalFrom(SessionResponse))();
 
     const rightNow: Date = new Date(Date.now());
 
@@ -145,6 +146,40 @@ describe('IdentityClient', () => {
         });
 
         testErrorPaths(c => c.getOrCreateSession());
+    });
+
+    describe('getSession', () => {
+        it('should return session', async () => {
+            const fetcher = td.object({
+                fetch: (_u: string, _o: any) => { }
+            });
+            const response = td.object({
+                ok: true,
+                json: () => { }
+            })
+            const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher).withContext(theSessionToken);
+
+            const sessionResponse = new SessionResponse();
+            sessionResponse.session = theSession;
+
+            td.when(fetcher.fetch('http://identity/session', {
+                method: 'GET',
+                cache: 'no-cache',
+                redirect: 'error',
+                referrer: 'client',
+                headers: {
+                    'Origin': 'core',
+                    [SESSION_TOKEN_HEADER_NAME]: JSON.stringify(sessionTokenMarshaller.pack(theSessionToken))
+                }
+            })).thenReturn(response);
+            td.when(response.json()).thenReturn(sessionResponseMarshaller.pack(sessionResponse));
+
+            const session = await client.getSession();
+
+            expect(session).to.eql(theSession);
+        });
+
+        testErrorPaths(c => c.getSession());
     });
 
     function testErrorPaths<T>(methodExtractor: (client: IdentityClient) => Promise<T>) {
