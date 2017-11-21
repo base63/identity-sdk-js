@@ -315,6 +315,8 @@ class IdentityClientImpl implements IdentityClient {
 
         if (rawResponse.ok) {
             // Do nothing
+        } else if (rawResponse.status == HttpStatus.UNAUTHORIZED) {
+            throw new UnauthorizedIdentityError('User is not authorized');
         } else {
             throw new IdentityError(`Service response ${rawResponse.status}`);
         }
