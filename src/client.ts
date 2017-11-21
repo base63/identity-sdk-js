@@ -388,7 +388,7 @@ class IdentityClientImpl implements IdentityClient {
                 const sessionResponse = this._sessionResponseMarshaller.extract(jsonResponse);
                 return sessionResponse.session;
             } catch (e) {
-                throw new IdentityError(`JSON decoding error '${e.toString()}'`);
+                throw new IdentityError(`JSON decoding error because '${e.toString()}'`);
             }
         } else if (rawResponse.status == HttpStatus.UNAUTHORIZED) {
             throw new UnauthorizedIdentityError('User is not authorized');

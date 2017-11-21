@@ -17,7 +17,7 @@ import {
     XSRF_TOKEN_HEADER_NAME
 } from './client'
 import { SessionAndTokenResponse, SessionResponse } from './dtos'
-import { Session, SessionState } from './entities'
+import { PrivateUser, Role, Session, SessionState, UserState } from './entities'
 import { SessionToken } from './session-token'
 
 
@@ -63,6 +63,26 @@ describe('IdentityClient', () => {
     theSessionWithAgreement.agreedToCookiePolicy = true;
     theSessionWithAgreement.timeCreated = rightNow;
     theSessionWithAgreement.timeLastUpdated = rightNow;
+
+    const theSessionTokenWithUser = new SessionToken(uuid(), 'x0bjohntok');
+
+    const theSessionWithUser = new Session();
+    theSessionWithUser.state = SessionState.ActiveAndLinkedWithUser;
+    theSessionWithUser.xsrfToken = ('0' as any).repeat(64);
+    theSessionWithUser.agreedToCookiePolicy = false;
+    theSessionWithUser.timeCreated = rightNow;
+    theSessionWithUser.timeLastUpdated = rightNow;
+    theSessionWithUser.user = new PrivateUser();
+    theSessionWithUser.user.id = 1;
+    theSessionWithUser.user.state = UserState.Active;
+    theSessionWithUser.user.role = Role.Regular;
+    theSessionWithUser.user.name = 'John Doe';
+    theSessionWithUser.user.pictureUri = 'https://example.com/picture.jpg';
+    theSessionWithUser.user.language = 'en';
+    theSessionWithUser.user.timeCreated = rightNow;
+    theSessionWithUser.user.timeLastUpdated = rightNow;
+    theSessionWithUser.user.agreedToCookiePolicy = false;
+    theSessionWithUser.user.userIdHash = ('f' as any).repeat(64);
 
     it('can be constructed', () => {
         const fetcher = td.object({});
@@ -255,6 +275,81 @@ describe('IdentityClient', () => {
         testErrorPaths(c => c.agreeToCookiePolicyForSession(theSession));
         testUnauthorized(c => c.agreeToCookiePolicyForSession(theSession));
         testJSONDecoding(c => c.agreeToCookiePolicyForSession(theSession));
+    });
+
+    describe('getOrCreateUserOnSession', () => {
+        it('should return new session with a user', async () => {
+            const fetcher = td.object({
+                fetch: (_u: string, _o: any) => { }
+            });
+            const response = td.object({
+                ok: true,
+                json: () => { }
+            })
+            const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher).withContext(theSessionTokenWithUser);
+
+            const sessionAndTokenResponse = new SessionAndTokenResponse();
+            sessionAndTokenResponse.sessionToken = theSessionTokenWithUser;
+            sessionAndTokenResponse.session = theSessionWithUser;
+
+            td.when(fetcher.fetch('http://identity/user', {
+                method: 'POST',
+                cache: 'no-cache',
+                redirect: 'error',
+                referrer: 'client',
+                headers: {
+                    'Origin': 'core',
+                    [SESSION_TOKEN_HEADER_NAME]: JSON.stringify(sessionTokenMarshaller.pack(theSessionTokenWithUser)),
+                    [XSRF_TOKEN_HEADER_NAME]: theSession.xsrfToken
+                }
+            })).thenReturn(response);
+            td.when(response.json()).thenReturn(sessionAndTokenResponseMarshaller.pack(sessionAndTokenResponse));
+
+            const [sessionToken, session] = await client.getOrCreateUserOnSession(theSessionWithUser);
+
+            expect(sessionToken).to.eql(theSessionTokenWithUser);
+            expect(session).to.eql(theSessionWithUser);
+        });
+
+        testErrorPaths(c => c.getOrCreateUserOnSession(theSession));
+        testUnauthorized(c => c.getOrCreateUserOnSession(theSession));
+        testJSONDecoding(c => c.getOrCreateUserOnSession(theSession));
+    });
+
+    describe('getUserOnSession', () => {
+        it('should return a session with a user', async () => {
+            const fetcher = td.object({
+                fetch: (_u: string, _o: any) => { }
+            });
+            const response = td.object({
+                ok: true,
+                json: () => { }
+            })
+            const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher).withContext(theSessionTokenWithUser);
+
+            const sessionResponse = new SessionResponse();
+            sessionResponse.session = theSessionWithUser;
+
+            td.when(fetcher.fetch('http://identity/user', {
+                method: 'GET',
+                cache: 'no-cache',
+                redirect: 'error',
+                referrer: 'client',
+                headers: {
+                    'Origin': 'core',
+                    [SESSION_TOKEN_HEADER_NAME]: JSON.stringify(sessionTokenMarshaller.pack(theSessionTokenWithUser))
+                }
+            })).thenReturn(response);
+            td.when(response.json()).thenReturn(sessionResponseMarshaller.pack(sessionResponse));
+
+            const session = await client.getUserOnSession();
+
+            expect(session).to.eql(theSessionWithUser);
+        });
+
+        testErrorPaths(c => c.getUserOnSession());
+        testUnauthorized(c => c.getUserOnSession());
+        testJSONDecoding(c => c.getUserOnSession());
     });
 
     function testErrorPaths<T>(methodExtractor: (client: IdentityClient) => Promise<T>) {
