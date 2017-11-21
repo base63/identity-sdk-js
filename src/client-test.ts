@@ -210,6 +210,7 @@ describe('IdentityClient', () => {
 
         testErrorPaths(c => c.getSession());
         testUnauthorized(c => c.getSession())
+        testJSONDecoding(c => c.getSession());
     });
 
     describe('removeSession', () => {
