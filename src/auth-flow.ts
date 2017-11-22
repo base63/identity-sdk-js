@@ -15,7 +15,7 @@ export class PostLoginRedirectInfo {
      * The path of the view the user was on when the auth flow began. Used so the application knows
      * where to return to.
      */
-    @MarshalWith(r.AbsolutePathMarshaller)
+    @MarshalWith(r.PathAndQueryAndFragmentMarshaller)
     path: string;
 
     /**
@@ -29,6 +29,16 @@ export class PostLoginRedirectInfo {
 
 
 /**
+ * The way we're supposed to look at an allowed path. Either match the prefix
+ * or the full path.
+ */
+export type PathMatch = {
+    path: string,
+    mode: 'prefix'|'full'
+};
+
+
+/**
  * A marshaller for {@link PostLoginRedirectInfo}. This is a bit more involved than a regular
  * marshaller obtained via {@link MarshalFrom}, since the basic representation is that of a string.
  * For deep lore reasons the basic representation is doubly URI encoded.
@@ -36,34 +46,45 @@ export class PostLoginRedirectInfo {
  * as in `@MarshalWith` annotations.
  * @param allowedPaths - the set of allowed path prefixes.
  */
-export function PostLoginRedirectInfoMarshaller(allowedPaths: string[]): r.MarshallerConstructor<PostLoginRedirectInfo> {
+export function PostLoginRedirectInfoMarshaller(allowedPaths: PathMatch[]): r.MarshallerConstructor<PostLoginRedirectInfo> {
     const localAllowedPaths = allowedPaths.slice(0);
 
     return class extends r.BaseStringMarshaller<PostLoginRedirectInfo> {
         private readonly _objectMarshaller = new (MarshalFrom(PostLoginRedirectInfo))();
 
         build(a: string): PostLoginRedirectInfo {
+            let path: string|null;
             try {
                 // Don't ask. Auth0 seems to double encode this.
                 const redirectInfoSer = decodeURIComponent(decodeURIComponent(a));
                 const redirectInfoRaw = JSON.parse(redirectInfoSer);
                 const redirectInfo = this._objectMarshaller.extract(redirectInfoRaw);
+                path = redirectInfo.path;
                 for (let allowedPath of localAllowedPaths) {
-                    if (redirectInfo.path.indexOf(allowedPath) == 0) {
-                        return redirectInfo;
+                    switch (allowedPath.mode) {
+                    case 'prefix':
+                        if (redirectInfo.path.indexOf(allowedPath.path) == 0) {
+                            return redirectInfo;
+                        }
+                        break;
+                    case 'full':
+                        if (redirectInfo.path == allowedPath.path) {
+                            return redirectInfo;
+                        }
+                        break;
                     }
                 }
-
-                throw new ExtractError(`Invalid path ${redirectInfo.path}`);
             } catch (e) {
                 throw new ExtractError(`Could not build redirect info "${e.toString()}"`);
             }
+
+            throw new ExtractError(`Invalid path "${path}"`);
         }
 
         unbuild(redirectInfo: PostLoginRedirectInfo) {
             const redirectInfoRaw = this._objectMarshaller.pack(redirectInfo);
             const redirectInfoSer = serializeJavascript(redirectInfoRaw, { isJSON: true });
-            return encodeURIComponent(redirectInfoSer);
+            return encodeURIComponent(encodeURIComponent(redirectInfoSer));
         }
     }
 }

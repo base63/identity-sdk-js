@@ -5,7 +5,7 @@ import { History } from 'history'
 import { Marshaller } from 'raynor'
 import 'require-ensure'
 
-import { PostLoginRedirectInfo, PostLoginRedirectInfoMarshaller } from '../auth-flow'
+import { PathMatch, PostLoginRedirectInfo, PostLoginRedirectInfoMarshaller } from '../auth-flow'
 import { Auth0Config } from '../auth0'
 
 
@@ -24,7 +24,7 @@ export class Auth0Lock {
      * @param history - a {@link History} object for accessing the current location.
      * @param auth0Config - the configuration for Auth0.
      */
-    constructor(history: History, allowedPaths: string[], auth0Config: Auth0Config) {
+    constructor(history: History, allowedPaths: PathMatch[], auth0Config: Auth0Config) {
         this._postLoginRedirectInfoMarshaller = new (PostLoginRedirectInfoMarshaller(allowedPaths))();
         this._history = history;
         this._auth0Config = auth0Config;

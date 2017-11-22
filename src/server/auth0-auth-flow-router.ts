@@ -11,7 +11,7 @@ import { Env } from '@base63/common-js'
 import { WebFetcher } from '@base63/common-server-js'
 
 import { Auth0Config } from '../auth0'
-import { PostLoginRedirectInfo, PostLoginRedirectInfoMarshaller } from '../auth-flow'
+import { PathMatch, PostLoginRedirectInfo, PostLoginRedirectInfoMarshaller } from '../auth-flow'
 import { IdentityClient } from '../client'
 import { RequestWithIdentity } from '../request'
 import {
@@ -66,7 +66,8 @@ class Auth0AuthorizeRedirectInfo {
     state: PostLoginRedirectInfo;
 }
 
-function Auth0AuthorizeRedirectInfoMarshaller(allowedPaths: string[]): r.MarshallerConstructor<Auth0AuthorizeRedirectInfo> {
+
+function Auth0AuthorizeRedirectInfoMarshaller(allowedPaths: PathMatch[]): r.MarshallerConstructor<Auth0AuthorizeRedirectInfo> {
     return class extends MarshalFrom(Auth0AuthorizeRedirectInfo) {
         private readonly _postLoginRedirectInfoMarshaller = new (PostLoginRedirectInfoMarshaller(allowedPaths))();
 
@@ -117,7 +118,7 @@ const AUTHORIZE_OPTIONS = {
  */
 export function newAuth0AuthFlowRouter(
     env: Env,
-    allowedPaths: string[],
+    allowedPaths: PathMatch[],
     auth0Config: Auth0Config,
     webFetcher: WebFetcher,
     identityClient: IdentityClient): express.Router {

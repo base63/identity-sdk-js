@@ -4,13 +4,14 @@ import 'mocha'
 import * as td from 'testdouble'
 
 import { Auth0Lock } from './auth0-lock'
+import { PathMatch } from '../auth-flow'
 import { Auth0Config } from '../auth0'
 
 
 describe('Auth0Lock', () => {
-    const allowedPaths = [
-        '/',
-        '/admin'
+    const allowedPaths: PathMatch[] = [
+        {path: '/', mode: 'full'},
+        {path: '/admin/', mode: 'prefix'}
     ];
 
     const auth0Config: Auth0Config = {
