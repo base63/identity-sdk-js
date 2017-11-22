@@ -2,6 +2,7 @@
 
 /** Imports. Also so typedoc works correctly. */
 import { History } from 'history'
+import { Marshaller } from 'raynor'
 import 'require-ensure'
 
 import { PostLoginRedirectInfo, PostLoginRedirectInfoMarshaller } from '../auth-flow'
@@ -13,17 +14,18 @@ import { Auth0Config } from '../auth0'
  * by Auth0, and this just does things our way.
  */
 export class Auth0Lock {
-    private readonly _postLoginRedirectInfoMarshaller: PostLoginRedirectInfoMarshaller;
+    private readonly _postLoginRedirectInfoMarshaller: Marshaller<PostLoginRedirectInfo>;
     private readonly _history: History;
     private readonly _auth0Config: Auth0Config;
 
     /**
      * Construct a {@link Auth0Lock}.
+     * @param allowedPaths - a list of path prefixes which are permitted.
      * @param history - a {@link History} object for accessing the current location.
      * @param auth0Config - the configuration for Auth0.
      */
-    constructor(history: History, auth0Config: Auth0Config) {
-        this._postLoginRedirectInfoMarshaller = new PostLoginRedirectInfoMarshaller();
+    constructor(history: History, allowedPaths: string[], auth0Config: Auth0Config) {
+        this._postLoginRedirectInfoMarshaller = new (PostLoginRedirectInfoMarshaller(allowedPaths))();
         this._history = history;
         this._auth0Config = auth0Config;
     }

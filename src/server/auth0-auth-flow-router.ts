@@ -4,6 +4,7 @@
 import { wrap } from 'async-middleware'
 import * as express from 'express'
 import * as HttpStatus from 'http-status-codes'
+import * as r from 'raynor'
 import { ExtractError, MarshalFrom, MarshalWith, OptionalOf, StringMarshaller } from 'raynor'
 
 import { Env } from '@base63/common-js'
@@ -61,8 +62,21 @@ class Auth0AuthorizeRedirectInfo {
     @MarshalWith(OptionalOf(Auth0AuthorizationCodeMarshaller), 'code')
     authorizationCode: string | null;
 
-    @MarshalWith(PostLoginRedirectInfoMarshaller)
+    @MarshalWith(MarshalFrom(r.ObjectMarshaller))
     state: PostLoginRedirectInfo;
+}
+
+function Auth0AuthorizeRedirectInfoMarshaller(allowedPaths: string[]): r.MarshallerConstructor<Auth0AuthorizeRedirectInfo> {
+    return class extends MarshalFrom(Auth0AuthorizeRedirectInfo) {
+        private readonly _postLoginRedirectInfoMarshaller = new (PostLoginRedirectInfoMarshaller(allowedPaths))();
+
+        filter(auth0AuthorizeRedirectInfo: Auth0AuthorizeRedirectInfo): Auth0AuthorizeRedirectInfo {
+            const newAuth0AuthorizeRedirectInfo = new Auth0AuthorizeRedirectInfo();
+            newAuth0AuthorizeRedirectInfo.authorizationCode = auth0AuthorizeRedirectInfo.authorizationCode;
+            newAuth0AuthorizeRedirectInfo.state = this._postLoginRedirectInfoMarshaller.extract(auth0AuthorizeRedirectInfo.state);
+            return newAuth0AuthorizeRedirectInfo;
+        }
+    };
 }
 
 
@@ -94,15 +108,21 @@ const AUTHORIZE_OPTIONS = {
  * @note The router has two paths exposed: /login and /logout. These are invoked by Auth0, via
  *     redirection with specific parameters containing information about the signed in user.
  * @param env - the environment in which the code is running.
+ * @param allowedPaths - a set of allowed path prefixes.
  * @param auth0Config - the configuration for Auth0.
  * @param webFetcher - a fetcher object.
  * @param identityClient - a client for the identity service.
  * @return An express router instance which implement the auth flow for the identity service via
  *     Auth0.
  */
-export function newAuth0AuthFlowRouter(env: Env, auth0Config: Auth0Config, webFetcher: WebFetcher, identityClient: IdentityClient): express.Router {
+export function newAuth0AuthFlowRouter(
+    env: Env,
+    allowedPaths: string[],
+    auth0Config: Auth0Config,
+    webFetcher: WebFetcher,
+    identityClient: IdentityClient): express.Router {
     const auth0TokenExchangeResultMarshaller = new (MarshalFrom(Auth0TokenExchangeResult))();
-    const auth0AuthorizeRedirectInfoMarshaller = new (MarshalFrom(Auth0AuthorizeRedirectInfo))();
+    const auth0AuthorizeRedirectInfoMarshaller = new (Auth0AuthorizeRedirectInfoMarshaller(allowedPaths))();
 
     const router = express.Router();
 

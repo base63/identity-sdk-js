@@ -8,6 +8,11 @@ import { Auth0Config } from '../auth0'
 
 
 describe('Auth0Lock', () => {
+    const allowedPaths = [
+        '/',
+        '/admin'
+    ];
+
     const auth0Config: Auth0Config = {
         clientId: 'some-id',
         clientSecret: 'someSecret',
@@ -18,7 +23,7 @@ describe('Auth0Lock', () => {
     it('can be constructed', () => {
         const history = td.object({});
 
-        const auth0Lock = new Auth0Lock(history as History, auth0Config);
+        const auth0Lock = new Auth0Lock(history as History, allowedPaths, auth0Config);
 
         expect(auth0Lock).is.not.null;
     });
