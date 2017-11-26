@@ -101,7 +101,7 @@ export function newSessionMiddleware(
                     .then(([sessionToken, session]) => {
                         req.sessionToken = sessionToken;
                         req.session = session;
-                        setSessionTokenOnResponse(res, sessionToken, sessionInfoSource, env);
+                        setSessionTokenOnResponse(res, req.requestTime, sessionToken, sessionInfoSource, env);
                         next();
                     })
                     .catch(e => {
@@ -140,7 +140,7 @@ export function newSessionMiddleware(
                     .then(session => {
                         req.sessionToken = sessionToken as SessionToken;
                         req.session = session;
-                        setSessionTokenOnResponse(res, sessionToken as SessionToken, sessionInfoSource, env);
+                        setSessionTokenOnResponse(res, req.requestTime, sessionToken as SessionToken, sessionInfoSource, env);
                         next();
                     })
                     .catch(e => {
@@ -168,7 +168,7 @@ export function newSessionMiddleware(
                     .then((session) => {
                         req.sessionToken = sessionToken as SessionToken;
                         req.session = session;
-                        setSessionTokenOnResponse(res, sessionToken as SessionToken, sessionInfoSource, env);
+                        setSessionTokenOnResponse(res, req.requestTime, sessionToken as SessionToken, sessionInfoSource, env);
                         next();
                     })
                     .catch(e => {
@@ -201,12 +201,14 @@ export function newSessionMiddleware(
  * to the same value. The cookie is http only, secure in production, does not expire and has the
  * sameSite attribute to protect against XSS attacks.
  * @param res - the response to attach the info to.
+ * @param rightNow - the request's time
  * @param sessionToken - the token to attach to the request.
  * @param sessionInfoSource - where to place the session info on.
  * @param env - the environment this code is running in.
  */
 export function setSessionTokenOnResponse(
     res: express.Response,
+    rightNow: Date,
     sessionToken: SessionToken,
     sessionInfoSource: SessionInfoSource,
     env: Env): void {
@@ -217,7 +219,7 @@ export function setSessionTokenOnResponse(
             res.cookie(SESSION_TOKEN_COOKIE_NAME, sessionTokenMarshaller.pack(sessionToken), {
                 httpOnly: true,
                 secure: !isLocal(env),
-                expires: moment.utc().add('days', 10000).toDate(),
+                expires: moment.utc(rightNow).add('days', 10000).toDate(),
                 sameSite: 'lax'
             });
             break;

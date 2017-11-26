@@ -194,7 +194,7 @@ export function newAuth0AuthFlowRouter(
             return;
         }
 
-        setSessionTokenOnResponse(res, sessionToken, SessionInfoSource.Cookie, env);
+        setSessionTokenOnResponse(res, req.requestTime, sessionToken, SessionInfoSource.Cookie, env);
         res.redirect(redirectInfo.state.path);
     }));
 
