@@ -7,6 +7,7 @@ import * as uuid from 'uuid'
 import { Env } from '@base63/common-js'
 
 import {
+    clearSessionTokenOnResponse,
     setSessionTokenOnResponse,
     SessionInfoSource } from './session-middleware'
 import { SESSION_TOKEN_COOKIE_NAME, SESSION_TOKEN_HEADER_NAME } from '../client'
@@ -59,3 +60,38 @@ describe('setSessionTokenOnResponse', () => {
 });
 
 
+describe('clearSessionTokenOnResponse', () => {
+    it('clears a non-secure cookie for the cookie source and the local env', () => {
+        const response = td.object({clearCookie: (_n: string, _c: any) => {}});
+
+        clearSessionTokenOnResponse(response as express.Response, SessionInfoSource.Cookie, Env.Local);
+
+        td.verify(response.clearCookie(SESSION_TOKEN_COOKIE_NAME, {
+            httpOnly: true,
+            secure: false
+        }));
+    });
+
+    for (let env of [Env.Test, Env.Staging, Env.Prod]) {
+        it(`sets a non-secure http same-site cookie for the cookie source and non-local env=${env}`, () => {
+            const response = td.object({clearCookie: (_n: string, _c: any) => {}});
+
+            clearSessionTokenOnResponse(response as express.Response, SessionInfoSource.Cookie, env);
+
+            td.verify(response.clearCookie(SESSION_TOKEN_COOKIE_NAME, {
+                httpOnly: true,
+                secure: true
+            }));
+        });
+    }
+
+    for (let env of [Env.Local, Env.Test, Env.Staging, Env.Prod]) {
+        it(`sets a header for the header source env=${env}`, () => {
+            const response = td.object({removeHeader: (_n: string) => {}});
+
+            clearSessionTokenOnResponse(response as express.Response, SessionInfoSource.Header, env);
+
+            td.verify(response.removeHeader(SESSION_TOKEN_HEADER_NAME));
+        });
+    }
+});
