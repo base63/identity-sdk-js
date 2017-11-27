@@ -81,7 +81,10 @@ export function newSessionMiddleware(
                 try {
                     sessionTokenSerialized = JSON.parse(req.header(SESSION_TOKEN_HEADER_NAME) as string);
                 } catch (e) {
-                    sessionTokenSerialized = null;
+                    req.log.error(e);
+                    res.status(HttpStatus.BAD_REQUEST);
+                    res.end();
+                    return;
                 }
             }
 
