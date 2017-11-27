@@ -1,4 +1,4 @@
-//import { expect } from 'chai'
+import { expect } from 'chai'
 import * as express from 'express'
 import 'mocha'
 import * as td from 'testdouble'
@@ -8,10 +8,87 @@ import { Env } from '@base63/common-js'
 
 import {
     clearSessionTokenOnResponse,
+    newSessionMiddleware,
     setSessionTokenOnResponse,
-    SessionInfoSource } from './session-middleware'
-import { SESSION_TOKEN_COOKIE_NAME, SESSION_TOKEN_HEADER_NAME } from '../client'
+    SessionInfoSource,
+    SessionLevel
+} from './session-middleware'
+import {
+    IdentityClient,
+    SESSION_TOKEN_COOKIE_NAME,
+    SESSION_TOKEN_HEADER_NAME
+} from '../client'
+import {
+    Session,
+    SessionState
+} from '../entities'
 import { SessionToken } from '../session-token'
+
+
+describe('SessionMiddleware', () => {
+    const rightNow: Date = new Date(Date.UTC(2017, 11, 24));
+    const toolTimeLater: Date = new Date(Date.UTC(2045, 4, 11));
+
+    const theSessionToken = new SessionToken(uuid());
+
+    const theSession = new Session();
+    theSession.state = SessionState.Active;
+    theSession.xsrfToken = ('0' as any).repeat(64);
+    theSession.agreedToCookiePolicy = false;
+    theSession.timeCreated = rightNow;
+    theSession.timeLastUpdated = rightNow;
+
+    const testCases = [
+        {source: SessionInfoSource.Cookie, env: Env.Local, secure: false},
+        {source: SessionInfoSource.Cookie, env: Env.Test, secure: true},
+        {source: SessionInfoSource.Cookie, env: Env.Staging, secure: true},
+        {source: SessionInfoSource.Cookie, env: Env.Prod, secure: true},
+        {source: SessionInfoSource.Header, env: Env.Local, secure: false},
+        {source: SessionInfoSource.Header, env: Env.Test, secure: true},
+        {source: SessionInfoSource.Header, env: Env.Staging, secure: true},
+        {source: SessionInfoSource.Header, env: Env.Prod, secure: true},
+    ];
+
+    for (let {source, env, secure} of testCases) {
+        it(`create session on identity service when there is no session information attached for source=${source} and env=${env} and secure=${secure}`, (done) => {
+            const identityClient = td.object({
+                getOrCreateSession: () => {}
+            });
+            const sessionMiddleware = newSessionMiddleware(SessionLevel.None, source, env, identityClient as IdentityClient);
+
+            const mockReq = td.object({
+                requestTime: rightNow,
+                cookies: {},
+                sessionToken: null,
+                session: null,
+                header: (_n: string) => {}
+            });
+            const mockRes = td.object({
+                cookie: (_n: string, _d: any, _c: any) => {},
+                setHeader: (_n: string, _d: string) => {}
+            });
+
+            td.when(identityClient.getOrCreateSession()).thenResolve([theSessionToken, theSession]);
+            td.when(mockReq.header(SESSION_TOKEN_HEADER_NAME)).thenReturn(undefined);
+
+            sessionMiddleware(mockReq as any, mockRes as any, () => {
+                expect(mockReq.sessionToken).to.eql(theSessionToken);
+                expect(mockReq.session).to.eql(theSession);
+                if (source == SessionInfoSource.Cookie) {
+                    td.verify(mockRes.cookie(SESSION_TOKEN_COOKIE_NAME, {sessionId: theSessionToken.sessionId}, {
+                        httpOnly: true,
+                        secure: secure,
+                        expires: toolTimeLater,
+                        sameSite: 'lax'
+                    }));
+                } else {
+                    td.verify(mockRes.setHeader(SESSION_TOKEN_HEADER_NAME, JSON.stringify({sessionId: theSessionToken.sessionId})));
+                }
+                done();
+            });
+        });
+    }
+});
 
 
 describe('setSessionTokenOnResponse', () => {
@@ -50,7 +127,7 @@ describe('setSessionTokenOnResponse', () => {
 
     for (let env of [Env.Local, Env.Test, Env.Staging, Env.Prod]) {
         it(`sets a header for the header source env=${env}`, () => {
-            const response = td.object({setHeader: (_n: string, _d: any) => {}});
+            const response = td.object({setHeader: (_n: string, _d: string) => {}});
 
             setSessionTokenOnResponse(response as express.Response, rightNow, theSessionToken, SessionInfoSource.Header, env);
 

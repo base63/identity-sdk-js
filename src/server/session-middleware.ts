@@ -1,7 +1,6 @@
 /** Defines the session middleware and some utilities for it. */
 
 /** Imports. Also so typedoc works correctly. */
-import { wrap } from 'async-middleware'
 import * as cookieParser from 'cookie-parser'
 import * as express from 'express'
 import * as HttpStatus from 'http-status-codes'
@@ -69,7 +68,7 @@ export function newSessionMiddleware(
             mustHaveSession = true;
     }
 
-    return wrap(async (req: RequestWithIdentity, res: express.Response, next: express.NextFunction) => {
+    return (req: RequestWithIdentity, res: express.Response, next: express.NextFunction) => {
         cookieParserMiddleware(req, res, () => {
             let sessionTokenSerialized: string | null = null;
 
@@ -191,7 +190,7 @@ export function newSessionMiddleware(
                     });
             }
         });
-    });
+    };
 }
 
 
@@ -219,7 +218,7 @@ export function setSessionTokenOnResponse(
             res.cookie(SESSION_TOKEN_COOKIE_NAME, sessionTokenMarshaller.pack(sessionToken), {
                 httpOnly: true,
                 secure: !isLocal(env),
-                expires: moment.utc(rightNow).add('days', 10000).toDate(),
+                expires: moment.utc(rightNow).add(10000, 'days').toDate(),
                 sameSite: 'lax'
             });
             break;
