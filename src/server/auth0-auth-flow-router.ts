@@ -24,7 +24,7 @@ import {
 import { SessionToken } from '../session-token'
 
 
-class Auth0AccessTokenMarshaller extends StringMarshaller {
+export class Auth0AccessTokenMarshaller extends StringMarshaller {
     private static readonly _alnumRegExp: RegExp = new RegExp('^[0-9a-zA-Z_-]+$');
 
     filter(s: string): string {
@@ -41,7 +41,7 @@ class Auth0AccessTokenMarshaller extends StringMarshaller {
 }
 
 
-class Auth0AuthorizationCodeMarshaller extends StringMarshaller {
+export class Auth0AuthorizationCodeMarshaller extends StringMarshaller {
     private static readonly _alnumRegExp: RegExp = new RegExp('^[0-9a-zA-Z_-]+$');
 
     filter(s: string): string {
@@ -58,7 +58,7 @@ class Auth0AuthorizationCodeMarshaller extends StringMarshaller {
 }
 
 
-class Auth0AuthorizeRedirectInfo {
+export class Auth0AuthorizeRedirectInfo {
     @MarshalWith(OptionalOf(Auth0AuthorizationCodeMarshaller), 'code')
     authorizationCode: string | null;
 
@@ -67,7 +67,7 @@ class Auth0AuthorizeRedirectInfo {
 }
 
 
-function Auth0AuthorizeRedirectInfoMarshaller(allowedPaths: PathMatch[]): r.MarshallerConstructor<Auth0AuthorizeRedirectInfo> {
+export function Auth0AuthorizeRedirectInfoMarshaller(allowedPaths: PathMatch[]): r.MarshallerConstructor<Auth0AuthorizeRedirectInfo> {
     return class extends MarshalFrom(Auth0AuthorizeRedirectInfo) {
         private readonly _postLoginRedirectInfoMarshaller = new (PostLoginRedirectInfoMarshaller(allowedPaths))();
 
