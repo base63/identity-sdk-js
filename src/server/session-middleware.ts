@@ -107,6 +107,13 @@ export function newSessionMiddleware(
                         next();
                     })
                     .catch(e => {
+                        if (e.name == 'IdentityError') {
+                            req.log.error(e);
+                            res.status(HttpStatus.BAD_GATEWAY);
+                            res.end();
+                            return;
+                        }
+
                         req.log.error(e);
                         res.status(HttpStatus.INTERNAL_SERVER_ERROR);
                         res.end();
@@ -147,12 +154,14 @@ export function newSessionMiddleware(
                     })
                     .catch(e => {
                         if (e.name == 'UnauthorizedIdentityError') {
+                            req.log.error(e);
                             res.status(HttpStatus.UNAUTHORIZED);
                             res.end();
                             return;
                         }
 
                         if (e.name == 'IdentityError') {
+                            req.log.error(e);
                             res.status(HttpStatus.BAD_GATEWAY);
                             res.end();
                             return;
@@ -175,12 +184,14 @@ export function newSessionMiddleware(
                     })
                     .catch(e => {
                         if (e.name == 'UnauthorizedIdentityError') {
+                            req.log.error(e);
                             res.status(HttpStatus.UNAUTHORIZED);
                             res.end();
                             return;
                         }
 
                         if (e.name == 'IdentityError') {
+                            req.log.error(e);
                             res.status(HttpStatus.BAD_GATEWAY);
                             res.end();
                             return;
