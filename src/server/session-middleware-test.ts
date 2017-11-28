@@ -280,6 +280,40 @@ describe('SessionMiddleware', () => {
         }
     });
 
+    describe('should return BAD_REQUEST when a session and user is required but there is just a user', () => {
+        for (let { source, env } of testCases) {
+            it(`for and source=${source} and env=${env}`, (done) => {
+                const identityClient = td.object({
+                    withContext: (_t: SessionToken) => { },
+                    getSession: () => { }
+                });
+                const sessionMiddleware = newSessionMiddleware(SessionLevel.SessionAndUser, source, env, identityClient as IdentityClient);
+
+                const mockReq = td.object({
+                    requestTime: rightNow,
+                    cookies: { [SESSION_TOKEN_COOKIE_NAME]: theSessionToken },
+                    header: (_n: string) => { },
+                    log: { warn: (_msg: string) => { } }
+                });
+                const mockRes = td.object(['status', 'end']);
+
+                let called = false;
+
+                td.when(mockReq.header(SESSION_TOKEN_HEADER_NAME)).thenReturn(JSON.stringify(theSessionToken));
+
+                sessionMiddleware(mockReq as any, mockRes as any, () => { called = true; });
+
+                setTimeout(() => {
+                    expect(called).to.be.false;
+                    td.verify(mockReq.log.warn('Expected auth token but none was had'));
+                    td.verify(mockRes.status(HttpStatus.BAD_REQUEST));
+                    td.verify(mockRes.end());
+                    done();
+                });
+            });
+        }
+    });
+
     describe('should return INTERNAL_SERVER_ERROR when the identity service errors and when there is no session information attached', () => {
         for (let { source, env } of testCases) {
             it(`for source=${source} and env=${env}`, (done) => {
