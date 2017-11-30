@@ -5,7 +5,7 @@ import { wrap } from 'async-middleware'
 import * as express from 'express'
 import * as HttpStatus from 'http-status-codes'
 import * as r from 'raynor'
-import { ExtractError, MarshalFrom, MarshalWith, OptionalOf, StringMarshaller } from 'raynor'
+import { ExtractError, MarshalFrom, MarshalWith, StringMarshaller } from 'raynor'
 
 import { Env } from '@base63/common-js'
 import { WebFetcher } from '@base63/common-server-js'
@@ -59,11 +59,16 @@ export class Auth0AuthorizationCodeMarshaller extends StringMarshaller {
 
 
 export class Auth0AuthorizeRedirectInfo {
-    @MarshalWith(OptionalOf(Auth0AuthorizationCodeMarshaller), 'code')
-    authorizationCode: string | null;
+    @MarshalWith(Auth0AuthorizationCodeMarshaller, 'code')
+    authorizationCode: string;
 
-    @MarshalWith(MarshalFrom(r.ObjectMarshaller))
+    @MarshalWith(r.StringMarshaller)
     state: PostLoginRedirectInfo;
+
+    constructor(authorizationCode: string, state: PostLoginRedirectInfo) {
+        this.authorizationCode = authorizationCode;
+        this.state = state;
+    }
 }
 
 
@@ -72,10 +77,21 @@ export function Auth0AuthorizeRedirectInfoMarshaller(allowedPaths: PathMatch[]):
         private readonly _postLoginRedirectInfoMarshaller = new (PostLoginRedirectInfoMarshaller(allowedPaths))();
 
         filter(auth0AuthorizeRedirectInfo: Auth0AuthorizeRedirectInfo): Auth0AuthorizeRedirectInfo {
-            const newAuth0AuthorizeRedirectInfo = new Auth0AuthorizeRedirectInfo();
-            newAuth0AuthorizeRedirectInfo.authorizationCode = auth0AuthorizeRedirectInfo.authorizationCode;
-            newAuth0AuthorizeRedirectInfo.state = this._postLoginRedirectInfoMarshaller.extract(auth0AuthorizeRedirectInfo.state);
-            return newAuth0AuthorizeRedirectInfo;
+            if (auth0AuthorizeRedirectInfo.authorizationCode == null)
+                throw new ExtractError('Authorization code should exist');
+
+            return new Auth0AuthorizeRedirectInfo(
+                auth0AuthorizeRedirectInfo.authorizationCode,
+                this._postLoginRedirectInfoMarshaller.extract(auth0AuthorizeRedirectInfo.state)
+            );
+        }
+
+        unbuild(auth0AutorizeRedirectInfo: Auth0AuthorizeRedirectInfo): object {
+            // Ugly stuff needs to happen here because Raynor isn't there yet.
+            return super.unbuild({
+                authorizationCode: auth0AutorizeRedirectInfo.authorizationCode,
+                state: this._postLoginRedirectInfoMarshaller.pack(auth0AutorizeRedirectInfo.state)
+            });
         }
     };
 }
