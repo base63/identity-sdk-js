@@ -77,9 +77,6 @@ export function Auth0AuthorizeRedirectInfoMarshaller(allowedPaths: PathMatch[]):
         private readonly _postLoginRedirectInfoMarshaller = new (PostLoginRedirectInfoMarshaller(allowedPaths))();
 
         filter(auth0AuthorizeRedirectInfo: Auth0AuthorizeRedirectInfo): Auth0AuthorizeRedirectInfo {
-            if (auth0AuthorizeRedirectInfo.authorizationCode == null)
-                throw new ExtractError('Authorization code should exist');
-
             return new Auth0AuthorizeRedirectInfo(
                 auth0AuthorizeRedirectInfo.authorizationCode,
                 this._postLoginRedirectInfoMarshaller.extract(auth0AuthorizeRedirectInfo.state)
