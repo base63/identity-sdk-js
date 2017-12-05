@@ -189,7 +189,7 @@ export function newAuth0AuthFlowRouter(
         } else {
             req.log.error(`Auth error - bad code ${rawResponse.status}`);
             req.errorLog.error(`Auth error - bad code ${rawResponse.status}`);
-            res.status(HttpStatus.INTERNAL_SERVER_ERROR);
+            res.status(HttpStatus.BAD_GATEWAY);
             res.end();
             return;
         }

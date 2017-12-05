@@ -236,7 +236,6 @@ describe('Auth0AuthFlowRouter', () => {
     const postLoginRedirectInfoMarshaller = new (PostLoginRedirectInfoMarshaller(allowedPaths))();
 
     const rightNow: Date = new Date(Date.UTC(2017, 11, 24));
-    // const toolTimeLater: Date = new Date(Date.UTC(2045, 4, 11));
 
     const theSessionToken = new SessionToken(uuid());
 
@@ -248,6 +247,7 @@ describe('Auth0AuthFlowRouter', () => {
     theSession.timeLastUpdated = rightNow;
 
     const theSessionTokenWithUser = new SessionToken(theSessionToken.sessionId, 'x0bjohntok');
+    const theOtherSessionTokenWithUser = new SessionToken(theSessionToken.sessionId, 'x0bjohntok2');
 
     const theSessionWithUser = new Session();
     theSessionWithUser.state = SessionState.ActiveAndLinkedWithUser;
@@ -380,6 +380,55 @@ describe('Auth0AuthFlowRouter', () => {
                 });
         });
 
+        it('should work with a session with a user when we get a new token', async () => {
+            const response = td.object({
+                ok: true,
+                json: () => { }
+            });
+
+            const appAgent = buildAppAgent(webFetcher as WebFetcher, identityClient as IdentityClient);
+
+            td.when(webFetcher.fetch('https://some-domain/oauth/token', {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                redirect: 'error',
+                referrer: 'client',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    grant_type: 'authorization_code',
+                    client_id: 'foo',
+                    client_secret: 'bar',
+                    code: 'some_code',
+                    redirect_uri: '/login'
+                })
+            })).thenReturn(response);
+            td.when(response.json()).thenReturn({ access_token: 'x0bjohntok2' });
+
+            td.when(identityClient.withContext(theSessionTokenWithUser)).thenReturn(identityClient);
+            td.when(identityClient.getUserOnSession()).thenResolve(theSessionWithUser);
+            td.when(identityClient.withContext(theOtherSessionTokenWithUser)).thenReturn(identityClient);
+            td.when(identityClient.getOrCreateUserOnSession(theSessionWithUser)).thenReturn([theOtherSessionTokenWithUser, theSessionWithUser]);
+
+            await appAgent
+                .post('/login?code=some_code&state=' + postLoginRedirectInfoMarshaller.pack(new PostLoginRedirectInfo('/admin')))
+                .set('Cookie', `${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionTokenWithUser)))}`)
+                .expect(HttpStatus.MOVED_TEMPORARILY)
+                .then(response => {
+                    expect(response.header).contains.keys('set-cookie', 'location', 'content-type');
+                    expect(response.header['set-cookie']).to.have.length(2);
+                    expect(response.header['set-cookie'][0]).to.match(
+                        new RegExp(`${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionTokenWithUser)))}; Path=/; Expires=.*GMT; HttpOnly; SameSite=Lax`));
+                    expect(response.header['set-cookie'][1]).to.match(
+                        new RegExp(`${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theOtherSessionTokenWithUser)))}; Path=/; Expires=.*GMT; HttpOnly; SameSite=Lax`));
+                    expect(response.header['location']).to.eql('/admin');
+                    expect(response.header['content-type']).to.eql('text/plain; charset=utf-8');
+                    expect(response.text).to.eql('Found. Redirecting to /admin');
+                    expect(response.charset).to.eql('utf-8');
+                    expect(response.type).to.eql('text/plain');
+                });
+        });
+
         for (let [text, cookieData] of [
             ['when the session token is not present', ''],
             ['when the session token is bad', `${SESSION_TOKEN_COOKIE_NAME}=bad-token`],
@@ -420,6 +469,133 @@ describe('Auth0AuthFlowRouter', () => {
                     });
             });
         }
+
+        for (let params of [
+            '',
+            '?code=some_code',
+            '?state=' + postLoginRedirectInfoMarshaller.pack(new PostLoginRedirectInfo('/admin')),
+            '?code=()',
+            '?code=some_code&state=foo',
+            '?code=some_code&state=' + postLoginRedirectInfoMarshaller.pack(new PostLoginRedirectInfo('/adminx')),
+        ]) {
+            it(`should return BAD_REQUEST when the query parameters are bad for "${params}"`, async () => {
+                const appAgent = buildAppAgent(webFetcher as WebFetcher, identityClient as IdentityClient);
+
+                td.when(identityClient.withContext(theSessionToken)).thenReturn(identityClient);
+                td.when(identityClient.getSession()).thenResolve(theSession);
+
+                await appAgent.post('/login' + params)
+                    .set('Cookie', `${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionToken)))}`)
+                    .expect(HttpStatus.BAD_REQUEST)
+                    .then(response => {
+                        expect(response.text).to.be.empty;
+                    });
+            });
+        }
+
+        it('should return BAD_GATEWAY when the fetch fails', async () => {
+            const appAgent = buildAppAgent(webFetcher as WebFetcher, identityClient as IdentityClient);
+
+            td.when(webFetcher.fetch('https://some-domain/oauth/token', {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                redirect: 'error',
+                referrer: 'client',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    grant_type: 'authorization_code',
+                    client_id: 'foo',
+                    client_secret: 'bar',
+                    code: 'some_code',
+                    redirect_uri: '/login'
+                })
+            })).thenThrow(new Error('Something bad happened'));
+
+            td.when(identityClient.withContext(theSessionToken)).thenReturn(identityClient);
+            td.when(identityClient.getSession()).thenResolve(theSession);
+
+            await appAgent
+                .post('/login?code=some_code&state=' + postLoginRedirectInfoMarshaller.pack(new PostLoginRedirectInfo('/admin')))
+                .set('Cookie', `${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionToken)))}`)
+                .expect(HttpStatus.BAD_GATEWAY)
+                .then(response => {
+                    expect(response.text).to.be.empty;
+                });
+        });
+
+        it('should return BAD_GATEWAY when the fetch has a problem', async () => {
+            const response = td.object({
+                ok: false,
+                status: HttpStatus.BAD_GATEWAY
+            });
+
+            const appAgent = buildAppAgent(webFetcher as WebFetcher, identityClient as IdentityClient);
+
+            td.when(webFetcher.fetch('https://some-domain/oauth/token', {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                redirect: 'error',
+                referrer: 'client',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    grant_type: 'authorization_code',
+                    client_id: 'foo',
+                    client_secret: 'bar',
+                    code: 'some_code',
+                    redirect_uri: '/login'
+                })
+            })).thenReturn(response);
+
+            td.when(identityClient.withContext(theSessionToken)).thenReturn(identityClient);
+            td.when(identityClient.getSession()).thenResolve(theSession);
+
+            await appAgent
+                .post('/login?code=some_code&state=' + postLoginRedirectInfoMarshaller.pack(new PostLoginRedirectInfo('/admin')))
+                .set('Cookie', `${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionToken)))}`)
+                .expect(HttpStatus.BAD_GATEWAY)
+                .then(response => {
+                    expect(response.text).to.be.empty;
+                });
+        });
+
+        it('should return INTERNAL_SERVER_ERROR when the fetched Auth0 data cannot be decoded', async () => {
+            const response = td.object({
+                ok: true,
+                json: () => { }
+            });
+
+            const appAgent = buildAppAgent(webFetcher as WebFetcher, identityClient as IdentityClient);
+
+            td.when(webFetcher.fetch('https://some-domain/oauth/token', {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                redirect: 'error',
+                referrer: 'client',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    grant_type: 'authorization_code',
+                    client_id: 'foo',
+                    client_secret: 'bar',
+                    code: 'some_code',
+                    redirect_uri: '/login'
+                })
+            })).thenReturn(response);
+            td.when(response.json()).thenReturn({ not: "good" });
+
+            td.when(identityClient.withContext(theSessionToken)).thenReturn(identityClient);
+            td.when(identityClient.getSession()).thenResolve(theSession);
+
+            await appAgent
+                .post('/login?code=some_code&state=' + postLoginRedirectInfoMarshaller.pack(new PostLoginRedirectInfo('/admin')))
+                .set('Cookie', `${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionToken)))}`)
+                .expect(HttpStatus.INTERNAL_SERVER_ERROR)
+                .then(response => {
+                    expect(response.text).to.be.empty;
+                });
+        });
 
         for (let [text, error, statusCode] of [
             ['UNAUTHORIZED when the identity service does not accept the user', new UnauthorizedIdentityError('Unauthorized'), HttpStatus.UNAUTHORIZED],
