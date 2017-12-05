@@ -9,21 +9,32 @@ import { Session } from '../entities'
 
 
 describe('CheckXsrfTokenMiddleware', () => {
+    const theSession = new Session();
+    theSession.xsrfToken = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+
+    const mockReq = td.object({
+        session: theSession,
+        headers: {},
+        log: {
+            warn: (_message: string) => { }
+        }
+    });
+    const mockRes = td.object({
+        status: (_status: number) => { },
+        end: () => { },
+        on: () => { },
+    });
+
+    afterEach('reset mocks', () => {
+        td.reset();
+    });
+
     it('should pass XSRF-valid request later', () => {
         const checkXsrfTokenMiddleware = newCheckXsrfTokenMiddleware();
 
         let passedCheck = false;
 
-        const session = new Session();
-        session.xsrfToken = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
-
-        const mockReq = td.object({
-            session: session,
-            header: (_headerName: string) => { }
-        });
-        const mockRes = td.object(['on']);
-
-        td.when(mockReq.header(XSRF_TOKEN_HEADER_NAME)).thenReturn('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+        (mockReq as any).headers[XSRF_TOKEN_HEADER_NAME] = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
 
         checkXsrfTokenMiddleware(mockReq as any, mockRes as any, () => { passedCheck = true });
 
@@ -35,23 +46,7 @@ describe('CheckXsrfTokenMiddleware', () => {
 
         let passedCheck = false;
 
-        const session = new Session();
-        session.xsrfToken = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
-
-        const mockReq = td.object({
-            session: session,
-            header: (_headerName: string) => { },
-            log: {
-                warn: (_message: string) => { }
-            }
-        });
-
-        const mockRes = td.object({
-            status: (_status: number) => { },
-            end: () => { }
-        });
-
-        td.when(mockReq.header(XSRF_TOKEN_HEADER_NAME)).thenReturn(undefined);
+        delete (mockReq as any).headers[XSRF_TOKEN_HEADER_NAME];
 
         checkXsrfTokenMiddleware(mockReq as any, mockRes as any, () => { passedCheck = true });
 
@@ -74,23 +69,7 @@ describe('CheckXsrfTokenMiddleware', () => {
 
             let passedCheck = false;
 
-            const session = new Session();
-            session.xsrfToken = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
-
-            const mockReq = td.object({
-                session: session,
-                header: (_headerName: string) => { },
-                log: {
-                    warn: (_message: string) => { }
-                }
-            });
-
-            const mockRes = td.object({
-                status: (_status: number) => { },
-                end: () => { }
-            });
-
-            td.when(mockReq.header(XSRF_TOKEN_HEADER_NAME)).thenReturn(badToken);
+            (mockReq as any).headers[XSRF_TOKEN_HEADER_NAME] = badToken;
 
             checkXsrfTokenMiddleware(mockReq as any, mockRes as any, () => { passedCheck = true });
 
@@ -106,23 +85,7 @@ describe('CheckXsrfTokenMiddleware', () => {
 
         let passedCheck = false;
 
-        const session = new Session();
-        session.xsrfToken = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
-
-        const mockReq = td.object({
-            session: session,
-            header: (_headerName: string) => { },
-            log: {
-                warn: (_message: string) => { }
-            }
-        });
-
-        const mockRes = td.object({
-            status: (_status: number) => { },
-            end: () => { }
-        });
-
-        td.when(mockReq.header(XSRF_TOKEN_HEADER_NAME)).thenReturn('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
+        (mockReq as any).headers[XSRF_TOKEN_HEADER_NAME] = 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB';
 
         checkXsrfTokenMiddleware(mockReq as any, mockRes as any, () => { passedCheck = true });
 
