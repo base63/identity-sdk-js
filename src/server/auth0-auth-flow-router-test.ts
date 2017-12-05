@@ -313,15 +313,15 @@ describe('Auth0AuthFlowRouter', () => {
 
             await appAgent
                 .post('/login?code=some_code&state=' + postLoginRedirectInfoMarshaller.pack(new PostLoginRedirectInfo('/admin')))
-                .set('Cookie', `${SESSION_TOKEN_COOKIE_NAME}=${JSON.stringify(sessionTokenMarshaller.pack(theSessionToken))}`)
+                .set('Cookie', `${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionToken)))}`)
                 .expect(HttpStatus.MOVED_TEMPORARILY)
                 .then(response => {
                     expect(response.header).contains.keys('set-cookie', 'location', 'content-type');
                     expect(response.header['set-cookie']).to.have.length(2);
                     expect(response.header['set-cookie'][0]).to.match(
-                        new RegExp(`base63-sessiontoken=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionToken)))}; Path=/; Expires=.*GMT; HttpOnly; SameSite=Lax`));
+                        new RegExp(`${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionToken)))}; Path=/; Expires=.*GMT; HttpOnly; SameSite=Lax`));
                     expect(response.header['set-cookie'][1]).to.match(
-                        new RegExp(`base63-sessiontoken=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionTokenWithUser)))}; Path=/; Expires=.*GMT; HttpOnly; SameSite=Lax`));
+                        new RegExp(`${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionTokenWithUser)))}; Path=/; Expires=.*GMT; HttpOnly; SameSite=Lax`));
                     expect(response.header['location']).to.eql('/admin');
                     expect(response.header['content-type']).to.eql('text/plain; charset=utf-8');
                     expect(response.text).to.eql('Found. Redirecting to /admin');

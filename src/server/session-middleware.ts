@@ -76,10 +76,10 @@ export function newSessionMiddleware(
             // either as a cookie with the name SESSION_TOKEN_COOKIE_NAME, or as a header with the name
             // SESSION_TOKEN_HEADER_NAME.
             if (sessionInfoSource == SessionInfoSource.Cookie && req.cookies[SESSION_TOKEN_COOKIE_NAME] != undefined) {
-                sessionTokenSerialized = JSON.parse(req.cookies[SESSION_TOKEN_COOKIE_NAME]);
-            } else if (sessionInfoSource == SessionInfoSource.Header && req.header(SESSION_TOKEN_HEADER_NAME) != undefined) {
+                sessionTokenSerialized = req.cookies[SESSION_TOKEN_COOKIE_NAME];
+            } else if (sessionInfoSource == SessionInfoSource.Header && req.headers[SESSION_TOKEN_HEADER_NAME] != undefined) {
                 try {
-                    sessionTokenSerialized = JSON.parse(req.header(SESSION_TOKEN_HEADER_NAME) as string);
+                    sessionTokenSerialized = JSON.parse(req.headers[SESSION_TOKEN_HEADER_NAME] as string);
                 } catch (e) {
                     req.log.error(e);
                     res.status(HttpStatus.BAD_REQUEST);

@@ -201,7 +201,6 @@ export function newAuth0AuthFlowRouter(
         try {
             sessionToken = (await identityClient.withContext(sessionToken).getOrCreateUserOnSession(req.session))[0];
         } catch (e) {
-            console.log(e);
             req.log.error(e);
             req.errorLog.error(e);
             res.status(HttpStatus.INTERNAL_SERVER_ERROR);
