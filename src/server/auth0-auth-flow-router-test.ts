@@ -277,9 +277,7 @@ describe('Auth0AuthFlowRouter', () => {
             });
             const response = td.object({
                 ok: true,
-                json: () => { },
-                redirect: (_t: string) => { },
-                cookie: (_n: string, _d: any, _o: any) => { }
+                json: () => { }
             });
 
             const router = newAuth0AuthFlowRouter(Env.Local, allowedPaths, auth0Config, webFetcher as WebFetcher, identityClient as IdentityClient);
@@ -327,6 +325,49 @@ describe('Auth0AuthFlowRouter', () => {
                     expect(response.text).to.eql('Found. Redirecting to /admin');
                     expect(response.charset).to.eql('utf-8');
                     expect(response.type).to.eql('text/plain');
+                });
+        });
+    });
+
+    describe('/logout', () => {
+        it('should do something', async () => {
+            const webFetcher = td.object({
+                fetch: (_u: string, _o: any) => { }
+            });
+            const identityClient = td.object({
+                withContext: (_t: SessionToken) => { },
+                getUserOnSession: () => { },
+                removeSession: (_s: Session) => { }
+            });
+
+            const router = newAuth0AuthFlowRouter(Env.Local, allowedPaths, auth0Config, webFetcher as WebFetcher, identityClient as IdentityClient);
+            const app = express();
+            app.use(newLocalCommonServerMiddleware('test', Env.Local, true));
+            app.use(router);
+
+            const appAgent = agent(app);
+
+            td.when(identityClient.withContext(theSessionTokenWithUser)).thenReturn(identityClient);
+            td.when(identityClient.getUserOnSession()).thenResolve(theSessionWithUser);
+
+            await appAgent
+                .post('/logout')
+                .set('Cookie', `${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionTokenWithUser)))}`)
+                .expect(HttpStatus.MOVED_TEMPORARILY)
+                .then(response => {
+                    expect(response.header).contains.keys('set-cookie', 'location', 'content-type');
+                    expect(response.header['set-cookie']).to.have.length(2);
+                    expect(response.header['set-cookie'][0]).to.match(
+                        new RegExp(`${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionTokenWithUser)))}; Path=/; Expires=.*GMT; HttpOnly; SameSite=Lax`));
+                    expect(response.header['set-cookie'][1]).to.match(
+                        new RegExp(`${SESSION_TOKEN_COOKIE_NAME}=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly`));
+                    expect(response.header['location']).to.eql('/');
+                    expect(response.header['content-type']).to.eql('text/plain; charset=utf-8');
+                    expect(response.text).to.eql('Found. Redirecting to /');
+                    expect(response.charset).to.eql('utf-8');
+                    expect(response.type).to.eql('text/plain');
+
+                    td.verify(identityClient.removeSession(theSessionWithUser));
                 });
         });
     });
