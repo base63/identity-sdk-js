@@ -121,6 +121,7 @@ const AUTHORIZE_OPTIONS = {
  *
  * @note The router has two paths exposed: /login and /logout. These are invoked by Auth0, via
  *     redirection with specific parameters containing information about the signed in user.
+ * @note The router assumes the common middleware is used.
  * @param env - the environment in which the code is running.
  * @param allowedPaths - a set of allowed path prefixes.
  * @param auth0Config - the configuration for Auth0.
@@ -142,7 +143,7 @@ export function newAuth0AuthFlowRouter(
 
     router.use(newSessionMiddleware(SessionLevel.Session, SessionInfoSource.Cookie, env, identityClient))
 
-    router.get('/login', wrap(async (req: RequestWithIdentity, res: express.Response) => {
+    router.post('/login', wrap(async (req: RequestWithIdentity, res: express.Response) => {
         let redirectInfo: Auth0AuthorizeRedirectInfo | null = null;
         try {
             redirectInfo = auth0AuthorizeRedirectInfoMarshaller.extract(req.query);
@@ -200,6 +201,7 @@ export function newAuth0AuthFlowRouter(
         try {
             sessionToken = (await identityClient.withContext(sessionToken).getOrCreateUserOnSession(req.session))[0];
         } catch (e) {
+            console.log(e);
             req.log.error(e);
             req.errorLog.error(e);
             res.status(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -211,7 +213,7 @@ export function newAuth0AuthFlowRouter(
         res.redirect(redirectInfo.state.path);
     }));
 
-    router.get('/logout', wrap(async (req: RequestWithIdentity, res: express.Response) => {
+    router.post('/logout', wrap(async (req: RequestWithIdentity, res: express.Response) => {
         try {
             await identityClient.withContext(req.sessionToken as SessionToken).removeSession(req.session);
         } catch (e) {

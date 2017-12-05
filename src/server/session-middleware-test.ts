@@ -129,7 +129,7 @@ describe('SessionMiddleware', () => {
 
                     const mockReq = td.object({
                         requestTime: rightNow,
-                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: theSessionToken },
+                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: JSON.stringify(theSessionToken) },
                         sessionToken: null,
                         session: null,
                         header: (_n: string) => { }
@@ -175,7 +175,7 @@ describe('SessionMiddleware', () => {
 
                     const mockReq = td.object({
                         requestTime: rightNow,
-                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: theSessionTokenWithUser },
+                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: JSON.stringify(theSessionTokenWithUser) },
                         sessionToken: null,
                         session: null,
                         header: (_n: string) => { }
@@ -291,7 +291,7 @@ describe('SessionMiddleware', () => {
 
                 const mockReq = td.object({
                     requestTime: rightNow,
-                    cookies: { [SESSION_TOKEN_COOKIE_NAME]: theSessionToken },
+                    cookies: { [SESSION_TOKEN_COOKIE_NAME]: JSON.stringify(theSessionToken) },
                     header: (_n: string) => { },
                     log: { warn: (_msg: string) => { } }
                 });
@@ -366,7 +366,7 @@ describe('SessionMiddleware', () => {
 
                     const mockReq = td.object({
                         requestTime: rightNow,
-                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: 'bad-stuff' },
+                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: '"bad-stuff"' },
                         header: (_n: string) => { },
                         log: { error: (_msg: Error) => { } }
                     });
@@ -391,7 +391,7 @@ describe('SessionMiddleware', () => {
 
                     const mockReq = td.object({
                         requestTime: rightNow,
-                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: { foo: 'bar' } },
+                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: JSON.stringify({ foo: 'bar' }) },
                         header: (_n: string) => { },
                         log: { error: (_msg: Error) => { } }
                     });
@@ -425,7 +425,7 @@ describe('SessionMiddleware', () => {
 
                     const mockReq = td.object({
                         requestTime: rightNow,
-                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: theSessionToken },
+                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: JSON.stringify(theSessionToken) },
                         header: (_n: string) => { },
                         log: { error: (_msg: Error) => { } }
                     });
@@ -464,7 +464,7 @@ describe('SessionMiddleware', () => {
 
                     const mockReq = td.object({
                         requestTime: rightNow,
-                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: theSessionToken },
+                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: JSON.stringify(theSessionToken) },
                         header: (_n: string) => { },
                         log: { error: (_msg: Error) => { } }
                     });
@@ -503,7 +503,7 @@ describe('SessionMiddleware', () => {
 
                     const mockReq = td.object({
                         requestTime: rightNow,
-                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: theSessionToken },
+                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: JSON.stringify(theSessionToken) },
                         header: (_n: string) => { },
                         log: { error: (_msg: Error) => { } }
                     });
@@ -542,7 +542,7 @@ describe('SessionMiddleware', () => {
 
                     const mockReq = td.object({
                         requestTime: rightNow,
-                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: theSessionTokenWithUser },
+                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: JSON.stringify(theSessionTokenWithUser) },
                         header: (_n: string) => { },
                         log: { error: (_msg: Error) => { } }
                     });
@@ -581,7 +581,7 @@ describe('SessionMiddleware', () => {
 
                     const mockReq = td.object({
                         requestTime: rightNow,
-                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: theSessionTokenWithUser },
+                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: JSON.stringify(theSessionTokenWithUser) },
                         header: (_n: string) => { },
                         log: { error: (_msg: Error) => { } }
                     });
@@ -620,7 +620,7 @@ describe('SessionMiddleware', () => {
 
                     const mockReq = td.object({
                         requestTime: rightNow,
-                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: theSessionTokenWithUser },
+                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: JSON.stringify(theSessionTokenWithUser) },
                         header: (_n: string) => { },
                         log: { error: (_msg: Error) => { } }
                     });

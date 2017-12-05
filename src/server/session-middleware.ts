@@ -76,7 +76,7 @@ export function newSessionMiddleware(
             // either as a cookie with the name SESSION_TOKEN_COOKIE_NAME, or as a header with the name
             // SESSION_TOKEN_HEADER_NAME.
             if (sessionInfoSource == SessionInfoSource.Cookie && req.cookies[SESSION_TOKEN_COOKIE_NAME] != undefined) {
-                sessionTokenSerialized = req.cookies[SESSION_TOKEN_COOKIE_NAME];
+                sessionTokenSerialized = JSON.parse(req.cookies[SESSION_TOKEN_COOKIE_NAME]);
             } else if (sessionInfoSource == SessionInfoSource.Header && req.header(SESSION_TOKEN_HEADER_NAME) != undefined) {
                 try {
                     sessionTokenSerialized = JSON.parse(req.header(SESSION_TOKEN_HEADER_NAME) as string);

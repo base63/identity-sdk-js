@@ -1,14 +1,34 @@
 import { expect } from 'chai'
+import * as express from 'express'
+import * as HttpStatus from 'http-status-codes'
 import 'mocha'
+import { MarshalFrom } from 'raynor'
 import * as serializeJavascript from 'serialize-javascript'
+import * as td from 'testdouble'
+import { agent } from 'supertest'
+import * as uuid from 'uuid'
+
+import { Env } from '@base63/common-js'
+import { WebFetcher, newLocalCommonServerMiddleware } from '@base63/common-server-js'
 
 import {
     Auth0AuthorizeRedirectInfo,
     Auth0AuthorizeRedirectInfoMarshaller,
     Auth0AuthorizationCodeMarshaller,
-    Auth0AccessTokenMarshaller
+    Auth0AccessTokenMarshaller,
+    newAuth0AuthFlowRouter
 } from './auth0-auth-flow-router'
-import { PathMatch, PostLoginRedirectInfo } from '../auth-flow'
+import {
+    PathMatch,
+    PostLoginRedirectInfo,
+    PostLoginRedirectInfoMarshaller
+} from '../auth-flow'
+import {
+    IdentityClient,
+    SESSION_TOKEN_COOKIE_NAME
+} from '../client'
+import { PrivateUser, Role, Session, SessionState, UserState } from '../entities'
+import { SessionToken } from '../session-token'
 
 
 describe('Auth0AccessTokenMarshaller', () => {
@@ -139,15 +159,15 @@ describe('Auth0AuthorizeRedirectInfo', () => {
         ];
 
         const auth0AuthorizeRedirectInfos = [
-            [{code: 'abcabc', state: quickEncode({path: '/'})}, new Auth0AuthorizeRedirectInfo('abcabc', new PostLoginRedirectInfo('/'))],
-            [{code: 'abcabc', state: quickEncode({path: '/admin'})}, new Auth0AuthorizeRedirectInfo('abcabc', new PostLoginRedirectInfo('/admin'))],
-            [{code: 'abcabc', state: quickEncode({path: '/admin/foo'})}, new Auth0AuthorizeRedirectInfo('abcabc', new PostLoginRedirectInfo('/admin/foo'))],
-            [{code: 'abcabc', state: quickEncode({path: '/admin/foo?id=10'})}, new Auth0AuthorizeRedirectInfo('abcabc', new PostLoginRedirectInfo('/admin/foo?id=10'))]
+            [{ code: 'abcabc', state: quickEncode({ path: '/' }) }, new Auth0AuthorizeRedirectInfo('abcabc', new PostLoginRedirectInfo('/'))],
+            [{ code: 'abcabc', state: quickEncode({ path: '/admin' }) }, new Auth0AuthorizeRedirectInfo('abcabc', new PostLoginRedirectInfo('/admin'))],
+            [{ code: 'abcabc', state: quickEncode({ path: '/admin/foo' }) }, new Auth0AuthorizeRedirectInfo('abcabc', new PostLoginRedirectInfo('/admin/foo'))],
+            [{ code: 'abcabc', state: quickEncode({ path: '/admin/foo?id=10' }) }, new Auth0AuthorizeRedirectInfo('abcabc', new PostLoginRedirectInfo('/admin/foo?id=10'))]
         ];
 
         const badAuth0AuthorizeRedirectInfos = [
-            {code: 'abcabc', state: quickEncode({path: '/a-bad-path'})},
-            {code: 'abcabc', state: quickEncode({path: 'admin'})}
+            { code: 'abcabc', state: quickEncode({ path: '/a-bad-path' }) },
+            { code: 'abcabc', state: quickEncode({ path: 'admin' }) }
         ];
 
         describe('extract', () => {
@@ -167,7 +187,7 @@ describe('Auth0AuthorizeRedirectInfo', () => {
         });
 
         describe('pack', () => {
-            for (let [raw, extracted] of auth0AuthorizeRedirectInfos)  {
+            for (let [raw, extracted] of auth0AuthorizeRedirectInfos) {
                 it(`should produce the same input for ${JSON.stringify(raw)}`, () => {
                     const marshaller = new (Auth0AuthorizeRedirectInfoMarshaller(allowedPaths))();
                     expect(marshaller.pack(extracted as Auth0AuthorizeRedirectInfo)).to.eql(raw);
@@ -176,7 +196,7 @@ describe('Auth0AuthorizeRedirectInfo', () => {
         });
 
         describe('extract and pack', () => {
-            for (let [example] of auth0AuthorizeRedirectInfos)  {
+            for (let [example] of auth0AuthorizeRedirectInfos) {
                 it(`should be opposites ${JSON.stringify(example)}`, () => {
                     const marshaller = new (Auth0AuthorizeRedirectInfoMarshaller(allowedPaths))();
 
@@ -192,5 +212,122 @@ describe('Auth0AuthorizeRedirectInfo', () => {
         function quickEncode(obj: any): string {
             return encodeURIComponent(encodeURIComponent(serializeJavascript(obj)));
         }
+    });
+});
+
+
+describe('Auth0AuthFlowRouter', () => {
+    const allowedPaths: PathMatch[] = [
+        { path: '/', mode: 'full' },
+        { path: '/admin', mode: 'full' },
+        { path: '/admin/', mode: 'prefix' }
+    ];
+
+    const auth0Config = {
+        clientId: 'foo',
+        clientSecret: 'bar',
+        domain: 'some-domain',
+        loginCallbackUri: '/login'
+    };
+
+    const sessionTokenMarshaller = new (MarshalFrom(SessionToken))();
+    const postLoginRedirectInfoMarshaller = new (PostLoginRedirectInfoMarshaller(allowedPaths))();
+
+    const rightNow: Date = new Date(Date.UTC(2017, 11, 24));
+    // const toolTimeLater: Date = new Date(Date.UTC(2045, 4, 11));
+
+    const theSessionToken = new SessionToken(uuid());
+
+    const theSession = new Session();
+    theSession.state = SessionState.Active;
+    theSession.xsrfToken = ('0' as any).repeat(64);
+    theSession.agreedToCookiePolicy = false;
+    theSession.timeCreated = rightNow;
+    theSession.timeLastUpdated = rightNow;
+
+    const theSessionTokenWithUser = new SessionToken(theSessionToken.sessionId, 'x0bjohntok');
+
+    const theSessionWithUser = new Session();
+    theSessionWithUser.state = SessionState.ActiveAndLinkedWithUser;
+    theSessionWithUser.xsrfToken = ('0' as any).repeat(64);
+    theSessionWithUser.agreedToCookiePolicy = false;
+    theSessionWithUser.timeCreated = rightNow;
+    theSessionWithUser.timeLastUpdated = rightNow;
+    theSessionWithUser.user = new PrivateUser();
+    theSessionWithUser.user.id = 1;
+    theSessionWithUser.user.state = UserState.Active;
+    theSessionWithUser.user.role = Role.Regular;
+    theSessionWithUser.user.name = 'John Doe';
+    theSessionWithUser.user.pictureUri = 'https://example.com/picture.jpg';
+    theSessionWithUser.user.language = 'en';
+    theSessionWithUser.user.timeCreated = rightNow;
+    theSessionWithUser.user.timeLastUpdated = rightNow;
+    theSessionWithUser.user.agreedToCookiePolicy = false;
+    theSessionWithUser.user.userIdHash = ('f' as any).repeat(64);
+
+    describe('/login', () => {
+        it('should do something', async () => {
+            const webFetcher = td.object({
+                fetch: (_u: string, _o: any) => { }
+            });
+            const identityClient = td.object({
+                withContext: (_t: SessionToken) => { },
+                getSession: () => { },
+                getOrCreateUserOnSession: (_s: Session) => { }
+            });
+            const response = td.object({
+                ok: true,
+                json: () => { },
+                redirect: (_t: string) => { },
+                cookie: (_n: string, _d: any, _o: any) => { }
+            });
+
+            const router = newAuth0AuthFlowRouter(Env.Local, allowedPaths, auth0Config, webFetcher as WebFetcher, identityClient as IdentityClient);
+            const app = express();
+            app.use(newLocalCommonServerMiddleware('test', Env.Local, true));
+            app.use(router);
+
+            const appAgent = agent(app);
+
+            td.when(webFetcher.fetch('https://some-domain/oauth/token', {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                redirect: 'error',
+                referrer: 'client',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    grant_type: 'authorization_code',
+                    client_id: 'foo',
+                    client_secret: 'bar',
+                    code: 'some_code',
+                    redirect_uri: '/login'
+                })
+            })).thenReturn(response);
+            td.when(response.json()).thenReturn({ access_token: 'x0bjohntok' });
+
+            td.when(identityClient.withContext(theSessionToken)).thenReturn(identityClient);
+            td.when(identityClient.getSession()).thenResolve(theSession);
+            td.when(identityClient.withContext(theSessionTokenWithUser)).thenReturn(identityClient);
+            td.when(identityClient.getOrCreateUserOnSession(theSession)).thenReturn([theSessionTokenWithUser, theSessionWithUser]);
+
+            await appAgent
+                .post('/login?code=some_code&state=' + postLoginRedirectInfoMarshaller.pack(new PostLoginRedirectInfo('/admin')))
+                .set('Cookie', `${SESSION_TOKEN_COOKIE_NAME}=${JSON.stringify(sessionTokenMarshaller.pack(theSessionToken))}`)
+                .expect(HttpStatus.MOVED_TEMPORARILY)
+                .then(response => {
+                    expect(response.header).contains.keys('set-cookie', 'location', 'content-type');
+                    expect(response.header['set-cookie']).to.have.length(2);
+                    expect(response.header['set-cookie'][0]).to.match(
+                        new RegExp(`base63-sessiontoken=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionToken)))}; Path=/; Expires=.*GMT; HttpOnly; SameSite=Lax`));
+                    expect(response.header['set-cookie'][1]).to.match(
+                        new RegExp(`base63-sessiontoken=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionTokenWithUser)))}; Path=/; Expires=.*GMT; HttpOnly; SameSite=Lax`));
+                    expect(response.header['location']).to.eql('/admin');
+                    expect(response.header['content-type']).to.eql('text/plain; charset=utf-8');
+                    expect(response.text).to.eql('Found. Redirecting to /admin');
+                    expect(response.charset).to.eql('utf-8');
+                    expect(response.type).to.eql('text/plain');
+                });
+        });
     });
 });
