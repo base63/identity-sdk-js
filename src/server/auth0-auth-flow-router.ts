@@ -169,7 +169,7 @@ export function newAuth0AuthFlowRouter(
         } catch (e) {
             req.log.error(e);
             req.errorLog.error(e);
-            res.status(HttpStatus.INTERNAL_SERVER_ERROR);
+            res.status(HttpStatus.BAD_GATEWAY);
             res.end();
             return;
         }
@@ -214,6 +214,20 @@ export function newAuth0AuthFlowRouter(
         try {
             await identityClient.withContext(req.sessionToken as SessionToken).removeSession(req.session);
         } catch (e) {
+            if (e.name == 'UnauthorizedIdentityError') {
+                req.log.error(e);
+                res.status(HttpStatus.UNAUTHORIZED);
+                res.end();
+                return;
+            }
+
+            if (e.name == 'IdentityError') {
+                req.log.error(e);
+                res.status(HttpStatus.BAD_GATEWAY);
+                res.end();
+                return;
+            }
+
             req.log.error(e);
             req.errorLog.error(e);
             res.status(HttpStatus.INTERNAL_SERVER_ERROR);

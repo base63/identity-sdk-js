@@ -25,7 +25,9 @@ import {
 } from '../auth-flow'
 import {
     IdentityClient,
-    SESSION_TOKEN_COOKIE_NAME
+    IdentityError,
+    SESSION_TOKEN_COOKIE_NAME,
+    UnauthorizedIdentityError
 } from '../client'
 import { PrivateUser, Role, Session, SessionState, UserState } from '../entities'
 import { SessionToken } from '../session-token'
@@ -265,6 +267,10 @@ describe('Auth0AuthFlowRouter', () => {
     theSessionWithUser.user.agreedToCookiePolicy = false;
     theSessionWithUser.user.userIdHash = ('f' as any).repeat(64);
 
+    afterEach('reset test doubles', () => {
+        td.reset();
+    });
+
     describe('/login', () => {
         it('should do something', async () => {
             const webFetcher = td.object({
@@ -330,22 +336,17 @@ describe('Auth0AuthFlowRouter', () => {
     });
 
     describe('/logout', () => {
-        it('should do something', async () => {
-            const webFetcher = td.object({
-                fetch: (_u: string, _o: any) => { }
-            });
-            const identityClient = td.object({
-                withContext: (_t: SessionToken) => { },
-                getUserOnSession: () => { },
-                removeSession: (_s: Session) => { }
-            });
+        const webFetcher = td.object({
+            fetch: (_u: string, _o: any) => { }
+        });
+        const identityClient = td.object({
+            withContext: (_t: SessionToken) => { },
+            getUserOnSession: () => { },
+            removeSession: (_s: Session) => { }
+        });
 
-            const router = newAuth0AuthFlowRouter(Env.Local, allowedPaths, auth0Config, webFetcher as WebFetcher, identityClient as IdentityClient);
-            const app = express();
-            app.use(newLocalCommonServerMiddleware('test', Env.Local, true));
-            app.use(router);
-
-            const appAgent = agent(app);
+        it('should work with a session and user', async () => {
+            const appAgent = buildAppAgent(webFetcher as WebFetcher, identityClient as IdentityClient);
 
             td.when(identityClient.withContext(theSessionTokenWithUser)).thenReturn(identityClient);
             td.when(identityClient.getUserOnSession()).thenResolve(theSessionWithUser);
@@ -370,5 +371,81 @@ describe('Auth0AuthFlowRouter', () => {
                     td.verify(identityClient.removeSession(theSessionWithUser));
                 });
         });
+
+        for (let [text, cookieData] of [
+            ['when the session token is not present', ''],
+            ['when the session token is bad', `${SESSION_TOKEN_COOKIE_NAME}=bad-token`],
+            ['when the session token has bad data', `${SESSION_TOKEN_COOKIE_NAME}=${JSON.stringify({ foo: "bar" })}`],
+            ['when the session token does not contain user info', `${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionToken)))}`]
+        ]) {
+            it(`return BAD_REQUEST ${text}`, async () => {
+                const appAgent = buildAppAgent(webFetcher as WebFetcher, identityClient as IdentityClient);
+
+                td.when(identityClient.withContext(theSessionTokenWithUser)).thenReturn(identityClient);
+                td.when(identityClient.getUserOnSession()).thenResolve(theSessionWithUser);
+
+                await appAgent
+                    .post('/logout')
+                    .set('Cookie', cookieData)
+                    .expect(HttpStatus.BAD_REQUEST)
+                    .then(response => {
+                        expect(response.text).to.be.empty;
+                        td.verify(identityClient.removeSession(theSessionWithUser), { times: 0 });
+                    });
+            });
+        }
+
+        for (let [text, error, statusCode] of [
+            ['UNAUTHORIZED when the identity service does not accept the user', new UnauthorizedIdentityError('Unauthorized'), HttpStatus.UNAUTHORIZED],
+            ['BAD_GATEWAY when the identity service errors', new IdentityError('Error'), HttpStatus.BAD_GATEWAY],
+            ['INTERNAL_SERVER_ERROR when there is another error', new Error('Bad error'), HttpStatus.INTERNAL_SERVER_ERROR]
+        ]) {
+            it(`when the identity retrieval fails it should return ${text}`, async () => {
+                const appAgent = buildAppAgent(webFetcher as WebFetcher, identityClient as IdentityClient);
+
+                td.when(identityClient.withContext(theSessionTokenWithUser)).thenReturn(identityClient);
+                td.when(identityClient.getUserOnSession()).thenReject(error as Error);
+
+                await appAgent
+                    .post('/logout')
+                    .set('Cookie', `${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionTokenWithUser)))}`)
+                    .expect(statusCode)
+                    .then(response => {
+                        expect(response.text).to.be.empty;
+                        td.verify(identityClient.removeSession(theSessionWithUser), { times: 0 });
+                    });
+            });
+        }
+
+        for (let [text, error, statusCode] of [
+            ['UNAUTHORIZED when the identity service does not accept the user', new UnauthorizedIdentityError('Unauthorized'), HttpStatus.UNAUTHORIZED],
+            ['BAD_GATEWAY when the identity service errors', new IdentityError('Error'), HttpStatus.BAD_GATEWAY],
+            ['INTERNAL_SERVER_ERROR when there is another error', new Error('Bad error'), HttpStatus.INTERNAL_SERVER_ERROR]
+        ]) {
+            it(`when the identity removal fails it should return ${text}`, async () => {
+                const appAgent = buildAppAgent(webFetcher as WebFetcher, identityClient as IdentityClient);
+
+                td.when(identityClient.withContext(theSessionTokenWithUser)).thenReturn(identityClient);
+                td.when(identityClient.getUserOnSession()).thenResolve(theSessionWithUser);
+                td.when(identityClient.removeSession(theSessionWithUser)).thenThrow(error as Error);
+
+                await appAgent
+                    .post('/logout')
+                    .set('Cookie', `${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionTokenWithUser)))}`)
+                    .expect(statusCode)
+                    .then(response => {
+                        expect(response.text).to.be.empty;
+                    });
+            });
+        }
     });
+
+    function buildAppAgent(webFetcher: WebFetcher, identityClient: IdentityClient) {
+        const router = newAuth0AuthFlowRouter(Env.Local, allowedPaths, auth0Config, webFetcher, identityClient);
+        const app = express();
+        app.use(newLocalCommonServerMiddleware('test', Env.Local, true));
+        app.use(router);
+
+        return agent(app);
+    }
 });
