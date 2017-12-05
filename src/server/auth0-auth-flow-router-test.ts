@@ -272,26 +272,23 @@ describe('Auth0AuthFlowRouter', () => {
     });
 
     describe('/login', () => {
-        it('should do something', async () => {
-            const webFetcher = td.object({
-                fetch: (_u: string, _o: any) => { }
-            });
-            const identityClient = td.object({
-                withContext: (_t: SessionToken) => { },
-                getSession: () => { },
-                getOrCreateUserOnSession: (_s: Session) => { }
-            });
+        const webFetcher = td.object({
+            fetch: (_u: string, _o: any) => { }
+        });
+        const identityClient = td.object({
+            withContext: (_t: SessionToken) => { },
+            getSession: () => { },
+            getUserOnSession: () => { },
+            getOrCreateUserOnSession: (_s: Session) => { }
+        });
+
+        it('should work with a session', async () => {
             const response = td.object({
                 ok: true,
                 json: () => { }
             });
 
-            const router = newAuth0AuthFlowRouter(Env.Local, allowedPaths, auth0Config, webFetcher as WebFetcher, identityClient as IdentityClient);
-            const app = express();
-            app.use(newLocalCommonServerMiddleware('test', Env.Local, true));
-            app.use(router);
-
-            const appAgent = agent(app);
+            const appAgent = buildAppAgent(webFetcher as WebFetcher, identityClient as IdentityClient);
 
             td.when(webFetcher.fetch('https://some-domain/oauth/token', {
                 method: 'POST',
@@ -333,6 +330,141 @@ describe('Auth0AuthFlowRouter', () => {
                     expect(response.type).to.eql('text/plain');
                 });
         });
+
+        it('should work with a session with a user', async () => {
+            const response = td.object({
+                ok: true,
+                json: () => { }
+            });
+
+            const appAgent = buildAppAgent(webFetcher as WebFetcher, identityClient as IdentityClient);
+
+            td.when(webFetcher.fetch('https://some-domain/oauth/token', {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                redirect: 'error',
+                referrer: 'client',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    grant_type: 'authorization_code',
+                    client_id: 'foo',
+                    client_secret: 'bar',
+                    code: 'some_code',
+                    redirect_uri: '/login'
+                })
+            })).thenReturn(response);
+            td.when(response.json()).thenReturn({ access_token: 'x0bjohntok' });
+
+            td.when(identityClient.withContext(theSessionTokenWithUser)).thenReturn(identityClient);
+            td.when(identityClient.getUserOnSession()).thenResolve(theSessionWithUser);
+            td.when(identityClient.withContext(theSessionTokenWithUser)).thenReturn(identityClient);
+            td.when(identityClient.getOrCreateUserOnSession(theSessionWithUser)).thenReturn([theSessionTokenWithUser, theSessionWithUser]);
+
+            await appAgent
+                .post('/login?code=some_code&state=' + postLoginRedirectInfoMarshaller.pack(new PostLoginRedirectInfo('/admin')))
+                .set('Cookie', `${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionTokenWithUser)))}`)
+                .expect(HttpStatus.MOVED_TEMPORARILY)
+                .then(response => {
+                    expect(response.header).contains.keys('set-cookie', 'location', 'content-type');
+                    expect(response.header['set-cookie']).to.have.length(2);
+                    expect(response.header['set-cookie'][0]).to.match(
+                        new RegExp(`${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionTokenWithUser)))}; Path=/; Expires=.*GMT; HttpOnly; SameSite=Lax`));
+                    expect(response.header['set-cookie'][1]).to.match(
+                        new RegExp(`${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionTokenWithUser)))}; Path=/; Expires=.*GMT; HttpOnly; SameSite=Lax`));
+                    expect(response.header['location']).to.eql('/admin');
+                    expect(response.header['content-type']).to.eql('text/plain; charset=utf-8');
+                    expect(response.text).to.eql('Found. Redirecting to /admin');
+                    expect(response.charset).to.eql('utf-8');
+                    expect(response.type).to.eql('text/plain');
+                });
+        });
+
+        for (let [text, cookieData] of [
+            ['when the session token is not present', ''],
+            ['when the session token is bad', `${SESSION_TOKEN_COOKIE_NAME}=bad-token`],
+            ['when the session token has bad data', `${SESSION_TOKEN_COOKIE_NAME}=${JSON.stringify({ foo: "bar" })}`],
+        ]) {
+            it(`return BAD_REQUEST ${text}`, async () => {
+                const appAgent = buildAppAgent(webFetcher as WebFetcher, identityClient as IdentityClient);
+
+                await appAgent
+                    .post('/login?code=some_code&state=' + postLoginRedirectInfoMarshaller.pack(new PostLoginRedirectInfo('/admin')))
+                    .set('Cookie', cookieData)
+                    .expect(HttpStatus.BAD_REQUEST)
+                    .then(response => {
+                        expect(response.text).to.be.empty;
+                        td.verify(identityClient.getOrCreateUserOnSession(theSession), { times: 0 });
+                    });
+            });
+        }
+
+        for (let [text, error, statusCode] of [
+            ['UNAUTHORIZED when the identity service does not accept the user', new UnauthorizedIdentityError('Unauthorized'), HttpStatus.UNAUTHORIZED],
+            ['BAD_GATEWAY when the identity service errors', new IdentityError('Error'), HttpStatus.BAD_GATEWAY],
+            ['INTERNAL_SERVER_ERROR when there is another error', new Error('Bad error'), HttpStatus.INTERNAL_SERVER_ERROR]
+        ]) {
+            it(`when the identity retrieval fails it should return ${text}`, async () => {
+                const appAgent = buildAppAgent(webFetcher as WebFetcher, identityClient as IdentityClient);
+
+                td.when(identityClient.withContext(theSessionToken)).thenReturn(identityClient);
+                td.when(identityClient.getSession()).thenReject(error as Error);
+
+                await appAgent
+                    .post('/login?code=some_code&state=' + postLoginRedirectInfoMarshaller.pack(new PostLoginRedirectInfo('/admin')))
+                    .set('Cookie', `${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionToken)))}`)
+                    .expect(statusCode)
+                    .then(response => {
+                        expect(response.text).to.be.empty;
+                        td.verify(identityClient.getOrCreateUserOnSession(theSession), { times: 0 });
+                    });
+            });
+        }
+
+        for (let [text, error, statusCode] of [
+            ['UNAUTHORIZED when the identity service does not accept the user', new UnauthorizedIdentityError('Unauthorized'), HttpStatus.UNAUTHORIZED],
+            ['BAD_GATEWAY when the identity service errors', new IdentityError('Error'), HttpStatus.BAD_GATEWAY],
+            ['INTERNAL_SERVER_ERROR when there is another error', new Error('Bad error'), HttpStatus.INTERNAL_SERVER_ERROR]
+        ]) {
+            it(`when the user creation fails it should return ${text}`, async () => {
+                const response = td.object({
+                    ok: true,
+                    json: () => { }
+                });
+
+                const appAgent = buildAppAgent(webFetcher as WebFetcher, identityClient as IdentityClient);
+
+                td.when(webFetcher.fetch('https://some-domain/oauth/token', {
+                    method: 'POST',
+                    mode: 'cors',
+                    cache: 'no-cache',
+                    redirect: 'error',
+                    referrer: 'client',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        grant_type: 'authorization_code',
+                        client_id: 'foo',
+                        client_secret: 'bar',
+                        code: 'some_code',
+                        redirect_uri: '/login'
+                    })
+                })).thenReturn(response);
+                td.when(response.json()).thenReturn({ access_token: 'x0bjohntok' });
+
+                td.when(identityClient.withContext(theSessionToken)).thenReturn(identityClient);
+                td.when(identityClient.getSession()).thenResolve(theSession);
+                td.when(identityClient.withContext(theSessionTokenWithUser)).thenReturn(identityClient);
+                td.when(identityClient.getOrCreateUserOnSession(theSession)).thenReject(error as Error);
+
+                await appAgent
+                    .post('/login?code=some_code&state=' + postLoginRedirectInfoMarshaller.pack(new PostLoginRedirectInfo('/admin')))
+                    .set('Cookie', `${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionToken)))}`)
+                    .expect(statusCode)
+                    .then(response => {
+                        expect(response.text).to.be.empty;
+                    });
+            });
+        }
     });
 
     describe('/logout', () => {
@@ -380,9 +512,6 @@ describe('Auth0AuthFlowRouter', () => {
         ]) {
             it(`return BAD_REQUEST ${text}`, async () => {
                 const appAgent = buildAppAgent(webFetcher as WebFetcher, identityClient as IdentityClient);
-
-                td.when(identityClient.withContext(theSessionTokenWithUser)).thenReturn(identityClient);
-                td.when(identityClient.getUserOnSession()).thenResolve(theSessionWithUser);
 
                 await appAgent
                     .post('/logout')
