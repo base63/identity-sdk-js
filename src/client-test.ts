@@ -112,8 +112,20 @@ describe('IdentityClient', () => {
     userInfoJaneDoe.timeCreated = rightNow;
     userInfoJaneDoe.timeLastUpdated = rightNow;
 
+    const fetcher = td.object({
+        fetch: (_u: string, _o: any) => { }
+    });
+
+    const response = td.object({
+        ok: true,
+        json: () => { }
+    });
+
+    afterEach('reset test doubles', () => {
+        td.reset();
+    });
+
     it('can be constructed', () => {
-        const fetcher = td.object({});
         const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher);
 
         expect(client).is.not.null;
@@ -121,7 +133,6 @@ describe('IdentityClient', () => {
 
     for (let env of [Env.Test, Env.Staging, Env.Prod]) {
         it(`can be constructed in non-local env=${env}`, () => {
-            const fetcher = td.object({});
             const client = newIdentityClient(env, 'core', 'identity', fetcher as WebFetcher);
 
             expect(client).is.not.null;
@@ -130,7 +141,6 @@ describe('IdentityClient', () => {
     }
 
     it('can attach a context', () => {
-        const fetcher = td.object({});
         const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher);
         const clientWithToken = client.withContext(theSessionToken);
 
@@ -139,13 +149,6 @@ describe('IdentityClient', () => {
 
     describe('getOrCreateSession', () => {
         it('should return session token and session with no session info', async () => {
-            const fetcher = td.object({
-                fetch: (_u: string, _o: any) => { }
-            });
-            const response = td.object({
-                ok: true,
-                json: () => { }
-            })
             const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher);
 
             const sessionAndTokenResponse = new SessionAndTokenResponse();
@@ -155,6 +158,7 @@ describe('IdentityClient', () => {
             td.when(fetcher.fetch('http://identity/session', {
                 method: 'POST',
                 cache: 'no-cache',
+
                 redirect: 'error',
                 referrer: 'client',
                 headers: {
@@ -170,13 +174,6 @@ describe('IdentityClient', () => {
         });
 
         it('should return session token and session with session info attached', async () => {
-            const fetcher = td.object({
-                fetch: (_u: string, _o: any) => { }
-            });
-            const response = td.object({
-                ok: true,
-                json: () => { }
-            })
             const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher).withContext(theSessionToken);
 
             const sessionAndTokenResponse = new SessionAndTokenResponse();
@@ -207,13 +204,6 @@ describe('IdentityClient', () => {
 
     describe('getSession', () => {
         it('should return session', async () => {
-            const fetcher = td.object({
-                fetch: (_u: string, _o: any) => { }
-            });
-            const response = td.object({
-                ok: true,
-                json: () => { }
-            })
             const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher).withContext(theSessionToken);
 
             const sessionResponse = new SessionResponse();
@@ -243,9 +233,6 @@ describe('IdentityClient', () => {
 
     describe('removeSession', () => {
         it('should remove session', async () => {
-            const fetcher = td.object({
-                fetch: (_u: string, _o: any) => { }
-            });
             const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher).withContext(theSessionToken);
 
             td.when(fetcher.fetch('http://identity/session', {
@@ -271,13 +258,6 @@ describe('IdentityClient', () => {
 
     describe('agreeToCookiePolicyForSession', () => {
         it('should return new session with agreement', async () => {
-            const fetcher = td.object({
-                fetch: (_u: string, _o: any) => { }
-            });
-            const response = td.object({
-                ok: true,
-                json: () => { }
-            })
             const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher).withContext(theSessionToken);
 
             const sessionResponse = new SessionResponse();
@@ -308,13 +288,6 @@ describe('IdentityClient', () => {
 
     describe('getOrCreateUserOnSession', () => {
         it('should return new session with a user', async () => {
-            const fetcher = td.object({
-                fetch: (_u: string, _o: any) => { }
-            });
-            const response = td.object({
-                ok: true,
-                json: () => { }
-            })
             const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher).withContext(theSessionTokenWithUser);
 
             const sessionAndTokenResponse = new SessionAndTokenResponse();
@@ -347,13 +320,6 @@ describe('IdentityClient', () => {
 
     describe('getUserOnSession', () => {
         it('should return a session with a user', async () => {
-            const fetcher = td.object({
-                fetch: (_u: string, _o: any) => { }
-            });
-            const response = td.object({
-                ok: true,
-                json: () => { }
-            })
             const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher).withContext(theSessionTokenWithUser);
 
             const sessionResponse = new SessionResponse();
@@ -383,13 +349,6 @@ describe('IdentityClient', () => {
 
     describe('getUsersInfo', () => {
         it('should return a set of users', async () => {
-            const fetcher = td.object({
-                fetch: (_u: string, _o: any) => { }
-            });
-            const response = td.object({
-                ok: true,
-                json: () => { }
-            })
             const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher).withContext(theSessionToken);
 
             const usersInfoResponse = new UsersInfoResponse();
@@ -413,13 +372,6 @@ describe('IdentityClient', () => {
         });
 
         it('should return a deduped set of users', async () => {
-            const fetcher = td.object({
-                fetch: (_u: string, _o: any) => { }
-            });
-            const response = td.object({
-                ok: true,
-                json: () => { }
-            })
             const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher).withContext(theSessionToken);
 
             const usersInfoResponse = new UsersInfoResponse();
@@ -448,9 +400,6 @@ describe('IdentityClient', () => {
 
     function testErrorPaths<T>(methodExtractor: (client: IdentityClient) => Promise<T>) {
         it('should throw when the fetch fails', async () => {
-            const fetcher = td.object({
-                fetch: (_u: string, _o: any) => { }
-            });
             const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher).withContext(theSessionToken);
 
             td.when(fetcher.fetch(td.matchers.isA(String), td.matchers.anything())).thenThrow(new Error('An error'));
@@ -464,9 +413,6 @@ describe('IdentityClient', () => {
         });
 
         it('should throw when the HTTP response was an error', async () => {
-            const fetcher = td.object({
-                fetch: (_u: string, _o: any) => { }
-            });
             const response = td.object({
                 ok: false,
                 status: HttpStatus.BAD_REQUEST,
@@ -487,9 +433,6 @@ describe('IdentityClient', () => {
 
     function testUnauthorized<T>(methodExtractor: (client: IdentityClient) => Promise<T>) {
         it('should throw when the HTTP response was an UNAUTHORIZED error', async () => {
-            const fetcher = td.object({
-                fetch: (_u: string, _o: any) => { }
-            });
             const response = td.object({
                 ok: false,
                 status: HttpStatus.UNAUTHORIZED,
@@ -510,13 +453,6 @@ describe('IdentityClient', () => {
 
     function testJSONDecoding<T>(methodExtractor: (client: IdentityClient) => Promise<T>) {
         it('should throw when the json cannot be obtained', async () => {
-            const fetcher = td.object({
-                fetch: (_u: string, _o: any) => { }
-            });
-            const response = td.object({
-                ok: true,
-                json: () => { }
-            })
             const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher);
 
             td.when(fetcher.fetch(td.matchers.isA(String), td.matchers.anything())).thenReturn(response);
@@ -531,13 +467,6 @@ describe('IdentityClient', () => {
         });
 
         it('should throw when the response json cannot be decoded', async () => {
-            const fetcher = td.object({
-                fetch: (_u: string, _o: any) => { }
-            });
-            const response = td.object({
-                ok: true,
-                json: () => { }
-            })
             const client = newIdentityClient(Env.Local, 'core', 'identity', fetcher as WebFetcher);
 
             td.when(fetcher.fetch(td.matchers.isA(String), td.matchers.anything())).thenReturn(response);
