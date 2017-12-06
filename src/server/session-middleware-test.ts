@@ -67,6 +67,20 @@ describe('SessionMiddleware', () => {
     theSessionWithUser.user.agreedToCookiePolicy = false;
     theSessionWithUser.user.userIdHash = ('f' as any).repeat(64);
 
+    const identityClient = td.object({
+        withContext: (_t: SessionToken) => { },
+        getSession: () => { },
+        getOrCreateSession: () => { },
+        getUserOnSession: () => { }
+    });
+
+    const mockRes = td.object({
+        cookie: (_n: string, _d: any, _c: any) => { },
+        setHeader: (_n: string, _d: string) => { },
+        status: (_c: number) => { },
+        end: () => { }
+    });
+
     const testCases = [
         { source: SessionInfoSource.Cookie, env: Env.Local, secure: false },
         { source: SessionInfoSource.Cookie, env: Env.Test, secure: true },
@@ -78,24 +92,20 @@ describe('SessionMiddleware', () => {
         { source: SessionInfoSource.Header, env: Env.Prod, secure: true },
     ];
 
+    afterEach('reset test doubles', () => {
+        td.reset();
+    });
+
     describe('should create session on identity service when there is no session information attached', () => {
         for (let { source, env, secure } of testCases) {
             it(`for source=${source} and env=${env}`, (done) => {
-                const identityClient = td.object({
-                    getOrCreateSession: () => { }
-                });
                 const sessionMiddleware = newSessionMiddleware(SessionLevel.None, source, env, identityClient as IdentityClient);
 
                 const mockReq = td.object({
                     requestTime: rightNow,
-                    cookies: {},
                     sessionToken: null,
                     session: null,
                     headers: {},
-                });
-                const mockRes = td.object({
-                    cookie: (_n: string, _d: any, _c: any) => { },
-                    setHeader: (_n: string, _d: string) => { }
                 });
 
                 td.when(identityClient.getOrCreateSession()).thenResolve([theSessionToken, theSession]);
@@ -123,10 +133,6 @@ describe('SessionMiddleware', () => {
         for (let sessionLevel of [SessionLevel.None, SessionLevel.Session]) {
             for (let { source, env, secure } of testCases) {
                 it(`for sessionLevel=${sessionLevel} and source=${source} and env=${env}`, (done) => {
-                    const identityClient = td.object({
-                        withContext: (_t: SessionToken) => { },
-                        getSession: () => { }
-                    });
                     const sessionMiddleware = newSessionMiddleware(sessionLevel, source, env, identityClient as IdentityClient);
 
                     const mockReq = td.object({
@@ -137,10 +143,6 @@ describe('SessionMiddleware', () => {
                             cookie: `${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionToken)))}`,
                             [SESSION_TOKEN_HEADER_NAME]: JSON.stringify(theSessionToken)
                         }
-                    });
-                    const mockRes = td.object({
-                        cookie: (_n: string, _d: any, _c: any) => { },
-                        setHeader: (_n: string, _d: string) => { }
                     });
 
                     td.when(identityClient.withContext(theSessionToken)).thenReturn(identityClient);
@@ -170,10 +172,6 @@ describe('SessionMiddleware', () => {
         for (let sessionLevel of [SessionLevel.None, SessionLevel.Session, SessionLevel.SessionAndUser]) {
             for (let { source, env, secure } of testCases) {
                 it(`for sessionLevel=${sessionLevel} and source=${source} and env=${env}`, (done) => {
-                    const identityClient = td.object({
-                        withContext: (_t: SessionToken) => { },
-                        getUserOnSession: () => { }
-                    });
                     const sessionMiddleware = newSessionMiddleware(sessionLevel, source, env, identityClient as IdentityClient);
 
                     const mockReq = td.object({
@@ -184,10 +182,6 @@ describe('SessionMiddleware', () => {
                             cookie: `${SESSION_TOKEN_COOKIE_NAME}=${encodeURIComponent('j:' + JSON.stringify(sessionTokenMarshaller.pack(theSessionTokenWithUser)))}`,
                             [SESSION_TOKEN_HEADER_NAME]: JSON.stringify(theSessionTokenWithUser)
                         }
-                    });
-                    const mockRes = td.object({
-                        cookie: (_n: string, _d: any, _c: any) => { },
-                        setHeader: (_n: string, _d: string) => { }
                     });
 
                     td.when(identityClient.withContext(theSessionTokenWithUser)).thenReturn(identityClient);
@@ -217,17 +211,14 @@ describe('SessionMiddleware', () => {
         for (let sessionLevel of [SessionLevel.Session, SessionLevel.SessionAndUser]) {
             for (let { source, env } of testCases) {
                 it(`for sessionLevel=${sessionLevel} and source=${source} and env=${env}`, () => {
-                    const identityClient = td.object({});
                     const sessionMiddleware = newSessionMiddleware(sessionLevel, source, env, identityClient as IdentityClient);
                     let called = false;
 
                     const mockReq = td.object({
                         requestTime: rightNow,
-                        cookies: {},
                         headers: {},
                         log: { warn: (_msg: string) => { } }
                     });
-                    const mockRes = td.object(['status', 'end']);
 
                     sessionMiddleware(mockReq as any, mockRes as any, () => { called = true; });
 
@@ -243,19 +234,14 @@ describe('SessionMiddleware', () => {
     describe('should return BAD_GATEWAY when the identity service errors and when there is no session information attached', () => {
         for (let { source, env } of testCases) {
             it(`for source=${source} and env=${env}`, (done) => {
-                const identityClient = td.object({
-                    getOrCreateSession: () => { }
-                });
                 const sessionMiddleware = newSessionMiddleware(SessionLevel.None, source, env, identityClient as IdentityClient);
                 let called = false;
 
                 const mockReq = td.object({
                     requestTime: rightNow,
-                    cookies: {},
                     headers: {},
                     log: { error: (_msg: Error) => { } }
                 });
-                const mockRes = td.object(['status', 'end']);
 
                 const identityError = new IdentityError('Something bad happened');
 
@@ -284,10 +270,6 @@ describe('SessionMiddleware', () => {
     describe('should return BAD_REQUEST when a session and user is required but there is just a user', () => {
         for (let { source, env } of testCases) {
             it(`for and source=${source} and env=${env}`, (done) => {
-                const identityClient = td.object({
-                    withContext: (_t: SessionToken) => { },
-                    getSession: () => { }
-                });
                 const sessionMiddleware = newSessionMiddleware(SessionLevel.SessionAndUser, source, env, identityClient as IdentityClient);
 
                 const mockReq = td.object({
@@ -298,7 +280,6 @@ describe('SessionMiddleware', () => {
                     },
                     log: { warn: (_msg: string) => { } }
                 });
-                const mockRes = td.object(['status', 'end']);
 
                 let called = false;
 
@@ -318,9 +299,6 @@ describe('SessionMiddleware', () => {
     describe('should return INTERNAL_SERVER_ERROR when the identity service errors and when there is no session information attached', () => {
         for (let { source, env } of testCases) {
             it(`for source=${source} and env=${env}`, (done) => {
-                const identityClient = td.object({
-                    getOrCreateSession: () => { }
-                });
                 const sessionMiddleware = newSessionMiddleware(SessionLevel.None, source, env, identityClient as IdentityClient);
                 let called = false;
 
@@ -329,7 +307,6 @@ describe('SessionMiddleware', () => {
                     headers: {},
                     log: { error: (_msg: Error) => { } }
                 });
-                const mockRes = td.object(['status', 'end']);
 
                 const error = new Error('Something bad happened');
 
@@ -359,20 +336,17 @@ describe('SessionMiddleware', () => {
         for (let sessionLevel of [SessionLevel.None, SessionLevel.Session, SessionLevel.SessionAndUser]) {
             for (let { source, env } of testCases) {
                 it(`bad JSON for sessionLevel=${sessionLevel} and source=${source} and env=${env}`, (done) => {
-                    const identityClient = td.object({});
                     const sessionMiddleware = newSessionMiddleware(SessionLevel.None, source, env, identityClient as IdentityClient);
                     let called = false;
 
                     const mockReq = td.object({
                         requestTime: rightNow,
-                        cookies: { [SESSION_TOKEN_COOKIE_NAME]: '"bad-stuff"' },
                         headers: {
                             cookie: `${SESSION_TOKEN_COOKIE_NAME}="bad-stuff"`,
                             [SESSION_TOKEN_HEADER_NAME]: 'bad-stuff'
                         },
                         log: { error: (_msg: Error) => { } }
                     });
-                    const mockRes = td.object(['status', 'end']);
 
                     sessionMiddleware(mockReq as any, mockRes as any, () => { called = true; });
 
@@ -386,7 +360,6 @@ describe('SessionMiddleware', () => {
                 });
 
                 it(`bad token for sessionLevel=${sessionLevel} and source=${source} and env=${env}`, (done) => {
-                    const identityClient = td.object({});
                     const sessionMiddleware = newSessionMiddleware(SessionLevel.None, source, env, identityClient as IdentityClient);
                     let called = false;
 
@@ -398,7 +371,6 @@ describe('SessionMiddleware', () => {
                         },
                         log: { error: (_msg: Error) => { } }
                     });
-                    const mockRes = td.object(['status', 'end']);
 
                     sessionMiddleware(mockReq as any, mockRes as any, () => { called = true; });
 
@@ -418,10 +390,6 @@ describe('SessionMiddleware', () => {
         for (let sessionLevel of [SessionLevel.None, SessionLevel.Session]) {
             for (let { source, env } of testCases) {
                 it(`for sessionLevel=${sessionLevel} and source=${source} and env=${env}`, (done) => {
-                    const identityClient = td.object({
-                        withContext: (_t: SessionToken) => { },
-                        getSession: () => { }
-                    });
                     const sessionMiddleware = newSessionMiddleware(sessionLevel, source, env, identityClient as IdentityClient);
                     let called = false;
 
@@ -433,7 +401,6 @@ describe('SessionMiddleware', () => {
                         },
                         log: { error: (_msg: Error) => { } }
                     });
-                    const mockRes = td.object(['status', 'end']);
 
                     const error = new UnauthorizedIdentityError('Bad');
 
@@ -473,7 +440,6 @@ describe('SessionMiddleware', () => {
                         },
                         log: { error: (_msg: Error) => { } }
                     });
-                    const mockRes = td.object(['status', 'end']);
 
                     const error = new IdentityError('Bad');
 
@@ -513,7 +479,6 @@ describe('SessionMiddleware', () => {
                         },
                         log: { error: (_msg: Error) => { } }
                     });
-                    const mockRes = td.object(['status', 'end']);
 
                     const error = new Error('Bad');
 
@@ -553,7 +518,6 @@ describe('SessionMiddleware', () => {
                         },
                         log: { error: (_msg: Error) => { } }
                     });
-                    const mockRes = td.object(['status', 'end']);
 
                     const error = new UnauthorizedIdentityError('Bad');
 
@@ -593,7 +557,6 @@ describe('SessionMiddleware', () => {
                         },
                         log: { error: (_msg: Error) => { } }
                     });
-                    const mockRes = td.object(['status', 'end']);
 
                     const error = new IdentityError('Bad');
 
@@ -633,7 +596,6 @@ describe('SessionMiddleware', () => {
                         },
                         log: { error: (_msg: Error) => { } }
                     });
-                    const mockRes = td.object(['status', 'end']);
 
                     const error = new Error('Bad');
 

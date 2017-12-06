@@ -25,7 +25,7 @@ describe('CheckXsrfTokenMiddleware', () => {
         on: () => { },
     });
 
-    afterEach('reset mocks', () => {
+    afterEach('reset test doubles', () => {
         td.reset();
     });
 
