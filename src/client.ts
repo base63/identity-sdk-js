@@ -203,7 +203,6 @@ class IdentityClientImpl implements IdentityClient {
     private readonly _sessionAndTokenResponseMarshaller: Marshaller<SessionAndTokenResponse>;
     private readonly _sessionResponseMarshaller: Marshaller<SessionResponse>;
     private readonly _usersInfoResponseMarshaller: Marshaller<UsersInfoResponse>;
-    private readonly _sessionToken: SessionToken | null;
     private readonly _defaultHeaders: HeadersInit;
     private readonly _protocol: string;
 
@@ -225,7 +224,6 @@ class IdentityClientImpl implements IdentityClient {
         this._sessionAndTokenResponseMarshaller = sessionAndTokenResponseMarshaler
         this._sessionResponseMarshaller = sessionResponseMarshaller;
         this._usersInfoResponseMarshaller = usersInfoResponseMarshaller;
-        this._sessionToken = sessionToken;
 
         this._defaultHeaders = {
             'Origin': origin
