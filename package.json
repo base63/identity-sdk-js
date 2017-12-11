@@ -1,11 +1,10 @@
 {
   "name": "@base63/identity-sdk-js",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "The SDK for the identity serivce",
   "author": "Base63 team",
   "scripts": {
     "build": "tsc",
-    "pretest": "tsc",
     "test-dev": "tsc --watch & mocha --watch $(find out -name '*-test.js')",
     "test": "tsc && istanbul cover --config ./.istanbul.yml ./node_modules/mocha/bin/_mocha --  $(find out -name '*-test.js') && remap-istanbul -i ./build/coverage/coverage-final.json -o ./build/coverage/coverage-remapped.json && coverage-filter -i ./build/coverage/coverage-remapped.json -o ./build/coverage/coverage-filtered.json",
     "push-coverage-to-codecov": "codecov -f ./build/coverage/coverage-filtered.json",
@@ -33,8 +32,8 @@
     "tsconfig.json": "f:tsconfig.json"
   },
   "dependencies": {
-    "@base63/common-js": "=0.2.1",
-    "@base63/common-server-js": "=1.4.0",
+    "@base63/common-js": "=0.2.2",
+    "@base63/common-server-js": "=1.4.1",
     "cookie-parser": "=1.4.3",
     "express": "=4.16.2",
     "history": "=4.7.2",
