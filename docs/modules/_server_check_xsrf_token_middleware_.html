@@ -66,6 +66,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Defines middleware for protecting against XSRF attacks.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -91,10 +98,19 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/0e5a358/src/server/check-xsrf-token-middleware.ts#L9">server/check-xsrf-token-middleware.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/server/check-xsrf-token-middleware.ts#L19">server/check-xsrf-token-middleware.ts:19</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create an express middleware for protection against XSRF attacks, for the identity service.
+										Needs to apply after the session middleware, since it depends on a session existing. What this
+										does is simply check the contents of the header given by <a href="_client_.html#xsrf_token_header_name">XSRF_TOKEN_HEADER_NAME</a> against
+									the XSRF token attached to the session. If they match the request is allowed to further stages.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
+							<p>A connect middleware doing all of the above.</p>
 						</li>
 					</ul>
 				</section>
@@ -135,6 +151,9 @@
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="_request_.html">"request"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_server_api_gateway_router_.html">"server/api-<wbr>gateway-<wbr>router"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="_server_auth0_auth_flow_router_.html">"server/auth0-<wbr>auth-<wbr>flow-<wbr>router"</a>

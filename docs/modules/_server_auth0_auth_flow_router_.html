@@ -66,22 +66,30 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Defines a router which implements the auth flow via <a href="https://auth0.com" class="external">Auth0</a>.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section tsd-is-not-exported">
+						<section class="tsd-index-section ">
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported"><a href="../classes/_server_auth0_auth_flow_router_.auth0accesstokenmarshaller.html" class="tsd-kind-icon">Auth0<wbr>Access<wbr>Token<wbr>Marshaller</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported"><a href="../classes/_server_auth0_auth_flow_router_.auth0authorizationcodemarshaller.html" class="tsd-kind-icon">Auth0<wbr>Authorization<wbr>Code<wbr>Marshaller</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported"><a href="../classes/_server_auth0_auth_flow_router_.auth0authorizeredirectinfo.html" class="tsd-kind-icon">Auth0<wbr>Authorize<wbr>Redirect<wbr>Info</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/_server_auth0_auth_flow_router_.auth0accesstokenmarshaller.html" class="tsd-kind-icon">Auth0<wbr>Access<wbr>Token<wbr>Marshaller</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/_server_auth0_auth_flow_router_.auth0authorizationcodemarshaller.html" class="tsd-kind-icon">Auth0<wbr>Authorization<wbr>Code<wbr>Marshaller</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/_server_auth0_auth_flow_router_.auth0authorizeredirectinfo.html" class="tsd-kind-icon">Auth0<wbr>Authorize<wbr>Redirect<wbr>Info</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported"><a href="../classes/_server_auth0_auth_flow_router_.auth0tokenexchangeresult.html" class="tsd-kind-icon">Auth0<wbr>Token<wbr>Exchange<wbr>Result</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_server_auth0_auth_flow_router_.html#auth0authorizeredirectinfomarshaller" class="tsd-kind-icon">Auth0<wbr>Authorize<wbr>Redirect<wbr>Info<wbr>Marshaller</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_server_auth0_auth_flow_router_.html#newauth0authflowrouter" class="tsd-kind-icon">new<wbr>Auth0<wbr>Auth<wbr>Flow<wbr>Router</a></li>
 							</ul>
 						</section>
@@ -97,34 +105,95 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
-					<a name="newauth0authflowrouter" class="tsd-anchor"></a>
-					<h3>new<wbr>Auth0<wbr>Auth<wbr>Flow<wbr>Router</h3>
+					<a name="auth0authorizeredirectinfomarshaller" class="tsd-anchor"></a>
+					<h3>Auth0<wbr>Authorize<wbr>Redirect<wbr>Info<wbr>Marshaller</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
-						<li class="tsd-signature tsd-kind-icon">new<wbr>Auth0<wbr>Auth<wbr>Flow<wbr>Router<span class="tsd-signature-symbol">(</span>env<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Env</span>, auth0Config<span class="tsd-signature-symbol">: </span><a href="../classes/_auth0_.auth0config.html" class="tsd-signature-type">Auth0Config</a>, webFetcher<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebFetcher</span>, identityClient<span class="tsd-signature-symbol">: </span><a href="../interfaces/_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">express.Router</span></li>
+						<li class="tsd-signature tsd-kind-icon">Auth0<wbr>Authorize<wbr>Redirect<wbr>Info<wbr>Marshaller<span class="tsd-signature-symbol">(</span>allowedPaths<span class="tsd-signature-symbol">: </span><a href="_auth_flow_.html#pathmatch" class="tsd-signature-type">PathMatch</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">r.MarshallerConstructor</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/_server_auth0_auth_flow_router_.auth0authorizeredirectinfo.html" class="tsd-signature-type">Auth0AuthorizeRedirectInfo</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/0e5a358/src/server/auth0-auth-flow-router.ts#L83">server/auth0-auth-flow-router.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/server/auth0-auth-flow-router.ts#L75">server/auth0-auth-flow-router.ts:75</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
+									<h5>allowedPaths: <a href="_auth_flow_.html#pathmatch" class="tsd-signature-type">PathMatch</a><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">r.MarshallerConstructor</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/_server_auth0_auth_flow_router_.auth0authorizeredirectinfo.html" class="tsd-signature-type">Auth0AuthorizeRedirectInfo</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="newauth0authflowrouter" class="tsd-anchor"></a>
+					<h3>new<wbr>Auth0<wbr>Auth<wbr>Flow<wbr>Router</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">new<wbr>Auth0<wbr>Auth<wbr>Flow<wbr>Router<span class="tsd-signature-symbol">(</span>env<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Env</span>, allowedPaths<span class="tsd-signature-symbol">: </span><a href="_auth_flow_.html#pathmatch" class="tsd-signature-type">PathMatch</a><span class="tsd-signature-symbol">[]</span>, auth0Config<span class="tsd-signature-symbol">: </span><a href="../classes/_auth0_.auth0config.html" class="tsd-signature-type">Auth0Config</a>, webFetcher<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebFetcher</span>, identityClient<span class="tsd-signature-symbol">: </span><a href="../interfaces/_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">express.Router</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/server/auth0-auth-flow-router.ts#L133">server/auth0-auth-flow-router.ts:133</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create a new router which takes care of the auth flow with <a href="https://auth0.com" class="external">Auth0</a> as
+										an identity provider manager. This router is meant to be installed on a backend for frontend
+										type service, as it is technically part of the &quot;frontend&quot;. It won&#39;t display any page or anything,
+										but just make changes to the identity service and redirect according to the configuration setup
+									here. This is just the way authentication flows work on the web.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>note</dt>
+									<dd><p>The router has two paths exposed: /login and /logout. These are invoked by Auth0, via
+										redirection with specific parameters containing information about the signed in user.</p>
+									</dd>
+									<dt>note</dt>
+									<dd><p>The router assumes the common middleware is used.</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
 									<h5>env: <span class="tsd-signature-type">Env</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the environment in which the code is running.</p>
+									</div>
+								</li>
+								<li>
+									<h5>allowedPaths: <a href="_auth_flow_.html#pathmatch" class="tsd-signature-type">PathMatch</a><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>a set of allowed path prefixes.</p>
+									</div>
 								</li>
 								<li>
 									<h5>auth0Config: <a href="../classes/_auth0_.auth0config.html" class="tsd-signature-type">Auth0Config</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the configuration for Auth0.</p>
+									</div>
 								</li>
 								<li>
 									<h5>webFetcher: <span class="tsd-signature-type">WebFetcher</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>a fetcher object.</p>
+									</div>
 								</li>
 								<li>
 									<h5>identityClient: <a href="../interfaces/_client_.identityclient.html" class="tsd-signature-type">IdentityClient</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>a client for the identity service.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">express.Router</span></h4>
+							<p>An express router instance which implement the auth flow for the identity service via
+							Auth0.</p>
 						</li>
 					</ul>
 				</section>
@@ -137,7 +206,7 @@
 					<div class="tsd-signature tsd-kind-icon">AUTHORIZE_<wbr>OPTIONS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/0e5a358/src/server/auth0-auth-flow-router.ts#L72">server/auth0-auth-flow-router.ts:72</a></li>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/server/auth0-auth-flow-router.ts#L103">server/auth0-auth-flow-router.ts:103</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
@@ -146,7 +215,7 @@
 						<div class="tsd-signature tsd-kind-icon">cache<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;no-cache&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/0e5a358/src/server/auth0-auth-flow-router.ts#L75">server/auth0-auth-flow-router.ts:75</a></li>
+								<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/server/auth0-auth-flow-router.ts#L106">server/auth0-auth-flow-router.ts:106</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -156,7 +225,7 @@
 						<div class="tsd-signature tsd-kind-icon">method<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;POST&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/0e5a358/src/server/auth0-auth-flow-router.ts#L73">server/auth0-auth-flow-router.ts:73</a></li>
+								<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/server/auth0-auth-flow-router.ts#L104">server/auth0-auth-flow-router.ts:104</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -166,7 +235,7 @@
 						<div class="tsd-signature tsd-kind-icon">mode<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;cors&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/0e5a358/src/server/auth0-auth-flow-router.ts#L74">server/auth0-auth-flow-router.ts:74</a></li>
+								<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/server/auth0-auth-flow-router.ts#L105">server/auth0-auth-flow-router.ts:105</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -176,7 +245,7 @@
 						<div class="tsd-signature tsd-kind-icon">redirect<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;error&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/0e5a358/src/server/auth0-auth-flow-router.ts#L76">server/auth0-auth-flow-router.ts:76</a></li>
+								<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/server/auth0-auth-flow-router.ts#L107">server/auth0-auth-flow-router.ts:107</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -186,7 +255,7 @@
 						<div class="tsd-signature tsd-kind-icon">referrer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;client&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/0e5a358/src/server/auth0-auth-flow-router.ts#L77">server/auth0-auth-flow-router.ts:77</a></li>
+								<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/server/auth0-auth-flow-router.ts#L108">server/auth0-auth-flow-router.ts:108</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -196,7 +265,7 @@
 						<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/0e5a358/src/server/auth0-auth-flow-router.ts#L78">server/auth0-auth-flow-router.ts:78</a></li>
+								<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/server/auth0-auth-flow-router.ts#L109">server/auth0-auth-flow-router.ts:109</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
@@ -205,7 +274,7 @@
 							<div class="tsd-signature tsd-kind-icon">Content-<wbr><wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;application/json&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/0e5a358/src/server/auth0-auth-flow-router.ts#L79">server/auth0-auth-flow-router.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/server/auth0-auth-flow-router.ts#L110">server/auth0-auth-flow-router.ts:110</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -249,6 +318,9 @@
 					<li class=" tsd-kind-external-module">
 						<a href="_request_.html">"request"</a>
 					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_server_api_gateway_router_.html">"server/api-<wbr>gateway-<wbr>router"</a>
+					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="_server_auth0_auth_flow_router_.html">"server/auth0-<wbr>auth-<wbr>flow-<wbr>router"</a>
 					</li>
@@ -268,17 +340,20 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="../classes/_server_auth0_auth_flow_router_.auth0accesstokenmarshaller.html" class="tsd-kind-icon">Auth0<wbr>Access<wbr>Token<wbr>Marshaller</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="../classes/_server_auth0_auth_flow_router_.auth0authorizationcodemarshaller.html" class="tsd-kind-icon">Auth0<wbr>Authorization<wbr>Code<wbr>Marshaller</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="../classes/_server_auth0_auth_flow_router_.auth0authorizeredirectinfo.html" class="tsd-kind-icon">Auth0<wbr>Authorize<wbr>Redirect<wbr>Info</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../classes/_server_auth0_auth_flow_router_.auth0tokenexchangeresult.html" class="tsd-kind-icon">Auth0<wbr>Token<wbr>Exchange<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="_server_auth0_auth_flow_router_.html#auth0authorizeredirectinfomarshaller" class="tsd-kind-icon">Auth0<wbr>Authorize<wbr>Redirect<wbr>Info<wbr>Marshaller</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module">
 						<a href="_server_auth0_auth_flow_router_.html#newauth0authflowrouter" class="tsd-kind-icon">new<wbr>Auth0<wbr>Auth<wbr>Flow<wbr>Router</a>

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>UsersInfoResponse | identity-sdk-js</title>
+	<title>&quot;server/api-gateway-router&quot; | identity-sdk-js</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,13 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_dtos_.html">&quot;dtos&quot;</a>
-				</li>
-				<li>
-					<a href="_dtos_.usersinforesponse.html">UsersInfoResponse</a>
+					<a href="_server_api_gateway_router_.html">&quot;server/api-gateway-router&quot;</a>
 				</li>
 			</ul>
-			<h1>Class UsersInfoResponse</h1>
+			<h1>External module &quot;server/api-gateway-router&quot;</h1>
 		</div>
 	</div>
 </header>
@@ -72,47 +69,73 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>A response with information about a lot of users.</p>
+						<p>Defines a router for translating between external API calls and internal ones.</p>
 					</div>
 				</div>
-			</section>
-			<section class="tsd-panel tsd-hierarchy">
-				<h3>Hierarchy</h3>
-				<ul class="tsd-hierarchy">
-					<li>
-						<span class="target">UsersInfoResponse</span>
-					</li>
-				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_dtos_.usersinforesponse.html#usersinfo" class="tsd-kind-icon">users<wbr>Info</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_server_api_gateway_router_.html#newapigatewayrouter" class="tsd-kind-icon">new<wbr>Api<wbr>Gateway<wbr>Router</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="usersinfo" class="tsd-anchor"></a>
-					<h3>users<wbr>Info</h3>
-					<div class="tsd-signature tsd-kind-icon">users<wbr>Info<span class="tsd-signature-symbol">:</span> <a href="_entities_.publicuser.html" class="tsd-signature-type">PublicUser</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/dtos.ts#L34">dtos.ts:34</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The set of information about users.</p>
-						</div>
-					</div>
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="newapigatewayrouter" class="tsd-anchor"></a>
+					<h3>new<wbr>Api<wbr>Gateway<wbr>Router</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">new<wbr>Api<wbr>Gateway<wbr>Router<span class="tsd-signature-symbol">(</span>webFetcher<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebFetcher</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">express.Router</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/server/api-gateway-router.ts#L36">server/api-gateway-router.ts:36</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create a new router which acts as an API gateway. Code running in a client isn&#39;t supposed
+										to call an internal service directly. Rather they call into a backend-for-frontend type service
+									associated with that particular client, and that does the call to the service.</p>
+								</div>
+								<p>The router does a couple of things:</p>
+								<ul>
+									<li>makes sure there&#39;s a session token attached to the request.</li>
+									<li>translates the cookie based token into a header based one. Internal services only speak via
+									the header approach, while clients will use cookies.</li>
+									<li>translates the client&#39;s call while maintaining all of the caller&#39;s properties (headers etc).</li>
+								</ul>
+								<dl class="tsd-comment-tags">
+									<dt>note</dt>
+									<dd><p>The router has a single path exposed: / which can only be POSTed.</p>
+									</dd>
+									<dt>note</dt>
+									<dd><p>The router assumes the common middleware is used.</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>webFetcher: <span class="tsd-signature-type">WebFetcher</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>a {@link WebFetcher} instance.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">express.Router</span></h4>
+							<p>An express router instance which implements the gateway protocol described above.</p>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -123,75 +146,60 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_auth_flow_.html">"auth-<wbr>flow"</a>
+						<a href="_auth_flow_.html">"auth-<wbr>flow"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_auth0_.html">"auth0"</a>
+						<a href="_auth0_.html">"auth0"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_client_.html">"client"</a>
+						<a href="_client_.html">"client"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_client_auth0_lock_.html">"client/auth0-<wbr>lock"</a>
+						<a href="_client_auth0_lock_.html">"client/auth0-<wbr>lock"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_client_index_.html">"client/index"</a>
+						<a href="_client_index_.html">"client/index"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_dtos_.html">"dtos"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_entities_.html">"entities"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_events_.html">"events"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_index_.html">"index"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_request_.html">"request"</a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../modules/_dtos_.html">"dtos"</a>
+						<a href="_server_api_gateway_router_.html">"server/api-<wbr>gateway-<wbr>router"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_entities_.html">"entities"</a>
+						<a href="_server_auth0_auth_flow_router_.html">"server/auth0-<wbr>auth-<wbr>flow-<wbr>router"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_events_.html">"events"</a>
+						<a href="_server_check_xsrf_token_middleware_.html">"server/check-<wbr>xsrf-<wbr>token-<wbr>middleware"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_index_.html">"index"</a>
+						<a href="_server_index_.html">"server/index"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_request_.html">"request"</a>
+						<a href="_server_session_middleware_.html">"server/session-<wbr>middleware"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_server_api_gateway_router_.html">"server/api-<wbr>gateway-<wbr>router"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_server_auth0_auth_flow_router_.html">"server/auth0-<wbr>auth-<wbr>flow-<wbr>router"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_server_check_xsrf_token_middleware_.html">"server/check-<wbr>xsrf-<wbr>token-<wbr>middleware"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_server_index_.html">"server/index"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_server_session_middleware_.html">"server/session-<wbr>middleware"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_session_token_.html">"session-<wbr>token"</a>
+						<a href="_session_token_.html">"session-<wbr>token"</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_dtos_.sessionandtokenresponse.html" class="tsd-kind-icon">Session<wbr>And<wbr>Token<wbr>Response</a>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="_server_api_gateway_router_.html#newapigatewayrouter" class="tsd-kind-icon">new<wbr>Api<wbr>Gateway<wbr>Router</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_dtos_.sessionresponse.html" class="tsd-kind-icon">Session<wbr>Response</a>
-					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_dtos_.usersinforesponse.html" class="tsd-kind-icon">Users<wbr>Info<wbr>Response</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_dtos_.usersinforesponse.html#usersinfo" class="tsd-kind-icon">users<wbr>Info</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-				<ul class="after-current">
 				</ul>
 			</nav>
 		</div>

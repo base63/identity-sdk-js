@@ -80,12 +80,94 @@
 						<section class="tsd-index-section ">
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported"><a href="../classes/_auth_flow_.allowedroutesmarshaller.html" class="tsd-kind-icon">Allowed<wbr>Routes<wbr>Marshaller</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/_auth_flow_.postloginredirectinfo.html" class="tsd-kind-icon">Post<wbr>Login<wbr>Redirect<wbr>Info</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/_auth_flow_.postloginredirectinfomarshaller.html" class="tsd-kind-icon">Post<wbr>Login<wbr>Redirect<wbr>Info<wbr>Marshaller</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_auth_flow_.html#pathmatch" class="tsd-kind-icon">Path<wbr>Match</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_auth_flow_.html#postloginredirectinfomarshaller" class="tsd-kind-icon">Post<wbr>Login<wbr>Redirect<wbr>Info<wbr>Marshaller</a></li>
 							</ul>
 						</section>
 					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module">
+					<a name="pathmatch" class="tsd-anchor"></a>
+					<h3>Path<wbr>Match</h3>
+					<div class="tsd-signature tsd-kind-icon">Path<wbr>Match<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/auth-flow.ts#L35">auth-flow.ts:35</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The way we&#39;re supposed to look at an allowed path. Either match the prefix
+							or the full path.</p>
+						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>mode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"prefix"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"full"</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+						</ul>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="postloginredirectinfomarshaller" class="tsd-anchor"></a>
+					<h3>Post<wbr>Login<wbr>Redirect<wbr>Info<wbr>Marshaller</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">Post<wbr>Login<wbr>Redirect<wbr>Info<wbr>Marshaller<span class="tsd-signature-symbol">(</span>allowedPaths<span class="tsd-signature-symbol">: </span><a href="_auth_flow_.html#pathmatch" class="tsd-signature-type">PathMatch</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">r.MarshallerConstructor</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/_auth_flow_.postloginredirectinfo.html" class="tsd-signature-type">PostLoginRedirectInfo</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/auth-flow.ts#L49">auth-flow.ts:49</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>A marshaller for <a href="../classes/_auth_flow_.postloginredirectinfo.html">PostLoginRedirectInfo</a>. This is a bit more involved than a regular
+										marshaller obtained via {@link MarshalFrom}, since the basic representation is that of a string.
+									For deep lore reasons the basic representation is doubly URI encoded.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>note</dt>
+									<dd><p>This is a function returning a class. So you can use it both in new expressions as well
+										as in <code>@MarshalWith</code> annotations.</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>allowedPaths: <a href="_auth_flow_.html#pathmatch" class="tsd-signature-type">PathMatch</a><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the set of allowed path prefixes.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">r.MarshallerConstructor</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/_auth_flow_.postloginredirectinfo.html" class="tsd-signature-type">PostLoginRedirectInfo</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -126,6 +208,9 @@
 						<a href="_request_.html">"request"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="_server_api_gateway_router_.html">"server/api-<wbr>gateway-<wbr>router"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="_server_auth0_auth_flow_router_.html">"server/auth0-<wbr>auth-<wbr>flow-<wbr>router"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -144,14 +229,14 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../classes/_auth_flow_.allowedroutesmarshaller.html" class="tsd-kind-icon">Allowed<wbr>Routes<wbr>Marshaller</a>
-					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="../classes/_auth_flow_.postloginredirectinfo.html" class="tsd-kind-icon">Post<wbr>Login<wbr>Redirect<wbr>Info</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_auth_flow_.postloginredirectinfomarshaller.html" class="tsd-kind-icon">Post<wbr>Login<wbr>Redirect<wbr>Info<wbr>Marshaller</a>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="_auth_flow_.html#pathmatch" class="tsd-kind-icon">Path<wbr>Match</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="_auth_flow_.html#postloginredirectinfomarshaller" class="tsd-kind-icon">Post<wbr>Login<wbr>Redirect<wbr>Info<wbr>Marshaller</a>
 					</li>
 				</ul>
 			</nav>

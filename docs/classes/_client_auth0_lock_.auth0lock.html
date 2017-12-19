@@ -110,13 +110,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Auth0<wbr>Lock<span class="tsd-signature-symbol">(</span>history<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">History</span>, auth0Config<span class="tsd-signature-symbol">: </span><a href="_auth0_.auth0config.html" class="tsd-signature-type">Auth0Config</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_client_auth0_lock_.auth0lock.html" class="tsd-signature-type">Auth0Lock</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Auth0<wbr>Lock<span class="tsd-signature-symbol">(</span>history<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">History</span>, allowedPaths<span class="tsd-signature-symbol">: </span><a href="../modules/_auth_flow_.html#pathmatch" class="tsd-signature-type">PathMatch</a><span class="tsd-signature-symbol">[]</span>, auth0Config<span class="tsd-signature-symbol">: </span><a href="_auth0_.auth0config.html" class="tsd-signature-type">Auth0Config</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_client_auth0_lock_.auth0lock.html" class="tsd-signature-type">Auth0Lock</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/0e5a358/src/client/auth0-lock.ts#L18">client/auth0-lock.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/client/auth0-lock.ts#L19">client/auth0-lock.ts:19</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -131,6 +131,14 @@
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
 											<p>a {@link History} object for accessing the current location.</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>allowedPaths: <a href="../modules/_auth_flow_.html#pathmatch" class="tsd-signature-type">PathMatch</a><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>a list of path prefixes which are permitted.</p>
 										</div>
 									</div>
 								</li>
@@ -160,12 +168,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/0e5a358/src/client/auth0-lock.ts#L39">client/auth0-lock.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/client/auth0-lock.ts#L42">client/auth0-lock.ts:42</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Show the UI component which shows the login/signup screen via Auth0.</p>
+									<p>Show the UI component which shows the login/signup screen via Auth0. This allows a user to
+									login or signup, and triggers the authentication flow to start.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>details</dt>
@@ -226,6 +235,9 @@
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_request_.html">"request"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_server_api_gateway_router_.html">"server/api-<wbr>gateway-<wbr>router"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_server_auth0_auth_flow_router_.html">"server/auth0-<wbr>auth-<wbr>flow-<wbr>router"</a>

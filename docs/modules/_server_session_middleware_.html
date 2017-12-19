@@ -66,6 +66,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Defines the session middleware and some utilities for it.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -100,19 +107,34 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/0e5a358/src/server/session-middleware.ts#L214">server/session-middleware.ts:214</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/server/session-middleware.ts#L253">server/session-middleware.ts:253</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Remove the any <a href="../classes/_session_token_.sessiontoken.html">SessionToken</a> from the request. Depending on {@link sessionInfoSource},
+									this means either clearing the cookie or the header from the response object.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>res: <span class="tsd-signature-type">express.Response</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the response to clear the info from.</p>
+									</div>
 								</li>
 								<li>
 									<h5>sessionInfoSource: <a href="../enums/_server_session_middleware_.sessioninfosource.html" class="tsd-signature-type">SessionInfoSource</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>where to clear the session info from.</p>
+									</div>
 								</li>
 								<li>
 									<h5>env: <span class="tsd-signature-type">Env</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the environment this code is running in.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -129,7 +151,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/0e5a358/src/server/session-middleware.ts#L50">server/session-middleware.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/server/session-middleware.ts#L52">server/session-middleware.ts:52</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -177,28 +199,54 @@
 					<a name="setsessiontokenonresponse" class="tsd-anchor"></a>
 					<h3>set<wbr>Session<wbr>Token<wbr>OnResponse</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Session<wbr>Token<wbr>OnResponse<span class="tsd-signature-symbol">(</span>res<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">express.Response</span>, sessionToken<span class="tsd-signature-symbol">: </span><a href="../classes/_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a>, sessionInfoSource<span class="tsd-signature-symbol">: </span><a href="../enums/_server_session_middleware_.sessioninfosource.html" class="tsd-signature-type">SessionInfoSource</a>, env<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Env</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Session<wbr>Token<wbr>OnResponse<span class="tsd-signature-symbol">(</span>res<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">express.Response</span>, rightNow<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span>, sessionToken<span class="tsd-signature-symbol">: </span><a href="../classes/_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a>, sessionInfoSource<span class="tsd-signature-symbol">: </span><a href="../enums/_server_session_middleware_.sessioninfosource.html" class="tsd-signature-type">SessionInfoSource</a>, env<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Env</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/0e5a358/src/server/session-middleware.ts#L195">server/session-middleware.ts:195</a></li>
+									<li>Defined in <a href="https://github.com/base63/identity-sdk-js/blob/516a631/src/server/session-middleware.ts#L222">server/session-middleware.ts:222</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Attach the given <a href="../classes/_session_token_.sessiontoken.html">SessionToken</a> to the request. Depending on {@link sessionInfoSource},
+										this means either setting a cookie to the serialized content of the token, or setting a header
+										to the same value. The cookie is http only, secure in production, does not expire and has the
+									sameSite attribute to protect against XSS attacks.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>res: <span class="tsd-signature-type">express.Response</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the response to attach the info to.</p>
+									</div>
+								</li>
+								<li>
+									<h5>rightNow: <span class="tsd-signature-type">Date</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the request&#39;s time</p>
+									</div>
 								</li>
 								<li>
 									<h5>sessionToken: <a href="../classes/_session_token_.sessiontoken.html" class="tsd-signature-type">SessionToken</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the token to attach to the request.</p>
+									</div>
 								</li>
 								<li>
 									<h5>sessionInfoSource: <a href="../enums/_server_session_middleware_.sessioninfosource.html" class="tsd-signature-type">SessionInfoSource</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>where to place the session info on.</p>
+									</div>
 								</li>
 								<li>
 									<h5>env: <span class="tsd-signature-type">Env</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the environment this code is running in.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -242,6 +290,9 @@
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="_request_.html">"request"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_server_api_gateway_router_.html">"server/api-<wbr>gateway-<wbr>router"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="_server_auth0_auth_flow_router_.html">"server/auth0-<wbr>auth-<wbr>flow-<wbr>router"</a>
