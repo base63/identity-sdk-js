@@ -1,4 +1,12 @@
 export {
+    Auth0Config
+} from './auth0'
+
+export {
+    PathMatch
+} from './auth-flow'
+
+export {
     IdentityError,
     IdentityClient,
     newIdentityClient,

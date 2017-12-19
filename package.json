@@ -1,6 +1,6 @@
 {
     "name": "@base63/identity-sdk-js",
-    "version": "0.7.4",
+    "version": "0.7.5",
     "description": "The SDK for the identity serivce",
     "author": "Base63 team",
     "scripts": {
