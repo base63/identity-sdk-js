@@ -5,9 +5,10 @@ export {
     newCheckXsrfTokenMiddleware
 } from './check-xsrf-token-middleware'
 export {
-    newSessionMiddleware
+    newSessionMiddleware,
+    SessionInfoSource,
+    SessionLevel
 } from './session-middleware'
 export {
     newApiGatewayRouter
 } from './api-gateway-router'
-
