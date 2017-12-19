@@ -7,3 +7,7 @@ export {
 export {
     newSessionMiddleware
 } from './session-middleware'
+export {
+    newApiGatewayRouter
+} from './api-gateway-router'
+
