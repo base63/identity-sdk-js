@@ -21,7 +21,7 @@
         "type": "git",
         "url": "git+https://github.com/base63/identity-sdk-js.git"
     },
-    "homepage": "https://github.com/base63/identity-server-js#readme",
+    "homepage": "https://github.com/base63/identity-sdk-js#readme",
     "license": "MIT",
     "main": "./index.js",
     "types": "./index.d.ts",
