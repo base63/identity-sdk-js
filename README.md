@@ -1,5 +1,4 @@
-
-# Common [![Build Status](https://travis-ci.org/base63/identity-sdk-js.svg?branch=master)](https://travis-ci.org/base63/identity-sdk-js) [![Coverage](https://codecov.io/gh/base63/identity-sdk-js/branch/master/graph/badge.svg)](https://codecov.io/gh/base63/identity-sdk-js)
+# Identity SDK [![Build Status](https://travis-ci.org/base63/identity-sdk-js.svg?branch=master)](https://travis-ci.org/base63/identity-sdk-js) [![Coverage](https://codecov.io/gh/base63/identity-sdk-js/branch/master/graph/badge.svg)](https://codecov.io/gh/base63/identity-sdk-js)
 
 The SDK for the identity service. This is meant to be used by both client side and server side code. Some bits are isomorphic and they are found in `/src` directly and are exported via `/src/index.ts` to users. Other bits are server or client specific, and can be found in `/src/server` and `/src/client`, respectively. Both have their own `index.ts` files which export what's needed. The idea is, of course for client code to only reference isomorphic and client code, and server code only isomorphic and server code.
 
