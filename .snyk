@@ -1,0 +1,22 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.25.0
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:extend:20180424':
+    - '@base63/common-server-js > rollbar > extend':
+        patched: '2022-10-06T18:12:01.849Z'
+    - '@base63/common-server-js > bunyan-loggly > node-loggly-bulk > request > extend':
+        patched: '2022-10-06T18:12:01.849Z'
+  'npm:hoek:20180212':
+    - '@base63/common-server-js > bunyan-loggly > node-loggly-bulk > request > hawk > hoek':
+        patched: '2022-10-06T18:12:01.849Z'
+    - '@base63/common-server-js > bunyan-loggly > node-loggly-bulk > request > hawk > boom > hoek':
+        patched: '2022-10-06T18:12:01.849Z'
+    - '@base63/common-server-js > bunyan-loggly > node-loggly-bulk > request > hawk > sntp > hoek':
+        patched: '2022-10-06T18:12:01.849Z'
+    - '@base63/common-server-js > bunyan-loggly > node-loggly-bulk > request > hawk > cryptiles > boom > hoek':
+        patched: '2022-10-06T18:12:01.849Z'
+  'npm:stringstream:20180511':
+    - '@base63/common-server-js > bunyan-loggly > node-loggly-bulk > request > stringstream':
+        patched: '2022-10-06T18:12:01.849Z'
