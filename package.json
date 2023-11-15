@@ -41,7 +41,7 @@
         "moment": "=2.19.3",
         "raynor": "0.14.0",
         "require-ensure": "=1.0.2",
-        "serialize-javascript": "=1.4.0",
+        "serialize-javascript": "2.1.1",
         "uuid": "=3.1.0"
     },
     "devDependencies": {
